@@ -1,0 +1,40 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.archastro.ai/docs/api-reference
+docs: https://docs.archastro.ai/docs/api-reference
+note: >-
+  The published openapi.json declares no components.securitySchemes, so this profile
+  is captured from the API reference documentation rather than derived from the spec.
+summary:
+  types: [http, apiKey, oauth2]
+  api_key_in: [header]
+  oauth2_flows: [deviceCode]
+schemes:
+- name: bearerToken
+  type: http
+  scheme: bearer
+  in: header
+  header: Authorization
+  format: "Authorization: Bearer $ARCHASTRO_ACCESS_TOKEN"
+  description: Session/access token bearer auth; also used by realtime channels.
+- name: publishableKey
+  type: apiKey
+  in: header
+  parameter: x-archastro-api-key
+  format: "x-archastro-api-key: $ARCHASTRO_PUBLISHABLE_KEY"
+  description: Publishable API key for client-side calls; sandbox vs production keys select the workspace.
+- name: oauthDevice
+  type: oauth2
+  flow: deviceCode
+  endpoints:
+    authorize: /oauth/device/authorize
+    approve: /oauth/device/approve
+    deny: /oauth/device/deny
+    token: /oauth/token
+    scopes: /oauth/scopes
+  description: >-
+    OAuth 2.0 Device Authorization flow for CLI / coding-agent login. GET /oauth/scopes
+    lists available scopes (requires authentication); scope values are not published in the docs.
+key_separation:
+  secret_keys: server-side setup (sandbox secret keys never access production)
+  publishable_keys: client-side work (sandbox publishable keys)
