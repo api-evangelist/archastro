@@ -1,0 +1,32 @@
+generated: '2026-07-18'
+method: searched
+source: live probes of /.well-known/ on archastro.ai / docs.archastro.ai / platform.archastro.ai
+hosts:
+- host: https://archastro.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+- host: https://docs.archastro.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /llms.txt
+    status: 200
+    file: ../llms/archastro-llms.txt
+  - path: /openapi.json
+    status: 200
+    file: ../openapi/archastro-platform-openapi.json
+  - path: /agent-manifest.json
+    status: 200
+- host: https://platform.archastro.ai
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+note: No /.well-known/ discovery documents were served. ArchAstro exposes machine-readable
+  discovery via docs.archastro.ai/llms.txt, /openapi.json, and /agent-manifest.json instead.

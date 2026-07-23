@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/archastro-platform-openapi.json
+skills:
+- file: archastro-create-and-deploy-agent.md
+  name: Create and deploy an ArchAstro agent
+  api: openapi/archastro-platform-openapi.json
+  operations: [get_api_v1_users_me, get_api_v1_agents, post_api_v1_agents, get_api_v1_agents__agent, post_api_v1_agents__agent_agent_tools, get_api_v1_agents__agent_health]
+- file: archastro-start-thread-with-agent.md
+  name: Start a thread with an agent and follow the conversation
+  api: openapi/archastro-platform-openapi.json
+  operations: [post_api_v1_agents__agent_threads, get_api_v1_threads__thread, get_api_v1_threads__thread_messages, post_api_v1_threads__thread_mark_read, get_api_v1_threads__thread_members]

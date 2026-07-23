@@ -1,0 +1,83 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/archastro-platform-openapi.json (components.schemas $ref + id-reference fields)
+entities:
+- name: Organization
+  summary: A company's private space; agents, teams, knowledge, and sign-in are scoped to it.
+- name: Agent
+  summary: An identity with routines, tools, knowledge, computers, installations, schedules, and health.
+- name: Team
+  summary: A group of users with artifacts, custom objects, invites, and threads.
+- name: Thread
+  summary: A conversation with members, messages, artifacts, and participating agents.
+- name: Message
+  summary: A message in a thread; supports idempotency_key, actors, attachments, reactions.
+- name: User
+  summary: A person with profile, orgs, invites, artifacts, and threads.
+- name: AgentRoutine
+  summary: A routine (with runs) belonging to an agent.
+- name: AgentTool
+  summary: A tool attached to an agent.
+- name: Installation
+  summary: An outside system/capability attached to an agent.
+- name: AgentSchedule
+  summary: A schedule attached to an agent.
+- name: Artifact
+  summary: A produced artifact owned by a team, thread, or user.
+relationships:
+- from: Agent
+  to: Acl
+  type: has_one
+  via: acl
+- from: Agent
+  to: AgentSourceSolution
+  type: has_one
+  via: source_solution
+- from: Agent
+  to: AgentRoutine
+  type: has_many
+  via: agent_routines
+- from: Agent
+  to: AgentTool
+  type: has_many
+  via: agent_tools
+- from: Agent
+  to: Installation
+  type: has_many
+  via: agent_installations
+- from: Agent
+  to: AgentSchedule
+  type: has_many
+  via: schedules
+- from: Team
+  to: Acl
+  type: has_one
+  via: acl
+- from: Thread
+  to: User
+  type: belongs_to
+  via: creator
+- from: Thread
+  to: Message
+  type: has_one
+  via: parent_message
+- from: Thread
+  to: User
+  type: has_many
+  via: participants
+- from: Thread
+  to: Agent
+  type: has_many
+  via: participating_agents
+- from: Message
+  to: Actor
+  type: has_many
+  via: actors
+- from: Message
+  to: Attachment
+  type: has_many
+  via: attachments
+- from: Message
+  to: MessageReaction
+  type: has_many
+  via: reactions

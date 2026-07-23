@@ -1,0 +1,38 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.archastro.ai/docs/api-reference + openapi/archastro-platform-openapi.json
+authentication:
+  styles: [bearer-token, publishable-api-key, oauth2-device]
+  header_bearer: "Authorization: Bearer <token>"
+  header_api_key: "x-archastro-api-key: <publishable-key>"
+  ref: authentication/archastro-authentication.yml
+idempotency:
+  supported: true
+  mechanism: request-body field
+  field: idempotency_key
+  scope: message creation (Message.idempotency_key on POST /api/v1/threads/{thread}/messages)
+  source: openapi Message schema (idempotency_key property)
+pagination:
+  styles: [page-number, cursor]
+  page_number:
+    params: [page, page_size]
+    response_fields: [data, page, page_size, has_next, has_prev, total_entries, total_pages]
+    example_endpoint: GET /api/v1/agents
+  cursor:
+    params: [before_cursor, after_cursor]
+    example_endpoint: activity feed / thread listings
+versioning:
+  style: uri-path
+  current: v1
+  ref: lifecycle/archastro-lifecycle.yml
+errors:
+  envelope: JSON object with an "error" field (e.g. {"error":"unauthenticated"}); no application/problem+json.
+  status_codes: [400, 401, 403, 404, 409, 422, 429, 500]
+  ref: errors/archastro-problem-types.yml
+rate_limiting:
+  signaled: true
+  http_status: 429
+  headers: none documented (no X-RateLimit-* in the OpenAPI)
+sandbox:
+  supported: true
+  ref: sandbox/archastro-sandbox.yml

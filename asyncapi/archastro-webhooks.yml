@@ -1,0 +1,22 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.archastro.ai/docs/more/extensions-integrations
+spec_type: Webhooks
+note: >-
+  ArchAstro publishes no AsyncAPI document. It documents INBOUND webhooks (external
+  systems trigger agent behavior) and a realtime channel surface (Phoenix channels,
+  see @archastro/channel-harness). Captured here as a webhook catalog; no fabricated
+  AsyncAPI spec.
+webhooks:
+  direction: inbound
+  description: Inbound webhooks let external systems trigger agent behavior.
+  endpoint_model: Each webhook gets a unique URL that external systems POST to.
+  configured_via: [CLI, Developer Portal]
+  triggers:
+  - Trigger an automation
+  - Start a workflow
+  - Ingest data into knowledge
+realtime:
+  transport: Phoenix channels
+  auth: bearer
+  contract_testing: "@archastro/channel-harness (npm)"

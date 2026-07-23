@@ -1,0 +1,26 @@
+generated: '2026-07-18'
+method: searched
+source: https://github.com/ArchAstro/archastro/releases
+scheme: semver
+surface: GitHub Releases (ArchAstro Platform CLI)
+current_version: v0.54.0
+entries:
+- version: v0.54.0
+  date: '2026-07-17'
+  highlights: Plugin content generation from sources/ with CI drift check; repo-validation lint checks; impersonate integration-tool limitation documented.
+- version: v0.53.0
+  date: '2026-07-16'
+  highlights: CLI documentation references v0.53.0 as current in docs.
+- version: v0.52.0
+  date: '2026-07-15'
+- version: v0.51.0
+  date: '2026-07-14'
+- version: v0.50.0
+  date: '2026-07-14'
+- version: v0.49.0
+  date: '2026-07-09'
+- version: v0.48.1
+  date: '2026-07-02'
+- version: v0.48.0
+  date: '2026-07-02'
+note: Release cadence is near-daily. Full notes at the source URL; highlights captured for the recent window only.

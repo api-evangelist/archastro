@@ -1,0 +1,39 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/archastro-platform-openapi.json (4xx/5xx responses)
+format: json
+envelope: JSON object with an "error" field; responses do not use application/problem+json.
+note: Derived from OpenAPI response coverage counts across 89 operations; titles from response descriptions.
+problems:
+- status: 400
+  title: Bad request
+  occurrences: 22
+  action: Fix malformed request syntax or parameters.
+- status: 401
+  title: Unauthenticated
+  occurrences: 81
+  action: Provide a valid bearer token or publishable API key.
+- status: 403
+  title: Forbidden
+  occurrences: 62
+  action: The caller lacks permission for this resource/action.
+- status: 404
+  title: Not found
+  occurrences: 59
+  action: The referenced agent/team/thread/user does not exist or is not visible.
+- status: 409
+  title: Conflict
+  occurrences: 4
+  action: Resource state conflict (e.g. duplicate or concurrent modification).
+- status: 422
+  title: Validation failed
+  occurrences: 35
+  action: Correct the invalid field values in the request body.
+- status: 429
+  title: Too many requests
+  occurrences: 10
+  action: Back off and retry; the API rate-limits requests (429).
+- status: 500
+  title: Internal server error
+  occurrences: 1
+  action: Retry later; contact support if persistent.

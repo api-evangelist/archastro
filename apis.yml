@@ -1,27 +1,372 @@
 aid: archastro
 name: Archastro
-description: 'Archastro is a company surfaced as a portfolio company of homebrew and added to the API
-  Evangelist network as a stub for enrichment. Sector: aerospace-defense. This profile is a lead awaiting
-  the enrichment pipeline.'
+description: >-
+  ArchAstro is a Seattle-area startup building a runtime for cross-company AI agents:
+  privacy-aware agents deployed on both sides of a business relationship that collaborate
+  on integrations, migrations, upgrades, onboarding, testing, and bug fixes, with shared
+  test visibility and human approval gates. The ArchAstro Platform API is an agent-first
+  developer control plane covering users, teams, agents, routines, threads, messages,
+  knowledge, tools, installations, workflows, sandboxes, integrations, and inbound webhooks,
+  with first-party TypeScript and Python SDKs and a CLI. Founded in 2026 by engineering
+  veterans from Microsoft, Stripe, Statsig, and Meta; backed by a $6.2M pre-seed.
 url: https://raw.githubusercontent.com/api-evangelist/archastro/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - homebrew
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://archastro.ai/og-image.png
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
-- Aerospace Defense
-apis: []
+- AI Agents
+- Agentic
+- Developer Platform
+- Automation
+- Integration
+- MCP
+- Workflows
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: archastro:archastro-activity-feed-api
+  name: Archastro Activity Feed API
+  description: The Activity Feed API from Archastro — 1 operation(s) for activity feed.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Activity Feed
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-activity-feed-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-agents-api
+  name: Archastro Agents API
+  description: The Agents API from Archastro — 17 operation(s) for agents.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-agents-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-auth-api
+  name: Archastro auth API
+  description: The auth API from Archastro — 9 operation(s) for auth.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-auth-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-files-api
+  name: Archastro Files API
+  description: The Files API from Archastro — 2 operation(s) for files.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-files-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-oauth-api
+  name: Archastro Oauth API
+  description: The Oauth API from Archastro — 5 operation(s) for oauth.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-oauth-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-s2s-api
+  name: Archastro s2s API
+  description: The s2s API from Archastro — 2 operation(s) for s2s.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - s2s
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-s2s-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-slack-channel-bindings-api
+  name: Archastro Slack Channel Bindings API
+  description: >-
+    The Slack Channel Bindings API from Archastro — 2 operation(s) for slack channel bindings.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Slack Channel Bindings
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-slack-channel-bindings-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-teams-api
+  name: Archastro Teams API
+  description: The Teams API from Archastro — 11 operation(s) for teams.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Teams
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-teams-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-threads-api
+  name: Archastro Threads API
+  description: The Threads API from Archastro — 10 operation(s) for threads.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Threads
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-threads-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-users-api
+  name: Archastro Users API
+  description: The Users API from Archastro — 7 operation(s) for users.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-users-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
 common:
+- type: DeveloperPortal
+  url: https://docs.archastro.ai
+- type: Documentation
+  url: https://docs.archastro.ai/docs
+- type: APIReference
+  url: https://docs.archastro.ai/docs/api-reference
+- type: GettingStarted
+  url: https://docs.archastro.ai/docs/start-here/getting-started
+- type: Authentication
+  url: authentication/archastro-authentication.yml
+- type: SDKs
+  url: packages/archastro-packages.yml
+- type: Packages
+  url: packages/archastro-packages.yml
+- type: CLI
+  url: cli/archastro-cli.yml
+- type: MCPServer
+  url: mcp/archastro-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Sandbox
+  url: sandbox/archastro-sandbox.yml
+- type: WellKnown
+  url: well-known/archastro-well-known.yml
+- type: LLMsTxt
+  url: llms/archastro-llms.txt
+- type: ChangeLog
+  url: changelog/archastro-changelog.yml
+- type: Lifecycle
+  url: lifecycle/archastro-lifecycle.yml
+- type: Conventions
+  url: conventions/archastro-conventions.yml
+- type: Idempotency
+  url: conventions/archastro-conventions.yml
+- type: ErrorCatalog
+  url: errors/archastro-problem-types.yml
+- type: DataModel
+  url: data-model/archastro-data-model.yml
+- type: Conformance
+  url: conformance/archastro-conformance.yml
+- type: Webhooks
+  url: asyncapi/archastro-webhooks.yml
+- type: Overlay
+  url: overlays/archastro-platform-overlay.yaml
+- type: DomainSecurity
+  url: security/archastro-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/archastro-agentic-access.yml
+- type: GitHubOrganization
+  url: https://github.com/ArchAstro
+- type: TermsOfService
+  url: https://archastro.ai/terms
+- type: PrivacyPolicy
+  url: https://archastro.ai/privacy
 - type: Website
   url: https://archastro.ai
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

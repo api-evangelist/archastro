@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/archastro-platform-openapi.json + https://docs.archastro.ai/docs/api-reference
+standards:
+- id: oauth2
+  conforms: true
+  evidence: Documented OAuth2 endpoints (/oauth/token, /oauth/device/authorize, /oauth/scopes) for CLI/agent login.
+- id: oauth2-device-authorization-grant
+  conforms: true
+  evidence: /oauth/device/authorize + /oauth/device/approve + /oauth/device/deny (RFC 8628) for CLI login.
+- id: oidc-discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration returns 404.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Error responses use a plain {"error":...} envelope, not application/problem+json.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404.
+- id: pagination
+  conforms: true
+  evidence: Page-number pagination (page/page_size/has_next/total_pages) and cursor pagination (before_cursor/after_cursor).
+- id: idempotency
+  conforms: true
+  evidence: Message.idempotency_key supports idempotent message creation.
+- id: rate-limiting
+  conforms: true
+  evidence: 429 Too Many Requests declared across operations.
+- id: json-api
+  conforms: false
+  evidence: Custom JSON envelope, not JSON:API media type.

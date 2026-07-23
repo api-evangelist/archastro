@@ -1,0 +1,55 @@
+generated: '2026-07-18'
+method: searched
+source: https://www.npmjs.com/org/archastro + https://pypi.org/project/archastro-sdk/
+packages:
+- language: javascript
+  registry: npm
+  name: "@archastro/sdk"
+  version: 0.7.0
+  url: https://www.npmjs.com/package/@archastro/sdk
+  repository: https://github.com/ArchAstro/archastro-js
+  install: npm install @archastro/sdk
+  license: MIT
+  description: TypeScript SDK for the ArchAstro Platform API (Node, browser, React Native).
+  official: true
+- language: javascript
+  registry: npm
+  name: "@archastro/sdk-nextjs"
+  version: 0.6.0
+  url: https://www.npmjs.com/package/@archastro/sdk-nextjs
+  install: npm install @archastro/sdk-nextjs
+  description: Next.js extensions for @archastro/sdk.
+  official: true
+- language: javascript
+  registry: npm
+  name: "@archastro/sdk-generator"
+  version: 0.7.3
+  url: https://www.npmjs.com/package/@archastro/sdk-generator
+  install: npm install @archastro/sdk-generator
+  description: Generate typed TypeScript and Python SDKs (plus contract tests) from an OpenAPI spec.
+  official: true
+- language: javascript
+  registry: npm
+  name: "@archastro/channel-harness"
+  version: 0.4.1
+  url: https://www.npmjs.com/package/@archastro/channel-harness
+  install: npm install @archastro/channel-harness
+  description: Runtime contract-testing harness for Phoenix channels declared in the ArchAstro realtime surface.
+  official: true
+- language: python
+  registry: pypi
+  name: archastro-sdk
+  version: 0.4.0
+  url: https://pypi.org/project/archastro-sdk/
+  repository: https://github.com/ArchAstro/archastro-python
+  install: pip install archastro-sdk
+  description: Python SDK for the ArchAstro Platform API.
+  official: true
+- language: cli
+  registry: homebrew
+  name: archastro
+  tap: ArchAstro/tools
+  url: https://github.com/ArchAstro/homebrew-tools
+  install: brew install ArchAstro/tools/archastro
+  description: ArchAstro Platform CLI (also installable via install.sh / install.ps1).
+  official: true

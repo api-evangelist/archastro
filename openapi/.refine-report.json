@@ -1,0 +1,32 @@
+{
+  "provider": "archastro",
+  "sources": [
+    "archastro-activity-feed-api-openapi.yml",
+    "archastro-agents-api-openapi.yml",
+    "archastro-auth-api-openapi.yml",
+    "archastro-files-api-openapi.yml",
+    "archastro-oauth-api-openapi.yml",
+    "archastro-s2s-api-openapi.yml",
+    "archastro-slack-channel-bindings-api-openapi.yml",
+    "archastro-teams-api-openapi.yml",
+    "archastro-threads-api-openapi.yml",
+    "archastro-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "archastro-activity-feed-api-openapi.yml",
+    "archastro-agents-api-openapi.yml",
+    "archastro-auth-api-openapi.yml",
+    "archastro-files-api-openapi.yml",
+    "archastro-oauth-api-openapi.yml",
+    "archastro-s2s-api-openapi.yml",
+    "archastro-slack-channel-bindings-api-openapi.yml",
+    "archastro-teams-api-openapi.yml",
+    "archastro-threads-api-openapi.yml",
+    "archastro-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

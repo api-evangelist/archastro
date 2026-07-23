@@ -1,0 +1,19 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.archastro.ai/docs/api-reference + openapi/archastro-platform-openapi.json
+versioning:
+  scheme: uri-path
+  current: v1
+  path_prefix: /api/v1
+  docs: https://docs.archastro.ai/docs/api-reference
+changelog:
+  surface: GitHub Releases
+  url: https://github.com/ArchAstro/archastro/releases
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation/sunset policy found; no operations marked deprecated in the OpenAPI.
+status_page: null
+sla:
+  url: null
+deprecated_operations: []

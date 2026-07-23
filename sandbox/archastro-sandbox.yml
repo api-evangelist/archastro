@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.archastro.ai/docs/operate-agents/sandboxes
+model: >-
+  A sandbox is a separate copy of the project's runtime data (same agents, routines,
+  and configs, but its own threads, users, messages, and credentials). Routing is
+  determined by which credential is used.
+credential_separation:
+- credential: production
+  routes_to: production workspace
+- credential: sandbox publishable key
+  routes_to: selected sandbox workspace (client-side)
+- credential: sandbox secret key
+  routes_to: selected sandbox workspace (server-side); never accesses production
+default_sandbox:
+  name: Test
+  note: Every new project ships with a default sandbox called "Test".
+named_sandboxes:
+  create_via: [CLI, Developer Portal]
+  slug_rules: lowercase alphanumeric with hyphens, 2-100 characters
+  examples: [staging, demo]
+email_handling: Emails sent within sandboxes are captured instead of delivered (test registration, notifications, magic links).
+note: No published magic test identifiers or key prefixes; isolation relies on the active credential set.

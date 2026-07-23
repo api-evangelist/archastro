@@ -1,0 +1,44 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/archastro-platform-openapi.json
+note: >-
+  ArchAstro documents connecting agents to remote MCP servers (the agent side of the
+  MCP ecosystem) and an "embed" loop into Claude Code / Codex / Cursor, but does not
+  publish an official hosted ArchAstro MCP server. This is a DERIVED candidate tool
+  list mapping core Platform API operations to MCP tools.
+server:
+  name: archastro
+  transport: http
+  base_url: https://developers.archastro.ai
+tools:
+- name: list_agents
+  description: List agents in the organization.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_agents
+- name: create_agent
+  description: Create a new agent.
+  source_operation: openapi/archastro-platform-openapi.json#post_api_v1_agents
+- name: get_agent
+  description: Retrieve a single agent.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_agents__agent
+- name: get_agent_health
+  description: Get an agent's health status.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_agents__agent_health
+- name: create_agent_thread
+  description: Start a thread with an agent.
+  source_operation: openapi/archastro-platform-openapi.json#post_api_v1_agents__agent_threads
+- name: list_agent_tools
+  description: List tools attached to an agent.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_agents__agent_agent_tools
+- name: post_thread_message
+  description: Post a message to a thread.
+  source_operation: openapi/archastro-platform-openapi.json#post_api_v1_threads__thread_messages
+- name: list_teams
+  description: List teams.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_teams
+- name: get_activity_feed
+  description: Read the organization activity feed.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_activity_feed
+- name: get_me
+  description: Get the current authenticated user.
+  source_operation: openapi/archastro-platform-openapi.json#get_api_v1_users_me

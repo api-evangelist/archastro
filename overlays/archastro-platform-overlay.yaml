@@ -1,0 +1,31 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for ArchAstro Platform API
+  version: 1.0.0
+extends: openapi/archastro-platform-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment: '2026-07-18'
+    x-apievangelist-notes: >-
+      Published spec omits servers[] and components.securitySchemes. Documented base
+      URL is https://developers.archastro.ai (live API also answers at
+      https://platform.archastro.ai). Auth is bearer token (Authorization: Bearer)
+      or publishable key (x-archastro-api-key), plus OAuth2 device flow for CLI.
+- target: $.servers
+  update:
+  - url: https://developers.archastro.ai
+    description: Documented base URL (per API reference).
+  - url: https://platform.archastro.ai
+    description: Live API host.
+- target: $.components.securitySchemes
+  update:
+    bearerToken:
+      type: http
+      scheme: bearer
+      description: "Authorization: Bearer <access token>."
+    publishableKey:
+      type: apiKey
+      in: header
+      name: x-archastro-api-key
+      description: Publishable API key for client-side calls.

@@ -1,0 +1,68 @@
+# ArchAstro Documentation Index
+
+Canonical host:
+https://docs.archastro.ai
+
+Primary sections:
+- API Reference: https://docs.archastro.ai/docs/api-reference
+  Human-readable reference for the public ArchAstro Platform API.
+- Getting Started: https://docs.archastro.ai/docs/start-here/getting-started
+  From signup to your first customer in four steps. The portal walks you through it; the CLI does the same things from your terminal.
+- Use ArchAstro from your coding agent: https://docs.archastro.ai/docs/start-here/coding-agents
+  Claude Code, Codex, and Cursor are the fastest, safest way to drive ArchAstro from your development workflow.
+- Organizations: https://docs.archastro.ai/docs/collaborate/organizations
+  Your company's private space in ArchAstro, agents, teams, knowledge, and sign-in all scoped to your organization.
+- Developer Portal: https://docs.archastro.ai/docs/operate-agents/portal
+  Review and manage what you've deployed: agents, networks, activity, and org settings.
+- Agent Memory: https://docs.archastro.ai/docs/operate-agents/agent-memory
+  Use memory to let an agent retain the right facts over time without turning it into an unreviewable black box.
+- Sandboxes: https://docs.archastro.ai/docs/operate-agents/sandboxes
+  Isolate test data from production so you can develop, test, and demo without affecting real users.
+- Agents: https://docs.archastro.ai/docs/build-agents/agents
+  Identity, routines, tools, and knowledge: the model behind everything.
+- Knowledge: https://docs.archastro.ai/docs/build-agents/knowledge
+  What the agent can use, and how to prove it is working.
+- Workflows: https://docs.archastro.ai/docs/build-agents/workflows
+  Design multi-step flows for approvals, handoffs, branching, and longer-running work.
+- Integrations: https://docs.archastro.ai/docs/integrations/overview
+  Choose how agents connect to outside services, understand who owns each credential, and verify a connection before relying on it.
+- Slack: https://docs.archastro.ai/docs/integrations/slack
+  Connect Slack to your organization, enable agents, assign channel residents, and understand how Slack channels and reply threads map into ArchAstro.
+- Automations: https://docs.archastro.ai/docs/build-agents/automations
+  Run repeatable project-wide jobs on a schedule or when important events happen.
+- Scripts: https://docs.archastro.ai/docs/build-agents/scripts
+  Write focused custom logic for workflows and routines, plus ScriptTest files that exercise scripts through the CLI and portal test runner.
+- Script Language Reference: https://docs.archastro.ai/docs/build-agents/script-reference
+  Complete reference for the ArchAstro script language, including syntax, operators, namespaces, and the test namespace for ScriptTest files.
+- Embed: https://docs.archastro.ai/docs/operate-agents/embed
+  Step into a live agent's exact tools and skills from Claude Code, Codex, or Cursor.
+- Tools: https://docs.archastro.ai/docs/build-agents/tools
+  Give agents real capabilities through builtin and custom tools, then inspect and operate those capabilities from the CLI and embed loop.
+- Skills: https://docs.archastro.ai/docs/build-agents/skills
+  Create reusable skill packages, inspect the files behind them, and install linked skills into Claude, Codex, or Cursor through a reviewed embed workflow.
+- Secrets: https://docs.archastro.ai/docs/operate-agents/secrets
+  Per-agent environment variables. API keys, webhook secrets, and other credentials a single agent needs to call out to its tools.
+- Installations: https://docs.archastro.ai/docs/operate-agents/installations
+  Attach outside systems and capabilities to an agent, inspect their state, and understand what needs attention before they become useful.
+- Computer Use: https://docs.archastro.ai/docs/operate-agents/computer-use
+  Computer use lets an agent act through a managed execution environment when simple tool calls are not enough.
+- Extensions & Integrations: https://docs.archastro.ai/docs/more/extensions-integrations
+  Connect agents to outside systems through built-in integrations, custom tools, MCP servers, webhooks, and scripts.
+- CLI: https://docs.archastro.ai/docs/start-here/cli
+  The terminal workflow for building and operating agents.
+- Configs: https://docs.archastro.ai/docs/build-agents/configs
+  Move a setup you trust into files so the team can review and ship it cleanly.
+- For Coding Agents: https://docs.archastro.ai/docs/start-here/for-coding-agents
+  The machine-readable version of Getting Started for Claude Code, Codex, Cursor, and similar AI coding tools.
+- Samples: https://docs.archastro.ai/docs/build-agents/samples
+  End-to-end playbooks that combine the portal and CLI into realistic developer workflows.
+- AstroDev: https://docs.archastro.ai/docs/start-here/astrodev
+  A local coding agent for interactive or headless work — run standalone or embed a live ArchAstro agent with its identity, tools, and skills.
+- Astrorun: https://docs.archastro.ai/docs/start-here/astrorun
+  A local work queue that finds agent work, drafts responses through your preferred coding harness, and keeps review and completion records on your machine.
+
+Machine-readable API target:
+https://docs.archastro.ai/openapi.json
+
+Machine-readable agent target:
+https://docs.archastro.ai/agent-manifest.json

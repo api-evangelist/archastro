@@ -1,0 +1,42 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.archastro.ai/docs/start-here/cli
+name: archastro
+current_version: v0.54.0
+binary: archastro
+install:
+- platform: macOS
+  command: brew install ArchAstro/tools/archastro
+- platform: Linux
+  command: curl -fsSL https://archastro.ai/install.sh | bash
+- platform: Windows
+  command: irm https://archastro.ai/install.ps1 | iex
+auth:
+  login: archastro auth login
+  init: archastro init
+command_groups:
+- name: agents
+  summary: List, describe, create, update, and delete agents.
+- name: users-teams
+  summary: Manage users, teams, and organization membership.
+- name: threads
+  summary: Threads and message conversation management.
+- name: automations
+  summary: Scheduled and event-triggered project-wide jobs.
+- name: knowledge
+  summary: Knowledge sources and context ingestion.
+- name: tools
+  summary: Builtin and custom agent tool attachments.
+- name: installations
+  summary: Attach outside systems/capabilities to an agent.
+- name: skills
+  summary: Create, inspect, and install reusable skill packages.
+- name: sandboxes
+  summary: Create and manage isolated test/demo environments.
+- name: configs
+  summary: File-based (YAML) setup management for review and ship.
+- name: scripts
+  summary: Write and run ArchAstro script logic and ScriptTests.
+- name: auth
+  summary: Login, token, and credential management.
+notes: Single unified CLI; organization operations are integrated (no separate archagent binary in the current CLI docs).
