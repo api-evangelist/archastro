@@ -2,11 +2,9 @@ generated: '2026-07-18'
 method: derived
 status: candidate
 source: openapi/archastro-platform-openapi.json
-note: >-
-  ArchAstro documents connecting agents to remote MCP servers (the agent side of the
-  MCP ecosystem) and an "embed" loop into Claude Code / Codex / Cursor, but does not
-  publish an official hosted ArchAstro MCP server. This is a DERIVED candidate tool
-  list mapping core Platform API operations to MCP tools.
+note: ArchAstro documents connecting agents to remote MCP servers (the agent side of the MCP ecosystem)
+  and an "embed" loop into Claude Code / Codex / Cursor, but does not publish an official hosted ArchAstro
+  MCP server. This is a DERIVED candidate tool list mapping core Platform API operations to MCP tools.
 server:
   name: archastro
   transport: http
@@ -42,3 +40,9 @@ tools:
 - name: get_me
   description: Get the current authenticated user.
   source_operation: openapi/archastro-platform-openapi.json#get_api_v1_users_me
+deployment:
+  mode: none
+  verified: derived
+  tools: 10
+  checked: '2026-08-12'
+  source: catalog MCP census

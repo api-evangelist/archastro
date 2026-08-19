@@ -1,0 +1,1874 @@
+{
+  "item": [
+    {
+      "id": "c8df4fd9-94f5-45d7-9222-74ec6d05da73",
+      "name": "auth",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58644cab-25ef-4ccc-9cad-3a4eb95a795b",
+          "name": "List supported auth methods",
+          "request": {
+            "name": "List supported auth methods",
+            "description": {
+              "content": "Returns the complete catalogue of authentication methods the platform supports,\nincluding each method's stable slug, user-facing name, and description.\n\nUse this endpoint to render method labels in sign-in UIs or org settings screens\nwithout hardcoding copy or maintaining your own enum list. Results reflect the\nplatform's source-of-truth catalogue and are consistent across all orgs.\n\nThis endpoint requires only a publishable key and is accessible without an active\nuser session, making it suitable for pre-authentication flows such as login page\nrendering or onboarding configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "allowed_auth_methods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "314541f2-fb32-4112-a242-88aabbf88bd4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "allowed_auth_methods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"description\": \"An example description.\",\n      \"name\": \"Example Name\",\n      \"slug\": \"example-slug\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aca88bdc-2d99-43e3-b830-2ee0d00bed81",
+          "name": "Authenticate with email and password",
+          "request": {
+            "name": "Authenticate with email and password",
+            "description": {
+              "content": "Authenticates a user with an email address and password and returns a short-lived\naccess token, a refresh token, and the authenticated user object. Use the refresh\ntoken with the `/auth/refresh` endpoint to obtain new access tokens without\nre-authenticating.\n\nPassword login must be enabled for the app; apps that have disabled password\nauthentication return HTTP 403. Requests are rate-limited per IP (10 per minute)\nand per email-IP pair (5 per minute) — exceeding either limit returns HTTP 429.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"password\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ab94acc8-17f2-4bdf-ab4b-e6f26ceaba9b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires_in\": 3600,\n  \"refresh_token\": \"rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\",\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6652874f-a9f1-4b76-a52b-3bfee2e9671d",
+              "name": "Invalid credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d32d32e3-6063-4ec4-9d3a-f1eb02fdad16",
+              "name": "Password login is not enabled for this organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1a2865bc-5e58-449e-b833-2803a4f64373",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "17796dcb-ffb2-45c9-84f7-5006acc85901",
+          "name": "Request a magic link for login",
+          "request": {
+            "name": "Request a magic link for login",
+            "description": {
+              "content": "Sends a magic link to the given email address so an existing user can sign in\nwithout a password. The user clicks the link in their email and is redirected to\n`redirect_uri` with a token; pass that token to `/auth/verify_link` to obtain\nsession tokens.\n\nIf no account exists for the email, the endpoint still returns success to prevent\nemail enumeration — no link is sent in that case. Both `email` and `redirect_uri`\nare required. Requests are rate-limited per IP (10 per minute) and per email-IP pair\n(3 per minute) — exceeding either limit returns HTTP 429. Returns HTTP 204 on success.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login",
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"redirect_uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7b9c428e-3ba5-46be-a2ad-8abfd0a56bd9",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9b3762e6-df42-418c-99c1-17df1a9ea739",
+              "name": "Missing email or redirect_uri",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d6c95a6c-d305-4c52-b732-33280e821abb",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "login",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8141f656-c8da-4589-9a30-9094d19577fd",
+          "name": "Refresh an access token",
+          "request": {
+            "name": "Refresh an access token",
+            "description": {
+              "content": "Exchanges a valid refresh token for a new access token and a new refresh token,\nrotating the refresh token on every call. The response also includes the updated\nuser object. Store the new refresh token and discard the old one.\n\nRefresh tokens are single-use — submitting an already-consumed token returns HTTP 401.\nRate limiting is applied per (user, IP) pair when the token can be verified, and\nfalls back to IP-only when it cannot. The limit is 30 exchanges per minute per\nbucket; exceeding it returns HTTP 429.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a877755c-d20f-450f-ac32-35062960d491",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires_in\": 3600,\n  \"refresh_token\": \"rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\",\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1c06a71-6008-4390-abd9-d96c6f94917d",
+              "name": "Invalid or expired refresh token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1d174ef4-d92e-430e-a059-67cf878c8185",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16793855-c30c-42bc-89de-47d6cb762f67",
+          "name": "Register a new user with email and password",
+          "request": {
+            "name": "Register a new user with email and password",
+            "description": {
+              "content": "Creates a new user account and returns an access token, refresh token, and the new\nuser object. Two registration paths are supported:\n\n- **Team registration**: supply `team_invite` with a valid team invite ID. The new\n  user is added to that team immediately upon registration. Returns HTTP 404 if the\n  invite is not found.\n- **Standard registration**: supply `password`. An `invite_code` may optionally be\n  included for invite-gated apps; an invalid code returns HTTP 404.\n\nExactly one of `team_invite` or `password` must be provided; omitting both returns\nHTTP 400. Password registration must be enabled for the app; disabled apps return\nHTTP 403. The response status is HTTP 201 on success.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"alias\": \"<string>\",\n  \"full_name\": \"<string>\",\n  \"invite_code\": \"<string>\",\n  \"password\": \"<string>\",\n  \"team_invite\": \"<string>\",\n  \"timezone\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "81b3ccb4-d932-46ca-b4c2-a467be6c66aa",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"invite_code\": \"string\",\n  \"password\": \"string\",\n  \"team_invite\": \"string\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires_in\": 3600,\n  \"refresh_token\": \"rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\",\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09cd68fa-415a-42e6-acd3-a9edf4a8adfb",
+              "name": "Missing required parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"invite_code\": \"string\",\n  \"password\": \"string\",\n  \"team_invite\": \"string\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a198de7b-4c41-4c35-895c-a61b83dc7198",
+              "name": "Password registration is not enabled for this organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"invite_code\": \"string\",\n  \"password\": \"string\",\n  \"team_invite\": \"string\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49012cf8-6279-46fb-839e-affeabdeb36b",
+              "name": "Team invite not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"invite_code\": \"string\",\n  \"password\": \"string\",\n  \"team_invite\": \"string\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2550c85e-e444-4ce0-8a0f-0282cf8713da",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"invite_code\": \"string\",\n  \"password\": \"string\",\n  \"team_invite\": \"string\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "790d467c-5414-4ea2-b081-17f0ae457115",
+          "name": "Request a magic link for registration",
+          "request": {
+            "name": "Request a magic link for registration",
+            "description": {
+              "content": "Starts a passwordless registration flow by sending a verification link to the given\nemail address. The recipient clicks the link and is redirected to `redirect_uri` with\na token; pass that token to `/auth/verify_link` to complete registration and obtain\nsession tokens.\n\nProfile fields (`full_name`, `alias`, `timezone`) are captured now and applied when\nthe link is verified. Requests are rate-limited per IP (10 per minute) and per\nemail-IP pair (3 per minute) — exceeding either limit returns HTTP 429. Returns\nHTTP 204 on success.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register",
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias\": \"<string>\",\n  \"email\": \"<string>\",\n  \"full_name\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"timezone\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bb8c6253-8ba1-4f1d-ab92-ead9807acf6e",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"redirect_uri\": \"https://example.com\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81ba6f19-7775-407a-8f09-9dd666a0050c",
+              "name": "Missing email",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"redirect_uri\": \"https://example.com\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b4f0a771-9786-4061-a572-b3b0c8c28ff9",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"redirect_uri\": \"https://example.com\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "192faaf7-bc18-4931-913e-0afad10136ea",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "register",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"email\": \"user@example.com\",\n  \"full_name\": \"Example Name\",\n  \"redirect_uri\": \"https://example.com\",\n  \"timezone\": \"America/New_York\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e369b42a-40e0-484e-bf11-fc6bf1f3adf5",
+          "name": "Request a magic link for login or registration",
+          "request": {
+            "name": "Request a magic link for login or registration",
+            "description": {
+              "content": "Sends a passwordless magic link to the given email address. If an account with that\nemail already exists, a login link is sent. If no account exists, a registration link\nis sent and the recipient completes sign-up by clicking through. This unified endpoint\nlets you implement a single email-entry UI that handles both cases transparently.\n\nThe `redirect_uri` is validated against the app's registered hosts; an unregistered\nURI returns HTTP 400. Both `email` and `redirect_uri` are required. Requests are\nrate-limited per IP (10 per minute) and per email-IP pair (3 per minute). Returns\nHTTP 204 on success — no body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "request",
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"redirect_uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bde5bdf3-745f-443e-8b60-f1e2d3ee8906",
+              "name": "No content",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "request",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3043994b-c0e6-40c8-9ccf-648d6a969813",
+              "name": "Missing email or redirect_uri",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "request",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "68da2ae9-7ff1-4f14-a778-71f0141ddc5c",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "request",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06276140-8305-46e2-b056-da1bea8ad766",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "request",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"user@example.com\",\n  \"redirect_uri\": \"https://example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d741b37a-d97f-49ca-ba19-959dafc72e59",
+          "name": "Exchange a one-time login token for session tokens",
+          "request": {
+            "name": "Exchange a one-time login token for session tokens",
+            "description": {
+              "content": "Consumes a single-use login token delivered via email and returns an access token,\nrefresh token, and the authenticated user object. One-time tokens are issued by the\npasswordless login flow and expire after a short window; submitting an expired or\nalready-used token returns HTTP 401.\n\nIf `timezone` is provided and the user's current timezone is still the default\n(`\"America/Los_Angeles\"`), the account timezone is updated in the same request.\nRequests are rate-limited to 10 per IP per minute; exceeding this returns HTTP 429.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\",\n  \"timezone\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1562ff4f-efca-48a3-963c-335fa8bcbc9d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timezone\": \"America/New_York\",\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires_in\": 3600,\n  \"refresh_token\": \"rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\",\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f332ef1-5a26-4b74-b443-d9c67e8938c4",
+              "name": "Missing token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timezone\": \"America/New_York\",\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "774fc9a2-9bae-4f42-ac57-eca662e7af35",
+              "name": "Invalid or expired token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timezone\": \"America/New_York\",\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ca8ccf26-8b53-46a3-89ae-a2362b114eb5",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timezone\": \"America/New_York\",\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "63bff9bf-1cf3-4061-9e48-2a922bf92502",
+              "name": "Token exchange failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timezone\": \"America/New_York\",\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fe550437-55a8-48be-81b9-eea349f417b9",
+          "name": "Verify a magic link token",
+          "request": {
+            "name": "Verify a magic link token",
+            "description": {
+              "content": "Consumes a single-use token from a magic link URL and returns an access token,\nrefresh token, and the authenticated user object. This endpoint completes both the\nlogin flow (initiated by `/auth/request_login_link`) and the registration flow\n(initiated by `/auth/request_register_link` or `/auth/request_link`).\n\nExtract the token from the `token` query parameter of the magic link redirect URI\nand POST it here. Expired or already-used tokens return HTTP 401. If the app has\ndisabled passwordless authentication the request returns HTTP 403. Rate-limited to\n10 requests per IP per minute — exceeding this returns HTTP 429.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "verify",
+                "link"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ce063558-c880-4d2c-90e0-39c31cefb3a3",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "verify",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"expires_in\": 3600,\n  \"refresh_token\": \"rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6\",\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\",\n  \"token_type\": \"Bearer\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  },\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c7fa914-8666-48e4-ab9a-65f2af764aad",
+              "name": "Missing token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "verify",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a834ffb-9c06-4a77-82a6-8ab228f51522",
+              "name": "Invalid or expired token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "verify",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "640604e7-8442-41d6-90f1-ca1f3c53ac82",
+              "name": "Passwordless login is not enabled for this organization",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "verify",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "84307c07-7dd4-40c6-a9da-5947dc112709",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "auth",
+                    "verify",
+                    "link"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8ed22c36-489f-4aba-bbf7-c088219f1d6b",
+    "name": "ArchAstro Platform Activity Feed auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).",
+      "type": "text/plain"
+    }
+  }
+}

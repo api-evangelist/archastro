@@ -1,0 +1,365 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed Threads API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Threads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). The authenticated user must have access to this thread."
+              }
+            ]
+          },
+          "docs": "Returns the full thread record for the given thread ID. The authenticated user\nmust own the thread or be a member of the workspace it belongs to.\n\nUse this endpoint to fetch the current state of a single thread, including its\ntitle, description, and metadata. To list many threads, use the list endpoint\nwith cursor-based pagination."
+        },
+        {
+          "info": {
+            "name": "Update a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/threads/:thread",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). The authenticated user must have permission to update this thread."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one or more mutable properties of the specified thread and returns\nthe full thread object with the applied changes. Only the fields you provide\nare modified; omitted fields retain their current values.\n\nIf `profile_picture` is supplied, the image is uploaded before the other\nfields are saved. Supplying invalid base64 picture data returns 422 and no\nother fields are updated.\n\nThe authenticated user must own the thread or be a team owner of the workspace\nthe thread belongs to."
+        },
+        {
+          "info": {
+            "name": "Delete a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/threads/:thread",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). The authenticated user must own this thread."
+              }
+            ]
+          },
+          "docs": "Permanently deletes a thread and all of its messages and artifacts. This action\ncannot be undone.\n\nThe authenticated user must own the thread or be an owner of the team the thread\nbelongs to. Attempting to delete a thread owned by another user or team returns 403."
+        },
+        {
+          "info": {
+            "name": "List agents in a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/agents",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). Must be a personal user thread visible to the authenticated user."
+              }
+            ]
+          },
+          "docs": "Returns the agents participating in the specified thread. Only personal user\nthreads (threads owned by a single user, not a team) expose agents through\nthis endpoint; requests for team threads return 404.\n\nThe authenticated user must have visibility into the thread. Each agent entry\nincludes display information such as name and profile picture. Thread-level\noverrides (e.g. a custom name or profile picture set for this thread) take\nprecedence over the agent's default values. When the caller is th"
+        },
+        {
+          "info": {
+            "name": "List artifacts for a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/artifacts",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). Must be accessible to the authenticated user."
+              }
+            ]
+          },
+          "docs": "Returns all artifacts produced during a thread's AI conversation. Artifacts are\nstructured outputs such as code files, documents, or generated assets created\nby the AI agent in response to messages in the thread.\n\nThe authenticated user must have access to the specified thread. Results are\nreturned in a single page; there is no cursor-based pagination for this endpoint."
+        },
+        {
+          "info": {
+            "name": "Mark a thread as read",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/mark_read",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). The thread to mark as read."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Records that a user has read up to a specific message in the thread. Unread\nindicators and badge counts are cleared up to the specified message.\n\nYou must supply exactly one of `last_read_message` or `use_latest_message`.\nOmitting both returns 400. If `use_latest_message` is `true` and the thread\nhas no messages, the request succeeds silently with no state change.\n\nFor server-to-server (S2S) requests where no user identity is present in the\ntoken, the `user` param is required to identify whose r"
+        },
+        {
+          "info": {
+            "name": "List members of a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/members",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`) whose members should be returned."
+              }
+            ]
+          },
+          "docs": "Returns all current members of the specified thread, including both user and\nagent members. The authenticated user must have visibility into the thread;\nrequests from users without access return 403.\n\nResults are returned as a flat array in the `data` field. The list is not\npaginated — all members are returned in a single response."
+        },
+        {
+          "info": {
+            "name": "Add a member to a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/members",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`) identifying the thread to add the member to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a user or agent as a member of the specified thread. The authenticated\nuser must have access to the thread. On success the new membership record is\nreturned with HTTP 201.\n\nSupply either `user` or `agent` depending on the value of `type`. Attempting\nto add a principal that is already a member of the thread returns a 422 error."
+        },
+        {
+          "info": {
+            "name": "Remove a member from a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/members",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`) identifying the thread to remove the member from."
+              }
+            ]
+          },
+          "docs": "Removes a user or agent membership from the specified thread. The authenticated\nuser must have access to the thread. A successful removal returns HTTP 204 with\nno response body.\n\nSupply either `user` or `agent` depending on the value of `type`. Returns 404\nif the thread or the membership record does not exist."
+        },
+        {
+          "info": {
+            "name": "List messages in a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/messages",
+            "params": [
+              {
+                "name": "limit",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of messages to return per page. Defaults to 20."
+              },
+              {
+                "name": "after_cursor",
+                "value": "string",
+                "type": "query",
+                "description": "Opaque cursor returned in a previous response's `after_cursor` field. When provided, returns the page of messages immediately after that position. Cannot be combined with `before_cursor`."
+              },
+              {
+                "name": "before_cursor",
+                "value": "string",
+                "type": "query",
+                "description": "Opaque cursor returned in a previous response's `before_cursor` field. When provided, returns the page of messages immediately before that position. Cannot be combined with `after_cursor`."
+              },
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). The authenticated user must have access to this thread."
+              },
+              {
+                "name": "include_reply_counts",
+                "value": "true",
+                "type": "query",
+                "description": "When `true`, each message in the response is annotated with its threaded reply count. Defaults to `false`. Adds latency; omit when reply counts are not needed."
+              }
+            ]
+          },
+          "docs": "Returns a cursor-paginated list of messages belonging to the specified thread,\nordered from oldest to newest. Supply `before_cursor` or `after_cursor` (not both)\nto page through the result set; omit both to receive the most recent page.\n\nThe authenticated user must have access to the thread's owner (workspace or user).\nA 403 is returned if the thread exists but is not accessible to the caller; a 404\nis returned if the thread does not exist or is not visible to the authenticated user.\n\nPass `incl"
+        },
+        {
+          "info": {
+            "name": "Update a thread's profile picture",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/picture",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). The authenticated user must have permission to update this thread."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads a new profile picture for the specified thread and returns the updated\nthread object. The image must be supplied as a base64-encoded string with its\nMIME type.\n\nThe authenticated user must own the thread or be a team owner of the workspace\nthe thread belongs to. Supplying invalid base64 data returns 422."
+        },
+        {
+          "info": {
+            "name": "Retrieve a thread's read status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/read_status",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). Must be accessible to the authenticated user or, for S2S requests, to the specified user."
+              },
+              {
+                "name": "user",
+                "value": "string",
+                "type": "query",
+                "description": "User ID (`usr_...`) whose read status to retrieve. Required for S2S requests; ignored for user-authenticated requests, which always return the status for the authenticated user."
+              }
+            ]
+          },
+          "docs": "Returns the read status of a thread for the specified user, including the ID\nof the last message they have read and the number of unread messages remaining.\n\nFor user-authenticated requests, the status is always returned for the\nauthenticated user and the `user` parameter is ignored. For server-to-server\n(S2S) requests, the `user` parameter is required and must be a valid user ID.\n\nReturns 404 if the thread does not exist or the caller does not have access\nto it."
+        },
+        {
+          "info": {
+            "name": "Search context items within a thread",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/search",
+            "params": [
+              {
+                "name": "type",
+                "value": "string",
+                "type": "query",
+                "description": "Context source type to restrict the search to, e.g. `\"thread/messages\"`. Omit to search across all context sources for the thread."
+              },
+              {
+                "name": "q",
+                "value": "string",
+                "type": "query",
+                "description": "Full-text search query. Results are ranked by relevance to this string."
+              },
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). Must be accessible to the authenticated user."
+              }
+            ]
+          },
+          "docs": "Performs a full-text search over context items (messages, files, and other\nindexed sources) attached to the specified thread. Returns tagged objects\nwhose content matches the query string.\n\nUse the `type` param to restrict results to a particular context source. All\naccessible context source types are searched when `type` is omitted. The\nauthenticated user must have access to the thread."
+        },
+        {
+          "info": {
+            "name": "Retrieve thread settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/settings",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). Must belong to the authenticated user's workspace."
+              }
+            ]
+          },
+          "docs": "Returns the current settings for the specified thread. Settings control\nper-thread behavior such as whether the AI agent is enabled.\n\nThe authenticated user must own the thread or be a member of its workspace.\nIf settings have never been explicitly configured, defaults are returned\n(for example, `agent_enabled` defaults to `true`)."
+        },
+        {
+          "info": {
+            "name": "Update thread settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/threads/:thread/settings",
+            "params": [
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "path",
+                "description": "Thread ID (`thr_...`). Must belong to the authenticated user's workspace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the settings for the specified thread. Only fields included in\nthe `settings` map are modified; omitted fields retain their current values.\n\nThe authenticated user must own the thread or be a member of its workspace.\nReturns the full settings object reflecting the state after the update.\nValidation errors are returned as `422 Unprocessable Entity`."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

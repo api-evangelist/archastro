@@ -1,0 +1,1908 @@
+{
+  "item": [
+    {
+      "id": "2a58dc00-e8ec-42f5-a8d9-1caa55831ebe",
+      "name": "Users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0252b4ba-2a4a-438a-a85d-b7b381cdc8a2",
+          "name": "Retrieve the current user",
+          "request": {
+            "name": "Retrieve the current user",
+            "description": {
+              "content": "Returns the user associated with the authenticated session or bearer\ntoken. This is the canonical way to resolve \"who am I?\" after\nauthentication.\n\nThe response includes the user's profile, notification settings, and\nprofile picture, along with the app, organization, and sandbox the\ntoken is scoped to and their display names — enough to establish full\nsession context in a single call. Unauthenticated requests return 401.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93eaa5e1-317b-4784-85c1-d03be4f2d6ba",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"alias\": \"jdoe\",\n  \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"app_name\": \"Example Name\",\n  \"email\": \"user@example.com\",\n  \"is_system_user\": true,\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"name\": \"Example Name\",\n  \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"org_name\": \"Example Name\",\n  \"org_role\": \"member\",\n  \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"sandbox_name\": \"Example Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b10df1fa-727e-45ca-bf54-b6b4bf2870dd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7cda878c-48a8-45e6-a36e-43f72f582eea",
+          "name": "Retrieve a user by ID",
+          "request": {
+            "name": "Retrieve a user by ID",
+            "description": {
+              "content": "Returns the user identified by `user`. The authenticated user must share\nat least one team with the target user; requests for users outside any\nshared team are rejected with 403.\n\nA user may always retrieve their own profile with this endpoint. Use the\n`GET /users/me` endpoint as a convenience alias for retrieving the\nauthenticated user without specifying an ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`) of the user to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0f644e8d-b327-4427-b5bf-e9330394f537",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"alias\": \"jdoe\",\n  \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"app_name\": \"Example Name\",\n  \"email\": \"user@example.com\",\n  \"is_system_user\": true,\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"name\": \"Example Name\",\n  \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"org_name\": \"Example Name\",\n  \"org_role\": \"member\",\n  \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"sandbox_name\": \"Example Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df290707-00ac-48d9-8f57-101ed6ec9dd9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user to retrieve."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "97331656-9136-4758-ac9f-576b559d6a90",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user to retrieve."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c9cc5b3-8219-4102-b337-4993f172f59a",
+          "name": "List a user's artifacts",
+          "request": {
+            "name": "List a user's artifacts",
+            "description": {
+              "content": "Returns all artifacts owned by the specified user. Artifacts represent\nAI-generated or user-uploaded files associated with agent sessions,\nthreads, or sandboxes — such as images, documents, and code outputs.\n\nThe authenticated user must be requesting their own artifacts or must\nhave administrative access. Attempting to list artifacts for a user\nthe caller is not authorized to access returns 403.\n\nResults are returned in a single page without cursor pagination. Each\nartifact in the response reflects the state of its current version,\nincluding a short-lived signed `file_url` for direct download.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`). The authenticated user must be this user or have access to their artifacts."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4393d77d-1ddf-4511-88e0-e6820557e07d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). The authenticated user must be this user or have access to their artifacts."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"art_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"agent\": \"agt_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"content_type\": \"application/json\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"current_version\": \"afv_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"description\": \"An example description.\",\n      \"file\": \"string\",\n      \"file_name\": \"Example Name\",\n      \"file_url\": \"https://example.com\",\n      \"image_source\": {\n        \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"height\": 600,\n        \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"mime_type\": \"application/json\",\n        \"refresh_url\": \"https://example.com\",\n        \"url\": \"https://example.com\",\n        \"width\": 800\n      },\n      \"name\": \"Example Name\",\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"sandbox\": \"string\",\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"thread\": \"thr_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"version\": 1\n    },\n    {\n      \"id\": \"art_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"agent\": \"agt_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"content_type\": \"application/json\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"current_version\": \"afv_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"description\": \"An example description.\",\n      \"file\": \"string\",\n      \"file_name\": \"Example Name\",\n      \"file_url\": \"https://example.com\",\n      \"image_source\": {\n        \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"height\": 600,\n        \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"mime_type\": \"application/json\",\n        \"refresh_url\": \"https://example.com\",\n        \"url\": \"https://example.com\",\n        \"width\": 800\n      },\n      \"name\": \"Example Name\",\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"sandbox\": \"string\",\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"thread\": \"thr_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"version\": 1\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da1955d0-520a-4176-93b4-4dfcb1fd0bfa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). The authenticated user must be this user or have access to their artifacts."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8091bccb-01d8-4752-af62-0fa6244b2dc9",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). The authenticated user must be this user or have access to their artifacts."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d1c34cd4-98e5-4f8a-9241-cecc99abc0dc",
+          "name": "Create an artifact",
+          "request": {
+            "name": "Create an artifact",
+            "description": {
+              "content": "Creates a new artifact and stores its file content. A file payload is required;\nsupply it via the `artifact.file_content` (Base64-encoded), `artifact.file_name`,\nand `artifact.file_content_type` fields. The artifact is scoped to the owner\nresolved from the request context — either a team or a user.\n\nOptionally associate the artifact with an existing thread or agent by passing\n`artifact.thread_id` or `artifact.agent_id`. Returns 201 with the created\nartifact on success.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "artifacts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"artifact\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "eacf7613-a1f4-4460-8946-741ff6f69bd2",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifact\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"art_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"agent\": \"agt_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"content_type\": \"application/json\",\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"current_version\": \"afv_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"description\": \"An example description.\",\n  \"file\": \"string\",\n  \"file_name\": \"Example Name\",\n  \"file_url\": \"https://example.com\",\n  \"image_source\": {\n    \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"height\": 600,\n    \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"mime_type\": \"application/json\",\n    \"refresh_url\": \"https://example.com\",\n    \"url\": \"https://example.com\",\n    \"width\": 800\n  },\n  \"name\": \"Example Name\",\n  \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"sandbox\": \"string\",\n  \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"thread\": \"thr_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"updated_at\": \"2024-01-01T00:00:00Z\",\n  \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"version\": 1\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a24c8aca-cd85-4e9f-9d51-f96694f27786",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifact\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ad66212-392b-431b-81fa-16b015e0b78b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifact\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "53fd751e-4522-456d-9044-87df602339ac",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "artifacts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"artifact\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cdb0425e-bee3-415c-a7e2-31b0021cb507",
+          "name": "Create a user invite",
+          "request": {
+            "name": "Create a user invite",
+            "description": {
+              "content": "Creates a new invite for the authenticated user. The invite can optionally be\nscoped to a specific thread, a persona, or carry arbitrary metadata. The\ncaller receives the new invite object at HTTP 201.\n\nThe invite key is always generated server-side (192-bit URL-safe random\nstring) and cannot be supplied by the caller.\n\nThe path `:user` must match the authenticated user. If a `thread_id` is\nprovided, the authenticated user must have permission to invite others to that\nthread; team threads are not supported and return an error. Supplying a\n`thread_id` that does not exist or that belongs to a different user returns\nan error. If a key collision occurs during creation the call returns a 409\nconflict — simply retry to generate a new key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "invites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"invite\": {\n    \"metadata\": \"<object>\",\n    \"persona_id\": \"<string>\",\n    \"thread_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88f4890b-dd6b-4aca-903b-d23558b0796d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite\": {\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"persona_id\": \"string\",\n    \"thread_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"uin_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"key\": \"string\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"thread\": \"thr_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"name\": \"Example Name\",\n    \"profile_picture\": {\n      \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"height\": 600,\n      \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"mime_type\": \"application/json\",\n      \"refresh_url\": \"https://example.com\",\n      \"url\": \"https://example.com\",\n      \"width\": 800\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a67c36e-819f-488d-8664-053e1afaddb2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite\": {\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"persona_id\": \"string\",\n    \"thread_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9db55abf-c29c-4a87-b651-3830d36afb61",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite\": {\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"persona_id\": \"string\",\n    \"thread_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d83a3bc8-3f73-452c-810b-c9654ca880fc",
+              "name": "Thread not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite\": {\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"persona_id\": \"string\",\n    \"thread_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1f8c4f30-d800-411d-9593-ad290cdcaf66",
+              "name": "Resource already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite\": {\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"persona_id\": \"string\",\n    \"thread_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f77c023a-d2dd-40c5-9cfa-15441f815b1e",
+              "name": "Validation failed; Invites cannot be created for team threads; Invalid thread id; User context is required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`). Must match the authenticated user."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"invite\": {\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"persona_id\": \"string\",\n    \"thread_id\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dfda51ac-a160-4f79-81a5-e0623cce9100",
+          "name": "List organizations for a user",
+          "request": {
+            "name": "List organizations for a user",
+            "description": {
+              "content": "Returns the organizations the specified user belongs to. A user can belong\nto at most one organization, so the `data` array contains either zero or one\nitems.\n\nThe authenticated viewer must have permission to inspect the target user.\nReturns an empty `data` array when the user has no organization membership.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "orgs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`) whose organization membership you want to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12abca27-bf44-4188-8e2e-d37197312a92",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) whose organization membership you want to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"description\": \"An example description.\",\n      \"domain\": \"acme.com\",\n      \"industry\": \"fintech\",\n      \"name\": \"Example Name\",\n      \"onboarding_track\": \"vendor\",\n      \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"slug\": \"example-slug\",\n      \"status\": \"active\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"website\": \"https://example.com\"\n    },\n    {\n      \"id\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"description\": \"An example description.\",\n      \"domain\": \"acme.com\",\n      \"industry\": \"fintech\",\n      \"name\": \"Example Name\",\n      \"onboarding_track\": \"vendor\",\n      \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"slug\": \"example-slug\",\n      \"status\": \"active\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"website\": \"https://example.com\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f2ad630-b9ea-46f1-b816-407a0b541298",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "orgs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) whose organization membership you want to retrieve."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0dd49eab-63b2-4a5b-9bce-8bff3f875596",
+          "name": "Update the current user's profile",
+          "request": {
+            "name": "Update the current user's profile",
+            "description": {
+              "content": "Updates one or more profile fields for the authenticated user. All\nfields are optional; omit any you do not want to change.\n\nWhen `profile_picture` is supplied, the image is uploaded and replaces\nthe existing picture. The previous picture is deleted after the new one\nis stored. Image upload failures return 422 without modifying other\nprofile fields.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`) or `\"me\"` for the authenticated user."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alias\": \"<string>\",\n  \"full_name\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"profile_picture\": {\n    \"data\": \"<string>\",\n    \"filename\": \"<string>\",\n    \"mime_type\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f56a9571-e6eb-481c-b1df-7c6c04475856",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) or `\"me\"` for the authenticated user."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"full_name\": \"Example Name\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"profile_picture\": {\n    \"data\": \"string\",\n    \"filename\": \"string\",\n    \"mime_type\": \"application/json\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"alias\": \"jdoe\",\n  \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"app_name\": \"Example Name\",\n  \"email\": \"user@example.com\",\n  \"is_system_user\": true,\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"name\": \"Example Name\",\n  \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"org_name\": \"Example Name\",\n  \"org_role\": \"member\",\n  \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"sandbox_name\": \"Example Name\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "897a18fc-ee3e-41d9-8e56-ff182554bbeb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) or `\"me\"` for the authenticated user."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"full_name\": \"Example Name\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"profile_picture\": {\n    \"data\": \"string\",\n    \"filename\": \"string\",\n    \"mime_type\": \"application/json\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc289d79-d2f4-4ee3-8d1b-e116073792cc",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) or `\"me\"` for the authenticated user."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"alias\": \"string\",\n  \"full_name\": \"Example Name\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"profile_picture\": {\n    \"data\": \"string\",\n    \"filename\": \"string\",\n    \"mime_type\": \"application/json\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e91ad345-e653-47bf-b511-da3d178446e2",
+          "name": "List threads for a user",
+          "request": {
+            "name": "List threads for a user",
+            "description": {
+              "content": "Returns all threads visible to the specified user. The authenticated caller must\nhave access to the target user's account; a 403 is returned otherwise.\n\nPass one or more `agent` IDs to narrow results to threads where at least one of\nthe listed agents is also a member — useful for displaying every thread a user\nshares with a particular agent. Pass one or more `filter` objects to narrow\nresults by thread metadata key/value pairs. Both narrowings may be combined in\na single request.\n\nResults are returned as a flat array; no cursor-based pagination is applied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "threads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "agent",
+                  "value": "<string>",
+                  "description": "Array of agent user IDs (`usr_...`). When provided, only threads where at least one of the listed agents is also a member are returned. Omit or pass an empty array to return all threads regardless of agent membership."
+                },
+                {
+                  "disabled": false,
+                  "key": "agent",
+                  "value": "<string>",
+                  "description": "Array of agent user IDs (`usr_...`). When provided, only threads where at least one of the listed agents is also a member are returned. Omit or pass an empty array to return all threads regardless of agent membership."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "{\"key\":\"<string>\",\"type\":\"<string>\",\"value\":\"<string>\"}",
+                  "description": "Array of metadata filter objects. Each filter matches threads whose `metadata` map contains the specified key/value pair. All filters must match (logical AND). Omit to return threads regardless of metadata."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "{\"key\":\"<string>\",\"type\":\"<string>\",\"value\":\"<string>\"}",
+                  "description": "Array of metadata filter objects. Each filter matches threads whose `metadata` map contains the specified key/value pair. All filters must match (logical AND). Omit to return threads regardless of metadata."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`) whose threads should be listed."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ac44cf06-80f0-46d2-b630-39d50a5c5579",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "agent",
+                      "value": "string"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "[object Object]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) whose threads should be listed."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"agent_user\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"creator\": {\n        \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"alias\": \"jdoe\",\n        \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"app_name\": \"Example Name\",\n        \"email\": \"user@example.com\",\n        \"is_system_user\": true,\n        \"metadata\": {\n          \"key\": \"value\"\n        },\n        \"name\": \"Example Name\",\n        \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"org_name\": \"Example Name\",\n        \"org_role\": \"member\",\n        \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"sandbox_name\": \"Example Name\"\n      },\n      \"description\": \"An example description.\",\n      \"is_channel\": true,\n      \"is_default\": true,\n      \"is_transient\": true,\n      \"is_unlisted\": true,\n      \"key\": \"string\",\n      \"last_activity\": \"2024-01-01T00:00:00Z\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"muted\": true,\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"parent_message\": {\n        \"id\": \"msg_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"actors\": [\n          {\n            \"alias\": \"alice\",\n            \"name\": \"Example Name\",\n            \"profile_picture\": {\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"height\": 600,\n              \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"mime_type\": \"application/json\",\n              \"refresh_url\": \"https://example.com\",\n              \"url\": \"https://example.com\",\n              \"width\": 800\n            }\n          }\n        ],\n        \"agent\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"attachments\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"file\",\n            \"content_type\": \"application/json\",\n            \"description\": \"An example description.\",\n            \"filename\": \"string\",\n            \"height\": 1,\n            \"image_height\": 1,\n            \"image_source\": {\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"height\": 600,\n              \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"mime_type\": \"application/json\",\n              \"refresh_url\": \"https://example.com\",\n              \"url\": \"https://example.com\",\n              \"width\": 800\n            },\n            \"image_url\": \"https://example.com\",\n            \"image_width\": 1,\n            \"media_type\": \"application/json\",\n            \"name\": \"Example Name\",\n            \"object\": {},\n            \"title\": \"Example Title\",\n            \"url\": \"https://example.com\",\n            \"variants\": [\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              },\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              }\n            ],\n            \"version\": 1,\n            \"width\": 1\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"file\",\n            \"content_type\": \"application/json\",\n            \"description\": \"An example description.\",\n            \"filename\": \"string\",\n            \"height\": 1,\n            \"image_height\": 1,\n            \"image_source\": {\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"height\": 600,\n              \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"mime_type\": \"application/json\",\n              \"refresh_url\": \"https://example.com\",\n              \"url\": \"https://example.com\",\n              \"width\": 800\n            },\n            \"image_url\": \"https://example.com\",\n            \"image_width\": 1,\n            \"media_type\": \"application/json\",\n            \"name\": \"Example Name\",\n            \"object\": {},\n            \"title\": \"Example Title\",\n            \"url\": \"https://example.com\",\n            \"variants\": [\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              },\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              }\n            ],\n            \"version\": 1,\n            \"width\": 1\n          }\n        ],\n        \"branched_thread\": \"string\",\n        \"content\": \"Hello, how can I help you today?\",\n        \"created_at\": \"2024-01-01T00:00:00Z\",\n        \"has_replies\": true,\n        \"idempotency_key\": \"01234567-89ab-cdef-0123-456789abcdef\",\n        \"legacy_agent\": \"string\",\n        \"metadata\": {\n          \"key\": \"value\"\n        },\n        \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"reactions\": [\n          {\n            \"payload\": {\n              \"key\": \"value\"\n            },\n            \"type\": \"emoji_reaction\",\n            \"user\": \"string\"\n          }\n        ],\n        \"rendering_mode\": \"reply\",\n        \"replies\": [\n          {}\n        ],\n        \"replies_after_cursor\": \"string\",\n        \"replies_before_cursor\": \"string\",\n        \"reply_count\": 1,\n        \"reply_to\": {\n          \"actors\": [\n            {\n              \"alias\": \"alice\",\n              \"name\": \"Example Name\",\n              \"profile_picture\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              }\n            }\n          ],\n          \"agent\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"attachments\": [\n            {\n              \"content_type\": \"application/json\",\n              \"description\": \"An example description.\",\n              \"filename\": \"string\",\n              \"height\": 1,\n              \"image_height\": 1,\n              \"image_source\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"image_url\": \"https://example.com\",\n              \"image_width\": 1,\n              \"media_type\": \"application/json\",\n              \"name\": \"Example Name\",\n              \"object\": {},\n              \"title\": \"Example Title\",\n              \"type\": \"file\",\n              \"url\": \"https://example.com\",\n              \"variants\": [\n                {\n                  \"content_type\": \"application/json\",\n                  \"created_at\": \"2024-01-01T00:00:00Z\",\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"filename\": \"string\",\n                  \"height\": 600,\n                  \"image_source\": {\n                    \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                    \"height\": 600,\n                    \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                    \"mime_type\": \"application/json\",\n                    \"refresh_url\": \"https://example.com\",\n                    \"url\": \"https://example.com\",\n                    \"width\": 800\n                  },\n                  \"updated_at\": \"2024-01-01T00:00:00Z\",\n                  \"url\": \"https://example.com\",\n                  \"variant_key\": \"original\",\n                  \"width\": 800\n                }\n              ],\n              \"version\": 1,\n              \"width\": 1\n            }\n          ],\n          \"branched_thread\": \"string\",\n          \"content\": \"Hello, how can I help you today?\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"has_replies\": true,\n          \"idempotency_key\": \"01234567-89ab-cdef-0123-456789abcdef\",\n          \"legacy_agent\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"reactions\": [\n            {\n              \"payload\": {\n                \"key\": \"value\"\n              },\n              \"type\": \"emoji_reaction\",\n              \"user\": \"string\"\n            }\n          ],\n          \"rendering_mode\": \"reply\",\n          \"replies\": [\n            {}\n          ],\n          \"replies_after_cursor\": \"string\",\n          \"replies_before_cursor\": \"string\",\n          \"reply_count\": 1,\n          \"reply_to\": {},\n          \"sandbox\": \"string\",\n          \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"thread\": \"string\",\n          \"user\": \"string\"\n        },\n        \"sandbox\": \"string\",\n        \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"thread\": \"string\",\n        \"user\": \"string\"\n      },\n      \"participant\": [\n        \"string\"\n      ],\n      \"participants\": [\n        {\n          \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"alias\": \"jdoe\",\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"app_name\": \"Example Name\",\n          \"email\": \"user@example.com\",\n          \"is_system_user\": true,\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"org_role\": \"member\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"sandbox_name\": \"Example Name\"\n        },\n        {\n          \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"alias\": \"jdoe\",\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"app_name\": \"Example Name\",\n          \"email\": \"user@example.com\",\n          \"is_system_user\": true,\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"org_role\": \"member\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"sandbox_name\": \"Example Name\"\n        }\n      ],\n      \"participating_actor\": [\n        \"string\"\n      ],\n      \"participating_agents\": [\n        {\n          \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"acl\": {\n            \"add\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"grants\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"remove\": [\n              {\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ]\n          },\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"default_model\": \"claude-3-7-sonnet-latest\",\n          \"email\": \"user@example.com\",\n          \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n          \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"lookup_key\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"originator\": \"deploy-pipeline\",\n          \"phone_number\": \"+15555550123\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"source_solution\": {\n            \"solution\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"Solution\",\n              \"owners\": [\n                \"string\"\n              ],\n              \"templates\": [\n                {\n                  \"description\": \"An example description.\",\n                  \"display_name\": \"Example Name\",\n                  \"kind\": \"AgentTemplate\",\n                  \"lookup_key\": \"string\",\n                  \"name\": \"Example Name\",\n                  \"readme_url\": \"https://example.com\",\n                  \"virtual_path\": \"string\"\n                }\n              ],\n              \"upgrade_available\": true,\n              \"category_keys\": [\n                \"string\"\n              ],\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"latest_version\": \"1.0.0\",\n              \"lookup_key\": \"string\",\n              \"metadata\": {\n                \"key\": \"value\"\n              },\n              \"name\": \"Example Name\",\n              \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"org_logo\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"org_name\": \"Example Name\",\n              \"org_slug\": \"example-slug\",\n              \"readme_url\": \"https://example.com\",\n              \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n              \"solution_version\": \"1.2.0\",\n              \"tag_keys\": [\n                \"string\"\n              ],\n              \"template_kind\": \"AgentTemplate\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            },\n            \"template\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"agent_tool_template\",\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"display_name\": \"Example Name\",\n              \"lookup_key\": \"string\",\n              \"name\": \"Example Name\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            }\n          },\n          \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n        },\n        {\n          \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"acl\": {\n            \"add\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"grants\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"remove\": [\n              {\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ]\n          },\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"default_model\": \"claude-3-7-sonnet-latest\",\n          \"email\": \"user@example.com\",\n          \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n          \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"lookup_key\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"originator\": \"deploy-pipeline\",\n          \"phone_number\": \"+15555550123\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"source_solution\": {\n            \"solution\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"Solution\",\n              \"owners\": [\n                \"string\"\n              ],\n              \"templates\": [\n                {\n                  \"description\": \"An example description.\",\n                  \"display_name\": \"Example Name\",\n                  \"kind\": \"AgentTemplate\",\n                  \"lookup_key\": \"string\",\n                  \"name\": \"Example Name\",\n                  \"readme_url\": \"https://example.com\",\n                  \"virtual_path\": \"string\"\n                }\n              ],\n              \"upgrade_available\": true,\n              \"category_keys\": [\n                \"string\"\n              ],\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"latest_version\": \"1.0.0\",\n              \"lookup_key\": \"string\",\n              \"metadata\": {\n                \"key\": \"value\"\n              },\n              \"name\": \"Example Name\",\n              \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"org_logo\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"org_name\": \"Example Name\",\n              \"org_slug\": \"example-slug\",\n              \"readme_url\": \"https://example.com\",\n              \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n              \"solution_version\": \"1.2.0\",\n              \"tag_keys\": [\n                \"string\"\n              ],\n              \"template_kind\": \"AgentTemplate\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            },\n            \"template\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"agent_tool_template\",\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"display_name\": \"Example Name\",\n              \"lookup_key\": \"string\",\n              \"name\": \"Example Name\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            }\n          },\n          \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n        }\n      ],\n      \"role\": \"member\",\n      \"sandbox\": \"string\",\n      \"settings\": {\n        \"agent_enabled\": true\n      },\n      \"slug\": \"example-slug\",\n      \"sub_threads\": [\n        {}\n      ],\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"title\": \"Example Title\",\n      \"ttl\": 3600,\n      \"unread_count\": 5,\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n    },\n    {\n      \"id\": \"string\",\n      \"agent_user\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"creator\": {\n        \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"alias\": \"jdoe\",\n        \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"app_name\": \"Example Name\",\n        \"email\": \"user@example.com\",\n        \"is_system_user\": true,\n        \"metadata\": {\n          \"key\": \"value\"\n        },\n        \"name\": \"Example Name\",\n        \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"org_name\": \"Example Name\",\n        \"org_role\": \"member\",\n        \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"sandbox_name\": \"Example Name\"\n      },\n      \"description\": \"An example description.\",\n      \"is_channel\": true,\n      \"is_default\": true,\n      \"is_transient\": true,\n      \"is_unlisted\": true,\n      \"key\": \"string\",\n      \"last_activity\": \"2024-01-01T00:00:00Z\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"muted\": true,\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"parent_message\": {\n        \"id\": \"msg_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"actors\": [\n          {\n            \"alias\": \"alice\",\n            \"name\": \"Example Name\",\n            \"profile_picture\": {\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"height\": 600,\n              \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"mime_type\": \"application/json\",\n              \"refresh_url\": \"https://example.com\",\n              \"url\": \"https://example.com\",\n              \"width\": 800\n            }\n          }\n        ],\n        \"agent\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"attachments\": [\n          {\n            \"id\": \"string\",\n            \"type\": \"file\",\n            \"content_type\": \"application/json\",\n            \"description\": \"An example description.\",\n            \"filename\": \"string\",\n            \"height\": 1,\n            \"image_height\": 1,\n            \"image_source\": {\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"height\": 600,\n              \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"mime_type\": \"application/json\",\n              \"refresh_url\": \"https://example.com\",\n              \"url\": \"https://example.com\",\n              \"width\": 800\n            },\n            \"image_url\": \"https://example.com\",\n            \"image_width\": 1,\n            \"media_type\": \"application/json\",\n            \"name\": \"Example Name\",\n            \"object\": {},\n            \"title\": \"Example Title\",\n            \"url\": \"https://example.com\",\n            \"variants\": [\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              },\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              }\n            ],\n            \"version\": 1,\n            \"width\": 1\n          },\n          {\n            \"id\": \"string\",\n            \"type\": \"file\",\n            \"content_type\": \"application/json\",\n            \"description\": \"An example description.\",\n            \"filename\": \"string\",\n            \"height\": 1,\n            \"image_height\": 1,\n            \"image_source\": {\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"height\": 600,\n              \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"mime_type\": \"application/json\",\n              \"refresh_url\": \"https://example.com\",\n              \"url\": \"https://example.com\",\n              \"width\": 800\n            },\n            \"image_url\": \"https://example.com\",\n            \"image_width\": 1,\n            \"media_type\": \"application/json\",\n            \"name\": \"Example Name\",\n            \"object\": {},\n            \"title\": \"Example Title\",\n            \"url\": \"https://example.com\",\n            \"variants\": [\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              },\n              {\n                \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"content_type\": \"application/json\",\n                \"created_at\": \"2024-01-01T00:00:00Z\",\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"filename\": \"string\",\n                \"height\": 600,\n                \"image_source\": {\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"height\": 600,\n                  \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"mime_type\": \"application/json\",\n                  \"refresh_url\": \"https://example.com\",\n                  \"url\": \"https://example.com\",\n                  \"width\": 800\n                },\n                \"updated_at\": \"2024-01-01T00:00:00Z\",\n                \"url\": \"https://example.com\",\n                \"variant_key\": \"original\",\n                \"width\": 800\n              }\n            ],\n            \"version\": 1,\n            \"width\": 1\n          }\n        ],\n        \"branched_thread\": \"string\",\n        \"content\": \"Hello, how can I help you today?\",\n        \"created_at\": \"2024-01-01T00:00:00Z\",\n        \"has_replies\": true,\n        \"idempotency_key\": \"01234567-89ab-cdef-0123-456789abcdef\",\n        \"legacy_agent\": \"string\",\n        \"metadata\": {\n          \"key\": \"value\"\n        },\n        \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"reactions\": [\n          {\n            \"payload\": {\n              \"key\": \"value\"\n            },\n            \"type\": \"emoji_reaction\",\n            \"user\": \"string\"\n          }\n        ],\n        \"rendering_mode\": \"reply\",\n        \"replies\": [\n          {}\n        ],\n        \"replies_after_cursor\": \"string\",\n        \"replies_before_cursor\": \"string\",\n        \"reply_count\": 1,\n        \"reply_to\": {\n          \"actors\": [\n            {\n              \"alias\": \"alice\",\n              \"name\": \"Example Name\",\n              \"profile_picture\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              }\n            }\n          ],\n          \"agent\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"attachments\": [\n            {\n              \"content_type\": \"application/json\",\n              \"description\": \"An example description.\",\n              \"filename\": \"string\",\n              \"height\": 1,\n              \"image_height\": 1,\n              \"image_source\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"image_url\": \"https://example.com\",\n              \"image_width\": 1,\n              \"media_type\": \"application/json\",\n              \"name\": \"Example Name\",\n              \"object\": {},\n              \"title\": \"Example Title\",\n              \"type\": \"file\",\n              \"url\": \"https://example.com\",\n              \"variants\": [\n                {\n                  \"content_type\": \"application/json\",\n                  \"created_at\": \"2024-01-01T00:00:00Z\",\n                  \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                  \"filename\": \"string\",\n                  \"height\": 600,\n                  \"image_source\": {\n                    \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                    \"height\": 600,\n                    \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                    \"mime_type\": \"application/json\",\n                    \"refresh_url\": \"https://example.com\",\n                    \"url\": \"https://example.com\",\n                    \"width\": 800\n                  },\n                  \"updated_at\": \"2024-01-01T00:00:00Z\",\n                  \"url\": \"https://example.com\",\n                  \"variant_key\": \"original\",\n                  \"width\": 800\n                }\n              ],\n              \"version\": 1,\n              \"width\": 1\n            }\n          ],\n          \"branched_thread\": \"string\",\n          \"content\": \"Hello, how can I help you today?\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"has_replies\": true,\n          \"idempotency_key\": \"01234567-89ab-cdef-0123-456789abcdef\",\n          \"legacy_agent\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"reactions\": [\n            {\n              \"payload\": {\n                \"key\": \"value\"\n              },\n              \"type\": \"emoji_reaction\",\n              \"user\": \"string\"\n            }\n          ],\n          \"rendering_mode\": \"reply\",\n          \"replies\": [\n            {}\n          ],\n          \"replies_after_cursor\": \"string\",\n          \"replies_before_cursor\": \"string\",\n          \"reply_count\": 1,\n          \"reply_to\": {},\n          \"sandbox\": \"string\",\n          \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"thread\": \"string\",\n          \"user\": \"string\"\n        },\n        \"sandbox\": \"string\",\n        \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"thread\": \"string\",\n        \"user\": \"string\"\n      },\n      \"participant\": [\n        \"string\"\n      ],\n      \"participants\": [\n        {\n          \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"alias\": \"jdoe\",\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"app_name\": \"Example Name\",\n          \"email\": \"user@example.com\",\n          \"is_system_user\": true,\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"org_role\": \"member\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"sandbox_name\": \"Example Name\"\n        },\n        {\n          \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"alias\": \"jdoe\",\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"app_name\": \"Example Name\",\n          \"email\": \"user@example.com\",\n          \"is_system_user\": true,\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"org_role\": \"member\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"sandbox_name\": \"Example Name\"\n        }\n      ],\n      \"participating_actor\": [\n        \"string\"\n      ],\n      \"participating_agents\": [\n        {\n          \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"acl\": {\n            \"add\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"grants\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"remove\": [\n              {\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ]\n          },\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"default_model\": \"claude-3-7-sonnet-latest\",\n          \"email\": \"user@example.com\",\n          \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n          \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"lookup_key\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"originator\": \"deploy-pipeline\",\n          \"phone_number\": \"+15555550123\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"source_solution\": {\n            \"solution\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"Solution\",\n              \"owners\": [\n                \"string\"\n              ],\n              \"templates\": [\n                {\n                  \"description\": \"An example description.\",\n                  \"display_name\": \"Example Name\",\n                  \"kind\": \"AgentTemplate\",\n                  \"lookup_key\": \"string\",\n                  \"name\": \"Example Name\",\n                  \"readme_url\": \"https://example.com\",\n                  \"virtual_path\": \"string\"\n                }\n              ],\n              \"upgrade_available\": true,\n              \"category_keys\": [\n                \"string\"\n              ],\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"latest_version\": \"1.0.0\",\n              \"lookup_key\": \"string\",\n              \"metadata\": {\n                \"key\": \"value\"\n              },\n              \"name\": \"Example Name\",\n              \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"org_logo\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"org_name\": \"Example Name\",\n              \"org_slug\": \"example-slug\",\n              \"readme_url\": \"https://example.com\",\n              \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n              \"solution_version\": \"1.2.0\",\n              \"tag_keys\": [\n                \"string\"\n              ],\n              \"template_kind\": \"AgentTemplate\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            },\n            \"template\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"agent_tool_template\",\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"display_name\": \"Example Name\",\n              \"lookup_key\": \"string\",\n              \"name\": \"Example Name\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            }\n          },\n          \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n        },\n        {\n          \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"acl\": {\n            \"add\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"grants\": [\n              {\n                \"actions\": [\n                  \"read\",\n                  \"write\"\n                ],\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ],\n            \"remove\": [\n              {\n                \"principal\": \"string\",\n                \"principal_type\": \"user\"\n              }\n            ]\n          },\n          \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"default_model\": \"claude-3-7-sonnet-latest\",\n          \"email\": \"user@example.com\",\n          \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n          \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"lookup_key\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_name\": \"Example Name\",\n          \"originator\": \"deploy-pipeline\",\n          \"phone_number\": \"+15555550123\",\n          \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"source_solution\": {\n            \"solution\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"Solution\",\n              \"owners\": [\n                \"string\"\n              ],\n              \"templates\": [\n                {\n                  \"description\": \"An example description.\",\n                  \"display_name\": \"Example Name\",\n                  \"kind\": \"AgentTemplate\",\n                  \"lookup_key\": \"string\",\n                  \"name\": \"Example Name\",\n                  \"readme_url\": \"https://example.com\",\n                  \"virtual_path\": \"string\"\n                }\n              ],\n              \"upgrade_available\": true,\n              \"category_keys\": [\n                \"string\"\n              ],\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"latest_version\": \"1.0.0\",\n              \"lookup_key\": \"string\",\n              \"metadata\": {\n                \"key\": \"value\"\n              },\n              \"name\": \"Example Name\",\n              \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"org_logo\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"org_name\": \"Example Name\",\n              \"org_slug\": \"example-slug\",\n              \"readme_url\": \"https://example.com\",\n              \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n              \"solution_version\": \"1.2.0\",\n              \"tag_keys\": [\n                \"string\"\n              ],\n              \"template_kind\": \"AgentTemplate\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            },\n            \"template\": {\n              \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"kind\": \"agent_tool_template\",\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"description\": \"An example description.\",\n              \"display_name\": \"Example Name\",\n              \"lookup_key\": \"string\",\n              \"name\": \"Example Name\",\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"virtual_path\": \"string\"\n            }\n          },\n          \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n        }\n      ],\n      \"role\": \"member\",\n      \"sandbox\": \"string\",\n      \"settings\": {\n        \"agent_enabled\": true\n      },\n      \"slug\": \"example-slug\",\n      \"sub_threads\": [\n        {}\n      ],\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"title\": \"Example Title\",\n      \"ttl\": 3600,\n      \"unread_count\": 5,\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "75026c30-afd3-42cd-9ed4-29190b0b91e8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "agent",
+                      "value": "string"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "[object Object]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) whose threads should be listed."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4048496c-616c-44c4-99c5-5a4e9de3abd7",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "agent",
+                      "value": "string"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "[object Object]"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) whose threads should be listed."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2eadf93-1471-4e88-8df7-5657b696d571",
+          "name": "Create a thread for a user",
+          "request": {
+            "name": "Create a thread for a user",
+            "description": {
+              "content": "Creates a new thread owned by the specified user. The authenticated caller must\nhave access to the target user's account; a 403 is returned otherwise.\n\nAn automatic welcome message is sent into the thread upon creation unless\n`skip_welcome_message` is set to `true`. The thread is immediately visible to\nthe owning user and any members added at creation time.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":user",
+                "threads"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user",
+                  "description": "(Required) User ID (`usr_...`) of the user who will own the new thread."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"thread\": {\n    \"create_legacy_agent\": \"<boolean>\",\n    \"description\": \"<string>\",\n    \"is_unlisted\": \"<boolean>\",\n    \"key\": \"<string>\",\n    \"metadata\": \"<object>\",\n    \"muted\": \"<boolean>\",\n    \"org_id\": \"<string>\",\n    \"profile_picture\": {\n      \"data\": \"<string>\",\n      \"filename\": \"<string>\",\n      \"mime_type\": \"<string>\"\n    },\n    \"settings\": {\n      \"agent_enabled\": \"<boolean>\"\n    },\n    \"title\": \"<string>\"\n  },\n  \"skip_welcome_message\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4aef452f-27db-4ff4-b13a-5187357d3428",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user who will own the new thread."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skip_welcome_message\": true,\n  \"thread\": {\n    \"create_legacy_agent\": true,\n    \"description\": \"An example description.\",\n    \"is_unlisted\": true,\n    \"key\": \"string\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"muted\": true,\n    \"org_id\": \"string\",\n    \"profile_picture\": {\n      \"data\": \"string\",\n      \"filename\": \"string\",\n      \"mime_type\": \"application/json\"\n    },\n    \"settings\": {\n      \"agent_enabled\": true\n    },\n    \"title\": \"Example Title\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"agent_user\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"creator\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  },\n  \"description\": \"An example description.\",\n  \"is_channel\": true,\n  \"is_default\": true,\n  \"is_transient\": true,\n  \"is_unlisted\": true,\n  \"key\": \"string\",\n  \"last_activity\": \"2024-01-01T00:00:00Z\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"muted\": true,\n  \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"parent_message\": {\n    \"id\": \"msg_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"actors\": [\n      {\n        \"alias\": \"alice\",\n        \"name\": \"Example Name\",\n        \"profile_picture\": {\n          \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"height\": 600,\n          \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"mime_type\": \"application/json\",\n          \"refresh_url\": \"https://example.com\",\n          \"url\": \"https://example.com\",\n          \"width\": 800\n        }\n      },\n      {\n        \"alias\": \"alice\",\n        \"name\": \"Example Name\",\n        \"profile_picture\": {\n          \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"height\": 600,\n          \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"mime_type\": \"application/json\",\n          \"refresh_url\": \"https://example.com\",\n          \"url\": \"https://example.com\",\n          \"width\": 800\n        }\n      }\n    ],\n    \"agent\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"attachments\": [\n      {\n        \"id\": \"string\",\n        \"type\": \"file\",\n        \"content_type\": \"application/json\",\n        \"description\": \"An example description.\",\n        \"filename\": \"string\",\n        \"height\": 1,\n        \"image_height\": 1,\n        \"image_source\": {\n          \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"height\": 600,\n          \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"mime_type\": \"application/json\",\n          \"refresh_url\": \"https://example.com\",\n          \"url\": \"https://example.com\",\n          \"width\": 800\n        },\n        \"image_url\": \"https://example.com\",\n        \"image_width\": 1,\n        \"media_type\": \"application/json\",\n        \"name\": \"Example Name\",\n        \"object\": {},\n        \"title\": \"Example Title\",\n        \"url\": \"https://example.com\",\n        \"variants\": [\n          {\n            \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"content_type\": \"application/json\",\n            \"created_at\": \"2024-01-01T00:00:00Z\",\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"filename\": \"string\",\n            \"height\": 600,\n            \"image_source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": \"2024-01-01T00:00:00Z\",\n            \"url\": \"https://example.com\",\n            \"variant_key\": \"original\",\n            \"width\": 800\n          },\n          {\n            \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"content_type\": \"application/json\",\n            \"created_at\": \"2024-01-01T00:00:00Z\",\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"filename\": \"string\",\n            \"height\": 600,\n            \"image_source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": \"2024-01-01T00:00:00Z\",\n            \"url\": \"https://example.com\",\n            \"variant_key\": \"original\",\n            \"width\": 800\n          }\n        ],\n        \"version\": 1,\n        \"width\": 1\n      },\n      {\n        \"id\": \"string\",\n        \"type\": \"file\",\n        \"content_type\": \"application/json\",\n        \"description\": \"An example description.\",\n        \"filename\": \"string\",\n        \"height\": 1,\n        \"image_height\": 1,\n        \"image_source\": {\n          \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"height\": 600,\n          \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"mime_type\": \"application/json\",\n          \"refresh_url\": \"https://example.com\",\n          \"url\": \"https://example.com\",\n          \"width\": 800\n        },\n        \"image_url\": \"https://example.com\",\n        \"image_width\": 1,\n        \"media_type\": \"application/json\",\n        \"name\": \"Example Name\",\n        \"object\": {},\n        \"title\": \"Example Title\",\n        \"url\": \"https://example.com\",\n        \"variants\": [\n          {\n            \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"content_type\": \"application/json\",\n            \"created_at\": \"2024-01-01T00:00:00Z\",\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"filename\": \"string\",\n            \"height\": 600,\n            \"image_source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": \"2024-01-01T00:00:00Z\",\n            \"url\": \"https://example.com\",\n            \"variant_key\": \"original\",\n            \"width\": 800\n          },\n          {\n            \"id\": \"mvr_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"content_type\": \"application/json\",\n            \"created_at\": \"2024-01-01T00:00:00Z\",\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"filename\": \"string\",\n            \"height\": 600,\n            \"image_source\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"updated_at\": \"2024-01-01T00:00:00Z\",\n            \"url\": \"https://example.com\",\n            \"variant_key\": \"original\",\n            \"width\": 800\n          }\n        ],\n        \"version\": 1,\n        \"width\": 1\n      }\n    ],\n    \"branched_thread\": \"string\",\n    \"content\": \"Hello, how can I help you today?\",\n    \"created_at\": \"2024-01-01T00:00:00Z\",\n    \"has_replies\": true,\n    \"idempotency_key\": \"01234567-89ab-cdef-0123-456789abcdef\",\n    \"legacy_agent\": \"string\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"reactions\": [\n      {\n        \"payload\": {\n          \"key\": \"value\"\n        },\n        \"type\": \"emoji_reaction\",\n        \"user\": \"string\"\n      },\n      {\n        \"payload\": {\n          \"key\": \"value\"\n        },\n        \"type\": \"emoji_reaction\",\n        \"user\": \"string\"\n      }\n    ],\n    \"rendering_mode\": \"reply\",\n    \"replies\": [\n      {}\n    ],\n    \"replies_after_cursor\": \"string\",\n    \"replies_before_cursor\": \"string\",\n    \"reply_count\": 1,\n    \"reply_to\": {\n      \"actors\": [\n        {\n          \"alias\": \"alice\",\n          \"name\": \"Example Name\",\n          \"profile_picture\": {\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"height\": 600,\n            \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"mime_type\": \"application/json\",\n            \"refresh_url\": \"https://example.com\",\n            \"url\": \"https://example.com\",\n            \"width\": 800\n          }\n        }\n      ],\n      \"agent\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"attachments\": [\n        {\n          \"content_type\": \"application/json\",\n          \"description\": \"An example description.\",\n          \"filename\": \"string\",\n          \"height\": 1,\n          \"image_height\": 1,\n          \"image_source\": {\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"height\": 600,\n            \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"mime_type\": \"application/json\",\n            \"refresh_url\": \"https://example.com\",\n            \"url\": \"https://example.com\",\n            \"width\": 800\n          },\n          \"image_url\": \"https://example.com\",\n          \"image_width\": 1,\n          \"media_type\": \"application/json\",\n          \"name\": \"Example Name\",\n          \"object\": {},\n          \"title\": \"Example Title\",\n          \"type\": \"file\",\n          \"url\": \"https://example.com\",\n          \"variants\": [\n            {\n              \"content_type\": \"application/json\",\n              \"created_at\": \"2024-01-01T00:00:00Z\",\n              \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n              \"filename\": \"string\",\n              \"height\": 600,\n              \"image_source\": {\n                \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"height\": 600,\n                \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n                \"mime_type\": \"application/json\",\n                \"refresh_url\": \"https://example.com\",\n                \"url\": \"https://example.com\",\n                \"width\": 800\n              },\n              \"updated_at\": \"2024-01-01T00:00:00Z\",\n              \"url\": \"https://example.com\",\n              \"variant_key\": \"original\",\n              \"width\": 800\n            }\n          ],\n          \"version\": 1,\n          \"width\": 1\n        }\n      ],\n      \"branched_thread\": \"string\",\n      \"content\": \"Hello, how can I help you today?\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"has_replies\": true,\n      \"idempotency_key\": \"01234567-89ab-cdef-0123-456789abcdef\",\n      \"legacy_agent\": \"string\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"reactions\": [\n        {\n          \"payload\": {\n            \"key\": \"value\"\n          },\n          \"type\": \"emoji_reaction\",\n          \"user\": \"string\"\n        }\n      ],\n      \"rendering_mode\": \"reply\",\n      \"replies\": [\n        {}\n      ],\n      \"replies_after_cursor\": \"string\",\n      \"replies_before_cursor\": \"string\",\n      \"reply_count\": 1,\n      \"reply_to\": {},\n      \"sandbox\": \"string\",\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"thread\": \"string\",\n      \"user\": \"string\"\n    },\n    \"sandbox\": \"string\",\n    \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"thread\": \"string\",\n    \"user\": \"string\"\n  },\n  \"participant\": [\n    \"string\"\n  ],\n  \"participants\": [\n    {\n      \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"alias\": \"jdoe\",\n      \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"app_name\": \"Example Name\",\n      \"email\": \"user@example.com\",\n      \"is_system_user\": true,\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"name\": \"Example Name\",\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"org_name\": \"Example Name\",\n      \"org_role\": \"member\",\n      \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"sandbox_name\": \"Example Name\"\n    },\n    {\n      \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"alias\": \"jdoe\",\n      \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"app_name\": \"Example Name\",\n      \"email\": \"user@example.com\",\n      \"is_system_user\": true,\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"name\": \"Example Name\",\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"org_name\": \"Example Name\",\n      \"org_role\": \"member\",\n      \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"sandbox_name\": \"Example Name\"\n    }\n  ],\n  \"participating_actor\": [\n    \"string\"\n  ],\n  \"participating_agents\": [\n    {\n      \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"acl\": {\n        \"add\": [\n          {\n            \"actions\": [\n              \"read\",\n              \"write\"\n            ],\n            \"principal\": \"string\",\n            \"principal_type\": \"user\"\n          }\n        ],\n        \"grants\": [\n          {\n            \"actions\": [\n              \"read\",\n              \"write\"\n            ],\n            \"principal\": \"string\",\n            \"principal_type\": \"user\"\n          }\n        ],\n        \"remove\": [\n          {\n            \"principal\": \"string\",\n            \"principal_type\": \"user\"\n          }\n        ]\n      },\n      \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"default_model\": \"claude-3-7-sonnet-latest\",\n      \"email\": \"user@example.com\",\n      \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n      \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"lookup_key\": \"string\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"name\": \"Example Name\",\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"org_name\": \"Example Name\",\n      \"originator\": \"deploy-pipeline\",\n      \"phone_number\": \"+15555550123\",\n      \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"source_solution\": {\n        \"solution\": {\n          \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"kind\": \"Solution\",\n          \"owners\": [\n            \"string\"\n          ],\n          \"templates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"upgrade_available\": true,\n          \"category_keys\": [\n            \"string\"\n          ],\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"description\": \"An example description.\",\n          \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"latest_version\": \"1.0.0\",\n          \"lookup_key\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_logo\": {\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"height\": 600,\n            \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"mime_type\": \"application/json\",\n            \"refresh_url\": \"https://example.com\",\n            \"url\": \"https://example.com\",\n            \"width\": 800\n          },\n          \"org_name\": \"Example Name\",\n          \"org_slug\": \"example-slug\",\n          \"readme_url\": \"https://example.com\",\n          \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n          \"solution_version\": \"1.2.0\",\n          \"tag_keys\": [\n            \"string\"\n          ],\n          \"template_kind\": \"AgentTemplate\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"virtual_path\": \"string\"\n        },\n        \"template\": {\n          \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"kind\": \"agent_tool_template\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"description\": \"An example description.\",\n          \"display_name\": \"Example Name\",\n          \"lookup_key\": \"string\",\n          \"name\": \"Example Name\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"virtual_path\": \"string\"\n        }\n      },\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n    },\n    {\n      \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"acl\": {\n        \"add\": [\n          {\n            \"actions\": [\n              \"read\",\n              \"write\"\n            ],\n            \"principal\": \"string\",\n            \"principal_type\": \"user\"\n          }\n        ],\n        \"grants\": [\n          {\n            \"actions\": [\n              \"read\",\n              \"write\"\n            ],\n            \"principal\": \"string\",\n            \"principal_type\": \"user\"\n          }\n        ],\n        \"remove\": [\n          {\n            \"principal\": \"string\",\n            \"principal_type\": \"user\"\n          }\n        ]\n      },\n      \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"created_at\": \"2024-01-01T00:00:00Z\",\n      \"default_model\": \"claude-3-7-sonnet-latest\",\n      \"email\": \"user@example.com\",\n      \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n      \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"lookup_key\": \"string\",\n      \"metadata\": {\n        \"key\": \"value\"\n      },\n      \"name\": \"Example Name\",\n      \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"org_name\": \"Example Name\",\n      \"originator\": \"deploy-pipeline\",\n      \"phone_number\": \"+15555550123\",\n      \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"source_solution\": {\n        \"solution\": {\n          \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"kind\": \"Solution\",\n          \"owners\": [\n            \"string\"\n          ],\n          \"templates\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"upgrade_available\": true,\n          \"category_keys\": [\n            \"string\"\n          ],\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"description\": \"An example description.\",\n          \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"latest_version\": \"1.0.0\",\n          \"lookup_key\": \"string\",\n          \"metadata\": {\n            \"key\": \"value\"\n          },\n          \"name\": \"Example Name\",\n          \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"org_logo\": {\n            \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"height\": 600,\n            \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n            \"mime_type\": \"application/json\",\n            \"refresh_url\": \"https://example.com\",\n            \"url\": \"https://example.com\",\n            \"width\": 800\n          },\n          \"org_name\": \"Example Name\",\n          \"org_slug\": \"example-slug\",\n          \"readme_url\": \"https://example.com\",\n          \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n          \"solution_version\": \"1.2.0\",\n          \"tag_keys\": [\n            \"string\"\n          ],\n          \"template_kind\": \"AgentTemplate\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"virtual_path\": \"string\"\n        },\n        \"template\": {\n          \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"kind\": \"agent_tool_template\",\n          \"created_at\": \"2024-01-01T00:00:00Z\",\n          \"description\": \"An example description.\",\n          \"display_name\": \"Example Name\",\n          \"lookup_key\": \"string\",\n          \"name\": \"Example Name\",\n          \"updated_at\": \"2024-01-01T00:00:00Z\",\n          \"virtual_path\": \"string\"\n        }\n      },\n      \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n      \"updated_at\": \"2024-01-01T00:00:00Z\",\n      \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n    }\n  ],\n  \"role\": \"member\",\n  \"sandbox\": \"string\",\n  \"settings\": {\n    \"agent_enabled\": true\n  },\n  \"slug\": \"example-slug\",\n  \"sub_threads\": [\n    {}\n  ],\n  \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"title\": \"Example Title\",\n  \"ttl\": 3600,\n  \"unread_count\": 5,\n  \"updated_at\": \"2024-01-01T00:00:00Z\",\n  \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3db66e20-beed-40ed-8651-8023ef49e4db",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user who will own the new thread."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skip_welcome_message\": true,\n  \"thread\": {\n    \"create_legacy_agent\": true,\n    \"description\": \"An example description.\",\n    \"is_unlisted\": true,\n    \"key\": \"string\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"muted\": true,\n    \"org_id\": \"string\",\n    \"profile_picture\": {\n      \"data\": \"string\",\n      \"filename\": \"string\",\n      \"mime_type\": \"application/json\"\n    },\n    \"settings\": {\n      \"agent_enabled\": true\n    },\n    \"title\": \"Example Title\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d205cc79-1969-4384-8aac-0fdd731ecdf0",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user who will own the new thread."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skip_welcome_message\": true,\n  \"thread\": {\n    \"create_legacy_agent\": true,\n    \"description\": \"An example description.\",\n    \"is_unlisted\": true,\n    \"key\": \"string\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"muted\": true,\n    \"org_id\": \"string\",\n    \"profile_picture\": {\n      \"data\": \"string\",\n      \"filename\": \"string\",\n      \"mime_type\": \"application/json\"\n    },\n    \"settings\": {\n      \"agent_enabled\": true\n    },\n    \"title\": \"Example Title\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f6559d5a-c29b-4e98-a797-72ecffbc231d",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":user",
+                    "threads"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user",
+                      "description": "(Required) User ID (`usr_...`) of the user who will own the new thread."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"skip_welcome_message\": true,\n  \"thread\": {\n    \"create_legacy_agent\": true,\n    \"description\": \"An example description.\",\n    \"is_unlisted\": true,\n    \"key\": \"string\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"muted\": true,\n    \"org_id\": \"string\",\n    \"profile_picture\": {\n      \"data\": \"string\",\n      \"filename\": \"string\",\n      \"mime_type\": \"application/json\"\n    },\n    \"settings\": {\n      \"agent_enabled\": true\n    },\n    \"title\": \"Example Title\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f6692196-4f06-4674-b0a9-452878217097",
+    "name": "ArchAstro Platform Activity Feed Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).",
+      "type": "text/plain"
+    }
+  }
+}

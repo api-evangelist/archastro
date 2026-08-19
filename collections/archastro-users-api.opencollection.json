@@ -1,0 +1,201 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed Users API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/me"
+          },
+          "docs": "Returns the user associated with the authenticated session or bearer\ntoken. This is the canonical way to resolve \"who am I?\" after\nauthentication.\n\nThe response includes the user's profile, notification settings, and\nprofile picture, along with the app, organization, and sandbox the\ntoken is scoped to and their display names — enough to establish full\nsession context in a single call. Unauthenticated requests return 401."
+        },
+        {
+          "info": {
+            "name": "Retrieve a user by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/:user",
+            "params": [
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`) of the user to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns the user identified by `user`. The authenticated user must share\nat least one team with the target user; requests for users outside any\nshared team are rejected with 403.\n\nA user may always retrieve their own profile with this endpoint. Use the\n`GET /users/me` endpoint as a convenience alias for retrieving the\nauthenticated user without specifying an ID."
+        },
+        {
+          "info": {
+            "name": "List a user's artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/:user/artifacts",
+            "params": [
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`). The authenticated user must be this user or have access to their artifacts."
+              }
+            ]
+          },
+          "docs": "Returns all artifacts owned by the specified user. Artifacts represent\nAI-generated or user-uploaded files associated with agent sessions,\nthreads, or sandboxes — such as images, documents, and code outputs.\n\nThe authenticated user must be requesting their own artifacts or must\nhave administrative access. Attempting to list artifacts for a user\nthe caller is not authorized to access returns 403.\n\nResults are returned in a single page without cursor pagination. Each\nartifact in the response refle"
+        },
+        {
+          "info": {
+            "name": "Create an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/:user/artifacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new artifact and stores its file content. A file payload is required;\nsupply it via the `artifact.file_content` (Base64-encoded), `artifact.file_name`,\nand `artifact.file_content_type` fields. The artifact is scoped to the owner\nresolved from the request context — either a team or a user.\n\nOptionally associate the artifact with an existing thread or agent by passing\n`artifact.thread_id` or `artifact.agent_id`. Returns 201 with the created\nartifact on success."
+        },
+        {
+          "info": {
+            "name": "Create a user invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/:user/invites",
+            "params": [
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`). Must match the authenticated user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new invite for the authenticated user. The invite can optionally be\nscoped to a specific thread, a persona, or carry arbitrary metadata. The\ncaller receives the new invite object at HTTP 201.\n\nThe invite key is always generated server-side (192-bit URL-safe random\nstring) and cannot be supplied by the caller.\n\nThe path `:user` must match the authenticated user. If a `thread_id` is\nprovided, the authenticated user must have permission to invite others to that\nthread; team threads are no"
+        },
+        {
+          "info": {
+            "name": "List organizations for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/:user/orgs",
+            "params": [
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`) whose organization membership you want to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns the organizations the specified user belongs to. A user can belong\nto at most one organization, so the `data` array contains either zero or one\nitems.\n\nThe authenticated viewer must have permission to inspect the target user.\nReturns an empty `data` array when the user has no organization membership."
+        },
+        {
+          "info": {
+            "name": "Update the current user's profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/users/:user/profile",
+            "params": [
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`) or `\"me\"` for the authenticated user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one or more profile fields for the authenticated user. All\nfields are optional; omit any you do not want to change.\n\nWhen `profile_picture` is supplied, the image is uploaded and replaces\nthe existing picture. The previous picture is deleted after the new one\nis stored. Image upload failures return 422 without modifying other\nprofile fields."
+        },
+        {
+          "info": {
+            "name": "List threads for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/users/:user/threads",
+            "params": [
+              {
+                "name": "agent",
+                "value": "string",
+                "type": "query",
+                "description": "Array of agent user IDs (`usr_...`). When provided, only threads where at least one of the listed agents is also a member are returned. Omit or pass an empty array to return all threads regardless of agent membership."
+              },
+              {
+                "name": "filter",
+                "value": "[object Object]",
+                "type": "query",
+                "description": "Array of metadata filter objects. Each filter matches threads whose `metadata` map contains the specified key/value pair. All filters must match (logical AND). Omit to return threads regardless of metadata."
+              },
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`) whose threads should be listed."
+              }
+            ]
+          },
+          "docs": "Returns all threads visible to the specified user. The authenticated caller must\nhave access to the target user's account; a 403 is returned otherwise.\n\nPass one or more `agent` IDs to narrow results to threads where at least one of\nthe listed agents is also a member — useful for displaying every thread a user\nshares with a particular agent. Pass one or more `filter` objects to narrow\nresults by thread metadata key/value pairs. Both narrowings may be combined in\na single request.\n\nResults are re"
+        },
+        {
+          "info": {
+            "name": "Create a thread for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/users/:user/threads",
+            "params": [
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`) of the user who will own the new thread."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new thread owned by the specified user. The authenticated caller must\nhave access to the target user's account; a 403 is returned otherwise.\n\nAn automatic welcome message is sent into the thread upon creation unless\n`skip_welcome_message` is set to `true`. The thread is immediately visible to\nthe owning user and any members added at creation time."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

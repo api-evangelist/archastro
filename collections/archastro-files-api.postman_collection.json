@@ -1,0 +1,396 @@
+{
+  "item": [
+    {
+      "id": "d3cb07d6-423c-400c-ba8a-ecc6f419da03",
+      "name": "Files",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "612eccd6-40f0-488f-9096-db77b030cbd3",
+          "name": "Upload a file",
+          "request": {
+            "name": "Upload a file",
+            "description": {
+              "content": "Creates a new file from base64-encoded content and returns the resulting file object,\nincluding a signed download URL. Use this endpoint to store images, documents, or\nother binary assets that can then be referenced by agents, teams, or users.\n\nApp scope is derived from the authenticated viewer's bearer token or publishable key.\nYou may optionally associate the file with an organization, team, user, or agent by\npassing the corresponding ID. If no owner is specified and the viewer is a user, the\nfile is automatically attributed to that user.\n\nReturns `422` when the `data` field is not valid base64 or the changeset is invalid.\nReturns `403` when the request lacks the required app scope.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content_type\": \"<string>\",\n  \"data\": \"<string>\",\n  \"filename\": \"<string>\",\n  \"agent\": \"<string>\",\n  \"org\": \"<string>\",\n  \"team\": \"<string>\",\n  \"user\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2dab0df9-5959-4500-8c06-c77ccd89e046",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"content_type\": \"application/json\",\n  \"data\": \"string\",\n  \"filename\": \"string\",\n  \"org\": \"string\",\n  \"team\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"content_type\": \"application/json\",\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"filename\": \"document.pdf\",\n  \"image_source\": {\n    \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"height\": 600,\n    \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"mime_type\": \"application/json\",\n    \"refresh_url\": \"https://example.com\",\n    \"url\": \"https://example.com\",\n    \"width\": 800\n  },\n  \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"size\": 1024,\n  \"updated_at\": \"2024-01-01T00:00:00Z\",\n  \"url\": \"https://example.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48ed5517-4acd-4c3b-9947-d6b3eae47252",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"content_type\": \"application/json\",\n  \"data\": \"string\",\n  \"filename\": \"string\",\n  \"org\": \"string\",\n  \"team\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "69475d08-f20c-43b1-8dc4-6abf9eedbddd",
+              "name": "Forbidden - app scope required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"content_type\": \"application/json\",\n  \"data\": \"string\",\n  \"filename\": \"string\",\n  \"org\": \"string\",\n  \"team\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c230be58-7b90-4590-8909-8cd4794d02d5",
+              "name": "Validation failed or invalid base64",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"content_type\": \"application/json\",\n  \"data\": \"string\",\n  \"filename\": \"string\",\n  \"org\": \"string\",\n  \"team\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71bf7054-2595-41cd-a877-1a38fa711f7b",
+          "name": "Fetch an agent avatar image",
+          "request": {
+            "name": "Fetch an agent avatar image",
+            "description": {
+              "content": "Returns the raw image bytes for an agent's profile picture identified by `file`.\nThis endpoint is designed for integration partners (such as Slack) that fetch\navatar URLs via plain GET requests without bearer token support. Authorization\nis performed via a short, stable capability `token` rather than an HTTP header.\n\nThe `token` is an HMAC-based capability tied to the file ID. It does not expire,\nbut it is invalidated when the agent's profile picture is replaced or the agent is\ndeleted — shared caches may continue serving the old image until the\n`Cache-Control` max-age of one hour elapses. The endpoint never redirects to\na signed storage URL; bytes are served inline so behavior is consistent across\nstorage backends.\n\nAll failure modes — invalid file ID, invalid token, file not currently referenced\nas an agent avatar — return a uniform `404` to avoid acting as an existence oracle.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "files",
+                ":file",
+                "avatar"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) HMAC capability token authorizing access to this specific file. Obtained from the avatar URL minted when the profile picture was set."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file",
+                  "description": "(Required) File ID of the agent's profile picture (`fil_...`). Must be currently set as an agent's profile picture within the same app."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5f45c1b0-6c46-4989-9212-b8acc80d3711",
+              "name": "Raw image bytes of the agent avatar, served with the file's original content type.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "files",
+                    ":file",
+                    "avatar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file",
+                      "description": "(Required) File ID of the agent's profile picture (`fil_...`). Must be currently set as an agent's profile picture within the same app."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "64a4353f-a1d8-43e7-96e7-a682e5068f22",
+              "name": "Not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "files",
+                    ":file",
+                    "avatar"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "token",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file",
+                      "description": "(Required) File ID of the agent's profile picture (`fil_...`). Must be currently set as an agent's profile picture within the same app."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "73a246d7-f46e-41ce-862c-a6c2d49900b8",
+    "name": "ArchAstro Platform Activity Feed Files API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).",
+      "type": "text/plain"
+    }
+  }
+}

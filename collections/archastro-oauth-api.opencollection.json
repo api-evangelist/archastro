@@ -1,0 +1,89 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed Oauth API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Oauth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Approve a device authorization request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth/device/approve",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Grants the pending device authorization identified by `user_code`, completing\nthe OAuth Device Authorization flow on behalf of the authenticated user. Once\napproved, the device can exchange the `device_code` for an access token.\n\nRequires a valid user session — the request must be authenticated as an end\nuser, not a machine client. The `user_code` must belong to a pending (not\nexpired, not already approved or denied) authorization associated with the\ncalling app.\n\nIf the requested scopes include"
+        },
+        {
+          "info": {
+            "name": "Initiate a device authorization request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth/device/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts the OAuth 2.0 Device Authorization flow for a device that cannot\nperform browser-based redirects. Returns a `device_code` (used by the device\nto poll for a token) and a `user_code` (shown to the user to enter at the\n`verification_uri`).\n\nThis endpoint requires a publishable API key; secret keys are rejected with\na 403. Third-party OAuth must be enabled on the app; if it is not, the\nresponse returns `error: \"third_party_oauth_not_enabled\"` with a 403.\n\nThe endpoint is rate-limited to 10 re"
+        },
+        {
+          "info": {
+            "name": "Deny a device authorization request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth/device/deny",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rejects the pending device authorization identified by `user_code`, preventing\nthe device from obtaining an access token. Once denied, the device will\nreceive an `access_denied` error on its next token poll.\n\nRequires a valid user session. The `user_code` must belong to a pending\nauthorization associated with the calling app. Attempting to deny an already\napproved, already denied, or expired authorization returns a 400."
+        },
+        {
+          "info": {
+            "name": "List available OAuth scopes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/oauth/scopes"
+          },
+          "docs": "Returns the complete set of OAuth scopes that the platform supports.\nUse this endpoint to discover which scopes are available before constructing\nan authorization request or rendering a consent UI.\n\nNo authentication is required. The response is the same for all callers."
+        },
+        {
+          "info": {
+            "name": "Exchange a grant for OAuth tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/oauth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Issues an access token and a refresh token in exchange for a valid grant.\nThree grant types are supported: `\"authorization_code\"`, `\"refresh_token\"`,\nand `\"urn:ietf:params:oauth:grant-type:device_code\"`.\n\nFor `\"authorization_code\"` grants, supply `code`, `client`, `redirect_uri`, and\noptionally `code_verifier` for PKCE flows. Each authorization code is single-use;\nconsuming it a second time returns `invalid_grant`.\n\nFor `\"refresh_token\"` grants, supply `refresh_token`. The endpoint rotates the\nr"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

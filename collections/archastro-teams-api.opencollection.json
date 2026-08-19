@@ -1,0 +1,434 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed Teams API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Teams",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/teams",
+            "params": [
+              {
+                "name": "membership",
+                "value": "string",
+                "type": "query",
+                "description": "Filter teams by membership status. `\"joined\"` returns only teams the caller is a member of. `\"joinable\"` returns ACL-visible teams the caller has not yet joined. Omit to return all visible teams."
+              },
+              {
+                "name": "search",
+                "value": "string",
+                "type": "query",
+                "description": "Full-text search string matched against team name and description."
+              },
+              {
+                "name": "page_size",
+                "value": "1",
+                "type": "query",
+                "description": "Number of teams to return per page. Defaults to 25."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number to retrieve, starting at 1. Defaults to 1."
+              },
+              {
+                "name": "metadata",
+                "value": "",
+                "type": "query",
+                "description": "Structured metadata filter expression. Only teams whose metadata satisfies the expression are returned."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of teams visible to the authenticated user, ordered\nby creation time descending. Use `membership` to narrow results to teams the\ncaller has joined or teams they are eligible to join based on their ACL\nvisibility.\n\nSupports full-text search across team name and description via `search`, and\nstructured metadata filtering via `metadata`. When `app` is present, results\nare scoped to that app and the caller must hold the corresponding app scope."
+        },
+        {
+          "info": {
+            "name": "Create a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new team and returns the created team object. The authenticated\nuser becomes the team's owner.\n\nWhen `app` is supplied, the request is scoped to that app and the caller\nmust hold the corresponding app scope. Omit `org` unless you want the team\npinned to a specific organization. A default chat thread is provisioned for\nthe team automatically after creation."
+        },
+        {
+          "info": {
+            "name": "Join a team with an invite code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/join_by_code",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a principal to a team using a 12-character invite code. The invite\ncode can be supplied as either `join_code` or `invite_code`; both are\naccepted for backwards compatibility.\n\nFor user-authenticated requests, the currently authenticated user is added\nto the team. For server-to-server requests, you must supply either `agent`\n(to add an agent) or `user` (to add a specific user by ID). If the user\nis already a member of the team, the request succeeds without creating a\nduplicate membership.\n\nT"
+        },
+        {
+          "info": {
+            "name": "Retrieve a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/teams/:team",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`) of the team to retrieve."
+              }
+            ]
+          },
+          "docs": "Returns the full team object for the given `team` ID, including its current\nmember list and all associated threads.\n\nThe authenticated user must be a member of the team or hold a role that\ngrants visibility (org admin, app scope). When `app` is supplied, the\ncaller must hold the corresponding app scope."
+        },
+        {
+          "info": {
+            "name": "Update a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/teams/:team",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`) of the team to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates one or more attributes of the team identified by `team`. Only the\nfields you provide are changed; omitted fields are left as-is.\n\nTo replace the team's profile picture, supply the `profile_picture` object\nwith base64-encoded image data. The previous picture is deleted after the\nnew one is successfully uploaded. When `app` is present, the caller must hold\nthe corresponding app scope. The caller must be a team owner or org admin."
+        },
+        {
+          "info": {
+            "name": "Delete a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/teams/:team",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`) of the team to delete."
+              }
+            ]
+          },
+          "docs": "Permanently deletes the team identified by `team`. This action is\nirreversible — all team memberships, settings, and associated data are\nremoved.\n\nThe caller must be the team owner or an org admin. When `app` is present,\nthe caller must also hold the corresponding app scope."
+        },
+        {
+          "info": {
+            "name": "List a team's artifacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/teams/:team/artifacts",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`tea_...`). The authenticated user must be a member of this team."
+              }
+            ]
+          },
+          "docs": "Returns all artifacts owned by the specified team. Artifacts represent\nAI-generated or user-uploaded files associated with agent sessions,\nthreads, or sandboxes — such as images, documents, and code outputs.\n\nThe authenticated user must be a member of the team. Attempting to list\nartifacts for a team the caller does not have access to returns 404\nrather than 403 to avoid leaking team existence.\n\nResults are returned in a single page without cursor pagination. Each\nartifact in the response reflec"
+        },
+        {
+          "info": {
+            "name": "Create an artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/artifacts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new artifact and stores its file content. A file payload is required;\nsupply it via the `artifact.file_content` (Base64-encoded), `artifact.file_name`,\nand `artifact.file_content_type` fields. The artifact is scoped to the owner\nresolved from the request context — either a team or a user.\n\nOptionally associate the artifact with an existing thread or agent by passing\n`artifact.thread_id` or `artifact.agent_id`. Returns 201 with the created\nartifact on success."
+        },
+        {
+          "info": {
+            "name": "List a team's custom objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/teams/:team/custom_objects",
+            "params": [
+              {
+                "name": "row_key",
+                "value": "string",
+                "type": "query",
+                "description": "Filter results to objects whose `row_key` exactly matches this value."
+              },
+              {
+                "name": "sort_key",
+                "value": "string",
+                "type": "query",
+                "description": "Filter results to objects whose `sort_key` exactly matches this value."
+              },
+              {
+                "name": "query",
+                "value": "string",
+                "type": "query",
+                "description": "Full-text search string matched against the schema's configured `search_fields`. When provided, results are ordered by relevance score descending instead of creation time descending."
+              },
+              {
+                "name": "limit",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of objects to return per page."
+              },
+              {
+                "name": "offset",
+                "value": "1",
+                "type": "query",
+                "description": "Number of objects to skip before returning results. Use with `limit` for page-based pagination."
+              },
+              {
+                "name": "type",
+                "value": "string",
+                "type": "query",
+                "description": "Schema type identifier (`lookup_key`) that filters results to objects of this schema."
+              },
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`). Scopes results to objects owned by this team."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of custom objects owned by the specified team,\nfiltered to a single schema type. Results are ordered by creation time\ndescending unless `query` is provided, in which case they are ordered by\nfull-text relevance score descending.\n\nUse `limit` and `offset` for page-based pagination. Use `row_key` or\n`sort_key` to narrow results to objects matching those index values.\nFull-text search via `query` operates only against the fields configured\nas `search_fields` on the schema.\n"
+        },
+        {
+          "info": {
+            "name": "Create a team custom object",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/custom_objects",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`). The team that will own the created object."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new custom object owned by the specified team. The object is\ninstantiated against the schema identified by `type` (the schema's\n`lookup_key`). All field values are validated against that schema's\nfield definitions before the object is persisted.\n\nThe authenticated user must be a member of the team with sufficient\naccess. If the team is not found or the caller lacks access, the endpoint\nreturns 404. If `type` does not match a registered schema for the team's\norganization, the endpoint a"
+        },
+        {
+          "info": {
+            "name": "Create a team invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/invite",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`tm_...`) identifying the team for which to generate the invite code."
+              }
+            ]
+          },
+          "docs": "Generates a new invite code for the specified team. The authenticated user\nmust be a member of the team with the `owner` or `admin` role.\n\nThe returned code is a short alphanumeric string that other users can\npresent to join the team. Each call produces a new code; previously issued\ncodes are not invalidated by this request."
+        },
+        {
+          "info": {
+            "name": "Join a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/join",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`) to join."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a principal to a team that is visible to the authenticated user.\n\nBy default, the currently authenticated user joins the team. Provide `agent`\nto add an agent to the team instead — the caller must already be a member of\nthe team to do so. Provide `user` (by ID) or `email` to add another user from\nyour organization — the caller must be a team owner, team admin, or org admin.\nOnly one of `agent`, `user`, or `email` may be supplied per request.\n\nIf the target principal is already a member of t"
+        },
+        {
+          "info": {
+            "name": "Leave a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/teams/:team/leave",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`) to leave."
+              }
+            ]
+          },
+          "docs": "Removes a principal from a team. By default, the authenticated user removes\nthemselves from the team. Provide `agent` to remove an agent instead — the\ncaller must be a member of the team to do so.\n\nTeam owners cannot leave their own team. To transfer ownership first, use\nthe update-membership endpoint, then call this endpoint.\n\nFor server-to-server requests, `user` is required to identify which user\nshould be removed."
+        },
+        {
+          "info": {
+            "name": "List members of a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/teams/:team/members",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`). The team whose members you want to list."
+              }
+            ]
+          },
+          "docs": "Returns all members of the specified team, including both users and agents.\nMembers are returned in a single non-paginated array ordered by join time.\n\nBearer-authenticated users must be a member of the team to retrieve its\nmember list. Developer and server-to-server callers can retrieve members for\nany team visible to their app scope. When `app` is provided, the request is\nscoped to that app and requires a valid app-scoped token."
+        },
+        {
+          "info": {
+            "name": "Remove a member or org from a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/teams/:team/members",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`). The team to remove the member from."
+              }
+            ]
+          },
+          "docs": "Removes a user, agent, or all members of an organization from the specified\nteam. Provide exactly one of `user`, `agent`, or `org` — supplying more than\none or none returns a 400 error. On success, returns 204 No Content.\n\nWhen `org` is provided, every user and agent membership belonging to that org\nis removed in a single call. The caller must be a member of the team's owning\norg to perform an org-scoped removal. You cannot target the team's owning org\nitself with this parameter.\n\nThe caller mus"
+        },
+        {
+          "info": {
+            "name": "Update a team member's role",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/teams/:team/members/:user",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`). The team whose member role you want to update."
+              },
+              {
+                "name": "user",
+                "value": "string",
+                "type": "path",
+                "description": "User ID (`usr_...`) of the existing member whose role should be changed."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changes the role of an existing user member on the specified team. Returns the\nupdated membership on success.\n\nOnly user memberships are supported by this endpoint. Attempting to update an\nagent membership returns 404. To change an agent's role, remove the existing\nmembership and re-add the agent with the desired role.\n\nThe caller must have permission to modify the team. You cannot change a member's\nrole across organization boundaries. Demoting the last owner of a team returns\n409. An invalid `r"
+        },
+        {
+          "info": {
+            "name": "List threads for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/teams/:team/threads",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`tem_...`) whose threads should be listed."
+              }
+            ]
+          },
+          "docs": "Returns all threads owned by the specified team that the authenticated caller\nhas permission to view. The caller must have access to the team; requests\nwithout team access are rejected with 404.\n\nThreads are returned in a single `data` array. Use the team-scoped thread\nendpoints to create, update, or delete individual threads."
+        },
+        {
+          "info": {
+            "name": "Create a thread for a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/threads",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`tem_...`) that will own the created thread."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new thread owned by the specified team. The authenticated caller must\nhave access to the team; requests from callers without team access are rejected\nwith 404.\n\nIf a `profile_picture` is provided in the thread params, it must be\nbase64-encoded image data. The image is uploaded and associated with the thread\nbefore creation completes. Omit `profile_picture` to skip this step.\n\nBy default the platform sends an automatic welcome message into the new thread.\nPass `skip_welcome_message: tru"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

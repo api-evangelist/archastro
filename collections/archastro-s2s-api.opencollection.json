@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed s2s API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "s2s",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a team invite (server-to-server)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/invites",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`tm_...`) identifying the team for which to generate the invite code."
+              }
+            ]
+          },
+          "docs": "Generates a new invite code for the specified team using server-to-server\nauthentication. Unlike the user-facing create endpoint, this variant does not\nrequire the caller to be a team member — it is intended for privileged\nback-end services acting on behalf of your platform.\n\nThe returned code is a short alphanumeric string that users can present to\njoin the team. Each call produces a new code; previously issued codes are\nnot invalidated by this request."
+        },
+        {
+          "info": {
+            "name": "Add a member to a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/teams/:team/members",
+            "params": [
+              {
+                "name": "team",
+                "value": "string",
+                "type": "path",
+                "description": "Team ID (`team_...`). The team to add the member to."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a user or agent as a member of the specified team and returns the new\nmembership with HTTP 201. Provide exactly one of `user` or `agent` — supplying\nboth or neither returns a 400 error.\n\nThe caller must have permission to manage the team. When an `app` is provided,\nthe request is scoped to that app and the caller must hold a valid app-scoped\ntoken. The default role is `\"member\"` when `role` is omitted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

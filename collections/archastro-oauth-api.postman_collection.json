@@ -1,0 +1,869 @@
+{
+  "item": [
+    {
+      "id": "82f9a4d1-6180-4135-bbdf-14c003e70f80",
+      "name": "Oauth",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "00ecbf26-48a7-4e69-a0ff-b24f910fbc91",
+          "name": "Approve a device authorization request",
+          "request": {
+            "name": "Approve a device authorization request",
+            "description": {
+              "content": "Grants the pending device authorization identified by `user_code`, completing\nthe OAuth Device Authorization flow on behalf of the authenticated user. Once\napproved, the device can exchange the `device_code` for an access token.\n\nRequires a valid user session — the request must be authenticated as an end\nuser, not a machine client. The `user_code` must belong to a pending (not\nexpired, not already approved or denied) authorization associated with the\ncalling app.\n\nIf the requested scopes include a `thread`-scoped permission, you must supply\nthe `thread` parameter; omitting it returns a 400 with `error: \"invalid_scope\"`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "device",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_code\": \"<string>\",\n  \"thread\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fb654f27-f298-4342-9e4c-dd91cf58e204",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"thread\": \"string\",\n  \"user_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"approved\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db78b8dc-1dfa-48a8-9050-43867a6e5977",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"thread\": \"string\",\n  \"user_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9cf0178f-a22a-4629-9ceb-5daf16135a1d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"thread\": \"string\",\n  \"user_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5daddd3-adf9-4eae-9193-0ec5f539c6fe",
+          "name": "Initiate a device authorization request",
+          "request": {
+            "name": "Initiate a device authorization request",
+            "description": {
+              "content": "Starts the OAuth 2.0 Device Authorization flow for a device that cannot\nperform browser-based redirects. Returns a `device_code` (used by the device\nto poll for a token) and a `user_code` (shown to the user to enter at the\n`verification_uri`).\n\nThis endpoint requires a publishable API key; secret keys are rejected with\na 403. Third-party OAuth must be enabled on the app; if it is not, the\nresponse returns `error: \"third_party_oauth_not_enabled\"` with a 403.\n\nThe endpoint is rate-limited to 10 requests per IP per minute. Excess\nrequests receive a 429 response. The returned codes expire after\n`expires_in` seconds; once expired, a new authorization request must be\ninitiated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "device",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client\": \"<string>\",\n  \"scope\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "38fc2fa3-d6fa-4bd9-8abf-394e11204c3b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"scope\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"device_code\": \"string\",\n  \"expires_in\": 1800,\n  \"interval\": 5,\n  \"user_code\": \"WDJB-MJHT\",\n  \"verification_uri\": \"https://example.com\",\n  \"verification_uri_complete\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "775775e9-5329-4eb2-8959-579055c949b9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"scope\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0690f497-20f2-4b08-97c3-32414aae14a4",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"scope\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87174a16-99a8-430d-af7b-79d3461e3f87",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"scope\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d73eba9a-a6e9-45d9-bf2c-d042b5f40be3",
+          "name": "Deny a device authorization request",
+          "request": {
+            "name": "Deny a device authorization request",
+            "description": {
+              "content": "Rejects the pending device authorization identified by `user_code`, preventing\nthe device from obtaining an access token. Once denied, the device will\nreceive an `access_denied` error on its next token poll.\n\nRequires a valid user session. The `user_code` must belong to a pending\nauthorization associated with the calling app. Attempting to deny an already\napproved, already denied, or expired authorization returns a 400.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "device",
+                "deny"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_code\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "73012ed6-bdf3-418b-a8b7-38e220e98954",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"approved\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b68cf96-2a65-436f-8829-a4fbf2c0a395",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c4f1fe6-934a-458c-bbb6-cf7d36945f90",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "device",
+                    "deny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_code\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e12b2cfc-8c43-42b9-a5da-ae74ebdf0931",
+          "name": "List available OAuth scopes",
+          "request": {
+            "name": "List available OAuth scopes",
+            "description": {
+              "content": "Returns the complete set of OAuth scopes that the platform supports.\nUse this endpoint to discover which scopes are available before constructing\nan authorization request or rendering a consent UI.\n\nNo authentication is required. The response is the same for all callers.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "scopes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "62f0eeaf-22c6-4c6d-a901-f6742ef2ef4c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "scopes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"scopes\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "743e06d5-ea8f-4138-923a-0fd70e6bd0e5",
+          "name": "Exchange a grant for OAuth tokens",
+          "request": {
+            "name": "Exchange a grant for OAuth tokens",
+            "description": {
+              "content": "Issues an access token and a refresh token in exchange for a valid grant.\nThree grant types are supported: `\"authorization_code\"`, `\"refresh_token\"`,\nand `\"urn:ietf:params:oauth:grant-type:device_code\"`.\n\nFor `\"authorization_code\"` grants, supply `code`, `client`, `redirect_uri`, and\noptionally `code_verifier` for PKCE flows. Each authorization code is single-use;\nconsuming it a second time returns `invalid_grant`.\n\nFor `\"refresh_token\"` grants, supply `refresh_token`. The endpoint rotates the\nrefresh token on every call and returns a fresh pair of tokens.\n\nFor device-code grants, supply `device_code` and `client`. Poll this endpoint\nafter receiving `authorization_pending` until the user approves or the code\nexpires. Slow down polling if you receive `slow_down`.\n\nThis endpoint is rate-limited to 20 requests per IP per 60 seconds. Exceeding\nthe limit returns HTTP 429 with `\"error\": \"too_many_requests\"`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"grant_type\": \"<string>\",\n  \"client\": \"<string>\",\n  \"code\": \"<string>\",\n  \"code_verifier\": \"<string>\",\n  \"device_code\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"refresh_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6da2d369-1916-4295-8cc4-69537372a99a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"code\": \"string\",\n  \"code_verifier\": \"string\",\n  \"device_code\": \"string\",\n  \"grant_type\": \"string\",\n  \"redirect_uri\": \"https://example.com\",\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\",\n  \"refresh_token\": \"string\",\n  \"scope\": \"read write\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "514b50ba-743c-45c0-90cd-98b90a51dfb7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"code\": \"string\",\n  \"code_verifier\": \"string\",\n  \"device_code\": \"string\",\n  \"grant_type\": \"string\",\n  \"redirect_uri\": \"https://example.com\",\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fd694489-ac3f-4bda-97bb-da182e5fee57",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"code\": \"string\",\n  \"code_verifier\": \"string\",\n  \"device_code\": \"string\",\n  \"grant_type\": \"string\",\n  \"redirect_uri\": \"https://example.com\",\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dff6b684-c1dc-406f-a6a0-3dd247d71b5a",
+              "name": "Rate limited",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client\": \"string\",\n  \"code\": \"string\",\n  \"code_verifier\": \"string\",\n  \"device_code\": \"string\",\n  \"grant_type\": \"string\",\n  \"redirect_uri\": \"https://example.com\",\n  \"refresh_token\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bc2e6d88-abe1-47ff-b6bc-534b146f7022",
+    "name": "ArchAstro Platform Activity Feed Oauth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).",
+      "type": "text/plain"
+    }
+  }
+}

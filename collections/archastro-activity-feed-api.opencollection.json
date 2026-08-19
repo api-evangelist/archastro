@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Activity Feed",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List activity feed entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/activity_feed",
+            "params": [
+              {
+                "name": "limit",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of entries to return per page. Defaults to 50; maximum is 100."
+              },
+              {
+                "name": "kind",
+                "value": "string",
+                "type": "query",
+                "description": "One or more entry kinds to include. Accepted values: routine_run, automation_run, thread_story, agent_quality_verdict, generic. Omit to return all kinds."
+              },
+              {
+                "name": "level",
+                "value": "string",
+                "type": "query",
+                "description": "One or more severity levels to include. Accepted values: debug, info, warn, error, audit. Omit to return all levels."
+              },
+              {
+                "name": "after_cursor",
+                "value": "string",
+                "type": "query",
+                "description": "Opaque cursor from a previous response's `after_cursor` field. Returns entries newer than the cursor's position."
+              },
+              {
+                "name": "before_cursor",
+                "value": "string",
+                "type": "query",
+                "description": "Opaque cursor from a previous response's `before_cursor` field. Returns entries older than the cursor's position."
+              },
+              {
+                "name": "agent",
+                "value": "string",
+                "type": "query",
+                "description": "Restrict results to entries associated with these agent IDs (`agt_...`). Accepts multiple values."
+              },
+              {
+                "name": "org",
+                "value": "string",
+                "type": "query",
+                "description": "Restrict results to entries associated with these organization IDs (`org_...`). Accepts multiple values."
+              },
+              {
+                "name": "team",
+                "value": "string",
+                "type": "query",
+                "description": "Restrict results to entries associated with these team IDs (`tem_...`). Accepts multiple values."
+              },
+              {
+                "name": "thread",
+                "value": "string",
+                "type": "query",
+                "description": "Restrict results to entries associated with these thread IDs (`thr_...`). Accepts multiple values."
+              },
+              {
+                "name": "correlation_id",
+                "value": "string",
+                "type": "query",
+                "description": "Restrict results to entries that share this correlation group identifier. Useful for tracing a chain of related events."
+              }
+            ]
+          },
+          "docs": "Returns a cursor-paginated list of activity feed entries visible to the\nauthenticated user. Entries are ordered from newest to oldest by default.\nUse `before_cursor` to page backward and `after_cursor` to page forward.\n\nResults are scoped to the caller's app. All filter params are optional and\ncan be combined. Passing multiple values in an array filter returns entries\nmatching any of the supplied values (OR semantics).\n\nInvalid `kind` or `level` values return a 400 error listing the accepted\nval"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,149 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed auth API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List supported auth methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/auth/allowed_auth_methods"
+          },
+          "docs": "Returns the complete catalogue of authentication methods the platform supports,\nincluding each method's stable slug, user-facing name, and description.\n\nUse this endpoint to render method labels in sign-in UIs or org settings screens\nwithout hardcoding copy or maintaining your own enum list. Results reflect the\nplatform's source-of-truth catalogue and are consistent across all orgs.\n\nThis endpoint requires only a publishable key and is accessible without an active\nuser session, making it suitabl"
+        },
+        {
+          "info": {
+            "name": "Authenticate with email and password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates a user with an email address and password and returns a short-lived\naccess token, a refresh token, and the authenticated user object. Use the refresh\ntoken with the `/auth/refresh` endpoint to obtain new access tokens without\nre-authenticating.\n\nPassword login must be enabled for the app; apps that have disabled password\nauthentication return HTTP 403. Requests are rate-limited per IP (10 per minute)\nand per email-IP pair (5 per minute) — exceeding either limit returns HTTP 429."
+        },
+        {
+          "info": {
+            "name": "Request a magic link for login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/login/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a magic link to the given email address so an existing user can sign in\nwithout a password. The user clicks the link in their email and is redirected to\n`redirect_uri` with a token; pass that token to `/auth/verify_link` to obtain\nsession tokens.\n\nIf no account exists for the email, the endpoint still returns success to prevent\nemail enumeration — no link is sent in that case. Both `email` and `redirect_uri`\nare required. Requests are rate-limited per IP (10 per minute) and per email-IP pa"
+        },
+        {
+          "info": {
+            "name": "Refresh an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchanges a valid refresh token for a new access token and a new refresh token,\nrotating the refresh token on every call. The response also includes the updated\nuser object. Store the new refresh token and discard the old one.\n\nRefresh tokens are single-use — submitting an already-consumed token returns HTTP 401.\nRate limiting is applied per (user, IP) pair when the token can be verified, and\nfalls back to IP-only when it cannot. The limit is 30 exchanges per minute per\nbucket; exceeding it retu"
+        },
+        {
+          "info": {
+            "name": "Register a new user with email and password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new user account and returns an access token, refresh token, and the new\nuser object. Two registration paths are supported:\n\n- **Team registration**: supply `team_invite` with a valid team invite ID. The new\n  user is added to that team immediately upon registration. Returns HTTP 404 if the\n  invite is not found.\n- **Standard registration**: supply `password`. An `invite_code` may optionally be\n  included for invite-gated apps; an invalid code returns HTTP 404.\n\nExactly one of `team_in"
+        },
+        {
+          "info": {
+            "name": "Request a magic link for registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/register/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a passwordless registration flow by sending a verification link to the given\nemail address. The recipient clicks the link and is redirected to `redirect_uri` with\na token; pass that token to `/auth/verify_link` to complete registration and obtain\nsession tokens.\n\nProfile fields (`full_name`, `alias`, `timezone`) are captured now and applied when\nthe link is verified. Requests are rate-limited per IP (10 per minute) and per\nemail-IP pair (3 per minute) — exceeding either limit returns HTTP"
+        },
+        {
+          "info": {
+            "name": "Request a magic link for login or registration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/request/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends a passwordless magic link to the given email address. If an account with that\nemail already exists, a login link is sent. If no account exists, a registration link\nis sent and the recipient completes sign-up by clicking through. This unified endpoint\nlets you implement a single email-entry UI that handles both cases transparently.\n\nThe `redirect_uri` is validated against the app's registered hosts; an unregistered\nURI returns HTTP 400. Both `email` and `redirect_uri` are required. Requests"
+        },
+        {
+          "info": {
+            "name": "Exchange a one-time login token for session tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Consumes a single-use login token delivered via email and returns an access token,\nrefresh token, and the authenticated user object. One-time tokens are issued by the\npasswordless login flow and expire after a short window; submitting an expired or\nalready-used token returns HTTP 401.\n\nIf `timezone` is provided and the user's current timezone is still the default\n(`\"America/Los_Angeles\"`), the account timezone is updated in the same request.\nRequests are rate-limited to 10 per IP per minute; exc"
+        },
+        {
+          "info": {
+            "name": "Verify a magic link token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/verify/link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Consumes a single-use token from a magic link URL and returns an access token,\nrefresh token, and the authenticated user object. This endpoint completes both the\nlogin flow (initiated by `/auth/request_login_link`) and the registration flow\n(initiated by `/auth/request_register_link` or `/auth/request_link`).\n\nExtract the token from the `token` query parameter of the magic link redirect URI\nand POST it here. Expired or already-used tokens return HTTP 401. If the app has\ndisabled passwordless aut"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

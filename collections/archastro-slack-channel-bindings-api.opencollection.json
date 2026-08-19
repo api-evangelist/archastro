@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed Slack Channel Bindings API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Slack Channel Bindings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Slack channel bindings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/slack_channel_bindings",
+            "params": [
+              {
+                "name": "per_page",
+                "value": "1",
+                "type": "query",
+                "description": "Number of bindings to return per page. Defaults to 25; maximum is 100."
+              },
+              {
+                "name": "page",
+                "value": "1",
+                "type": "query",
+                "description": "Page number to retrieve, 1-indexed. Defaults to 1. Must be a positive integer."
+              },
+              {
+                "name": "team",
+                "value": "string",
+                "type": "query",
+                "description": "Return only bindings bound to one of these team IDs. Omit to return bindings for all teams."
+              },
+              {
+                "name": "org",
+                "value": "string",
+                "type": "query",
+                "description": "Return only bindings that belong to one of these organization IDs. Omit to return bindings across all organizations visible to the caller."
+              },
+              {
+                "name": "agent",
+                "value": "string",
+                "type": "query",
+                "description": "Return only bindings that have at least one of these agent user IDs attached. Omit to return bindings regardless of agent attachment."
+              },
+              {
+                "name": "integration",
+                "value": "string",
+                "type": "query",
+                "description": "Return only bindings whose Slack integration matches one of these integration IDs. Omit to return bindings across all integrations."
+              }
+            ]
+          },
+          "docs": "Returns a page of Slack channel bindings visible to the authenticated user.\nResults can be filtered by integration, team, agent, or organization. Omit all\nfilter params to retrieve every binding the caller can see.\n\nPagination is page-based. Pass `page` and `per_page` to navigate large result\nsets. `page` must be a positive integer; `per_page` must be between 1 and 100.\nInvalid values return 400."
+        },
+        {
+          "info": {
+            "name": "Create or update a Slack channel binding",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/slack_channel_bindings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new binding between a Slack channel and a team, or updates the\nexisting binding if one already exists for the given channel. The caller also\nsupplies a list of agents to attach to the binding and enroll as members of the\ndestination team.\n\nThe caller must have team-manage rights on the destination team (and on the\ncurrently bound team if the channel is being re-pointed). Returns 403 if\npermission is insufficient. All write steps are idempotent, so retrying after\na partial failure is sa"
+        },
+        {
+          "info": {
+            "name": "Retrieve a Slack channel binding",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/slack_channel_bindings/:channel",
+            "params": [
+              {
+                "name": "channel",
+                "value": "string",
+                "type": "path",
+                "description": "Slack channel ID of the binding to retrieve (e.g. `C01234ABCDE`)."
+              },
+              {
+                "name": "slack_team_id",
+                "value": "string",
+                "type": "query",
+                "description": "Slack workspace team ID that the channel belongs to (e.g. `T01234ABCDE`). Used together with `channel` to uniquely identify the binding."
+              }
+            ]
+          },
+          "docs": "Returns the Slack channel binding identified by a Slack channel ID and workspace\nteam ID pair. Use this endpoint to look up the team and agents currently bound\nto a specific Slack channel.\n\nThe `channel` path parameter is the Slack channel ID; `slack_team_id` identifies\nthe Slack workspace the channel belongs to, disambiguating channels with the same\nID across workspaces. Both parameters are required. Returns 404 if no binding\nexists for the given pair or the associated Slack integration is not "
+        },
+        {
+          "info": {
+            "name": "Delete a Slack channel binding",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/slack_channel_bindings/:channel",
+            "params": [
+              {
+                "name": "channel",
+                "value": "string",
+                "type": "path",
+                "description": "Slack channel ID of the binding to delete (e.g. `C01234ABCDE`)."
+              }
+            ]
+          },
+          "docs": "Removes the binding between a Slack channel and its associated team. The\nchannel is identified by its Slack channel ID together with the `slack_team_id`\nthat scopes it to a specific Slack workspace. Removing the binding does not\ndelete the bound team or any conversation threads scoped to it; decommission\nthose resources separately if required.\n\nThe caller must have team-manage rights on the team the channel is currently\nbound to. Returning 403 indicates insufficient permission; returning 404\nind"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

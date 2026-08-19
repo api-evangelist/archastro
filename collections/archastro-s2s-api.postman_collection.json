@@ -1,0 +1,470 @@
+{
+  "item": [
+    {
+      "id": "bf4ade65-7a51-473c-863e-980df861d6e0",
+      "name": "s2s",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f04aa3cb-2a95-4dfe-80b5-99ce3d53d4db",
+          "name": "Create a team invite (server-to-server)",
+          "request": {
+            "name": "Create a team invite (server-to-server)",
+            "description": {
+              "content": "Generates a new invite code for the specified team using server-to-server\nauthentication. Unlike the user-facing create endpoint, this variant does not\nrequire the caller to be a team member — it is intended for privileged\nback-end services acting on behalf of your platform.\n\nThe returned code is a short alphanumeric string that users can present to\njoin the team. Each call produces a new code; previously issued codes are\nnot invalidated by this request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                ":team",
+                "invites"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "team",
+                  "description": "(Required) Team ID (`tm_...`) identifying the team for which to generate the invite code."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29f98591-c0bc-46f2-9c1e-3d7632825b9f",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`tm_...`) identifying the team for which to generate the invite code."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f08a2e7-de46-4bbc-b916-ae6665c675d0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`tm_...`) identifying the team for which to generate the invite code."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5cb82a50-b2db-411f-acdc-aebf27caba1f",
+              "name": "Team not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "invites"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`tm_...`) identifying the team for which to generate the invite code."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "78ee83f7-ac34-40e8-97c0-9f83b09a489c",
+          "name": "Add a member to a team",
+          "request": {
+            "name": "Add a member to a team",
+            "description": {
+              "content": "Adds a user or agent as a member of the specified team and returns the new\nmembership with HTTP 201. Provide exactly one of `user` or `agent` — supplying\nboth or neither returns a 400 error.\n\nThe caller must have permission to manage the team. When an `app` is provided,\nthe request is scoped to that app and the caller must hold a valid app-scoped\ntoken. The default role is `\"member\"` when `role` is omitted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "teams",
+                ":team",
+                "members"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "team",
+                  "description": "(Required) Team ID (`team_...`). The team to add the member to."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"agent\": \"<string>\",\n  \"role\": \"<string>\",\n  \"user\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "67f67958-bbe3-4367-bf6a-079161c92290",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`team_...`). The team to add the member to."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"role\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"tmb_0aBcDeFgHiJkLmNoPqRsTu\",\n  \"agent\": {\n    \"id\": \"agi_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"acl\": {\n      \"add\": [\n        {\n          \"actions\": [\n            \"read\",\n            \"write\"\n          ],\n          \"principal\": \"string\",\n          \"principal_type\": \"user\"\n        }\n      ],\n      \"grants\": [\n        {\n          \"actions\": [\n            \"read\",\n            \"write\"\n          ],\n          \"principal\": \"string\",\n          \"principal_type\": \"user\"\n        }\n      ],\n      \"remove\": [\n        {\n          \"principal\": \"string\",\n          \"principal_type\": \"user\"\n        }\n      ]\n    },\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"created_at\": \"2024-01-01T00:00:00Z\",\n    \"default_model\": \"claude-3-7-sonnet-latest\",\n    \"email\": \"user@example.com\",\n    \"identity\": \"You are a helpful assistant that answers questions about ArchAstro products.\",\n    \"last_applied_template_config\": \"cfg_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"lookup_key\": \"string\",\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"originator\": \"deploy-pipeline\",\n    \"phone_number\": \"+15555550123\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"source_solution\": {\n      \"solution\": {\n        \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"kind\": \"Solution\",\n        \"owners\": [\n          \"string\"\n        ],\n        \"templates\": [\n          {\n            \"description\": \"An example description.\",\n            \"display_name\": \"Example Name\",\n            \"kind\": \"AgentTemplate\",\n            \"lookup_key\": \"string\",\n            \"name\": \"Example Name\",\n            \"readme_url\": \"https://example.com\",\n            \"virtual_path\": \"string\"\n          },\n          {\n            \"description\": \"An example description.\",\n            \"display_name\": \"Example Name\",\n            \"kind\": \"AgentTemplate\",\n            \"lookup_key\": \"string\",\n            \"name\": \"Example Name\",\n            \"readme_url\": \"https://example.com\",\n            \"virtual_path\": \"string\"\n          }\n        ],\n        \"upgrade_available\": true,\n        \"category_keys\": [\n          \"string\"\n        ],\n        \"created_at\": \"2024-01-01T00:00:00Z\",\n        \"description\": \"An example description.\",\n        \"latest_solution\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"latest_version\": \"1.0.0\",\n        \"lookup_key\": \"string\",\n        \"metadata\": {\n          \"key\": \"value\"\n        },\n        \"name\": \"Example Name\",\n        \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"org_logo\": {\n          \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"height\": 600,\n          \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n          \"mime_type\": \"application/json\",\n          \"refresh_url\": \"https://example.com\",\n          \"url\": \"https://example.com\",\n          \"width\": 800\n        },\n        \"org_name\": \"Example Name\",\n        \"org_slug\": \"example-slug\",\n        \"readme_url\": \"https://example.com\",\n        \"solution_id\": \"01234567-89ab-cdef-0123-456789abcdef\",\n        \"solution_version\": \"1.2.0\",\n        \"tag_keys\": [\n          \"string\"\n        ],\n        \"template_kind\": \"AgentTemplate\",\n        \"updated_at\": \"2024-01-01T00:00:00Z\",\n        \"virtual_path\": \"string\"\n      },\n      \"template\": {\n        \"id\": \"id_0aBcDeFgHiJkLmNoPqRsTu\",\n        \"kind\": \"agent_tool_template\",\n        \"created_at\": \"2024-01-01T00:00:00Z\",\n        \"description\": \"An example description.\",\n        \"display_name\": \"Example Name\",\n        \"lookup_key\": \"string\",\n        \"name\": \"Example Name\",\n        \"updated_at\": \"2024-01-01T00:00:00Z\",\n        \"virtual_path\": \"string\"\n      }\n    },\n    \"team\": \"tem_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"updated_at\": \"2024-01-01T00:00:00Z\",\n    \"user\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\"\n  },\n  \"created_at\": \"2024-01-01T00:00:00Z\",\n  \"joined_at\": \"2024-01-01T00:00:00Z\",\n  \"metadata\": {\n    \"key\": \"value\"\n  },\n  \"name\": \"Example Name\",\n  \"profile_picture\": {\n    \"file\": \"fil_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"height\": 600,\n    \"media\": \"med_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"mime_type\": \"application/json\",\n    \"refresh_url\": \"https://example.com\",\n    \"url\": \"https://example.com\",\n    \"width\": 800\n  },\n  \"role\": \"member\",\n  \"team\": {},\n  \"type\": \"user\",\n  \"updated_at\": \"2024-01-01T00:00:00Z\",\n  \"user\": {\n    \"id\": \"usr_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"alias\": \"jdoe\",\n    \"app\": \"dap_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"app_name\": \"Example Name\",\n    \"email\": \"user@example.com\",\n    \"is_system_user\": true,\n    \"metadata\": {\n      \"key\": \"value\"\n    },\n    \"name\": \"Example Name\",\n    \"org\": \"org_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"org_name\": \"Example Name\",\n    \"org_role\": \"member\",\n    \"sandbox\": \"dsb_0aBcDeFgHiJkLmNoPqRsTu\",\n    \"sandbox_name\": \"Example Name\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44ff8c3b-638e-496b-b050-87817cead31a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`team_...`). The team to add the member to."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"role\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "afaf2ada-774a-4da9-bff2-cfb1d013bf80",
+              "name": "Team or member not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`team_...`). The team to add the member to."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"role\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62baca55-d78e-410c-b3ee-38bcaa65a60e",
+              "name": "Validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "teams",
+                    ":team",
+                    "members"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "team",
+                      "description": "(Required) Team ID (`team_...`). The team to add the member to."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"agent\": \"string\",\n  \"role\": \"string\",\n  \"user\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d3f3b6a2-1cd7-4b5a-a94d-7f3d4e419dc7",
+    "name": "ArchAstro Platform Activity Feed s2s API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "ArchAstro Platform Activity Feed Files API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/files",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new file from base64-encoded content and returns the resulting file object,\nincluding a signed download URL. Use this endpoint to store images, documents, or\nother binary assets that can then be referenced by agents, teams, or users.\n\nApp scope is derived from the authenticated viewer's bearer token or publishable key.\nYou may optionally associate the file with an organization, team, user, or agent by\npassing the corresponding ID. If no owner is specified and the viewer is a user, the\n"
+        },
+        {
+          "info": {
+            "name": "Fetch an agent avatar image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/files/:file/avatar",
+            "params": [
+              {
+                "name": "file",
+                "value": "string",
+                "type": "path",
+                "description": "File ID of the agent's profile picture (`fil_...`). Must be currently set as an agent's profile picture within the same app."
+              },
+              {
+                "name": "token",
+                "value": "string",
+                "type": "query",
+                "description": "HMAC capability token authorizing access to this specific file. Obtained from the avatar URL minted when the profile picture was set."
+              }
+            ]
+          },
+          "docs": "Returns the raw image bytes for an agent's profile picture identified by `file`.\nThis endpoint is designed for integration partners (such as Slack) that fetch\navatar URLs via plain GET requests without bearer token support. Authorization\nis performed via a short, stable capability `token` rather than an HTTP header.\n\nThe `token` is an HMAC-based capability tied to the file ID. It does not expire,\nbut it is invalidated when the agent's profile picture is replaced or the agent is\ndeleted — shared "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
