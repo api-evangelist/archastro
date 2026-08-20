@@ -105,6 +105,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - Authentication
+  tags_raw:
   - auth
   properties:
   - type: OpenAPI
@@ -131,6 +133,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -157,6 +161,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - Authentication
+  tags_raw:
   - Oauth
   properties:
   - type: OpenAPI
@@ -183,6 +189,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - S2S
+  tags_raw:
   - s2s
   properties:
   - type: OpenAPI
@@ -236,6 +244,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - Team
+  tags_raw:
   - Teams
   properties:
   - type: OpenAPI
@@ -288,6 +298,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
