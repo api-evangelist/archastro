@@ -201,7 +201,7 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
-  - S2S
+  - s2s
   tags_raw:
   - s2s
   properties:
