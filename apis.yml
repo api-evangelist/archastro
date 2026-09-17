@@ -167,34 +167,6 @@ apis:
     url: asyncapi/archastro-webhooks.yml
   - type: Sandbox
     url: sandbox/archastro-sandbox.yml
-- aid: archastro:archastro-oauth-api
-  name: Archastro Oauth API
-  description: The Oauth API from Archastro — 5 operation(s) for oauth.
-  humanURL: https://docs.archastro.ai/docs/api-reference
-  baseURL: https://developers.archastro.ai
-  tags:
-  - Authentication
-  tags_raw:
-  - Oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/archastro-oauth-api-openapi.yml
-  - type: Authentication
-    url: authentication/archastro-authentication.yml
-  - type: Conventions
-    url: conventions/archastro-conventions.yml
-  - type: Idempotency
-    url: conventions/archastro-conventions.yml
-  - type: ErrorCatalog
-    url: errors/archastro-problem-types.yml
-  - type: DataModel
-    url: data-model/archastro-data-model.yml
-  - type: Conformance
-    url: conformance/archastro-conformance.yml
-  - type: Webhooks
-    url: asyncapi/archastro-webhooks.yml
-  - type: Sandbox
-    url: sandbox/archastro-sandbox.yml
 - aid: archastro:archastro-s2s-api
   name: Archastro s2s API
   description: The s2s API from Archastro — 2 operation(s) for s2s.
@@ -316,6 +288,32 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/archastro-users-api-openapi.yml
+  - type: Authentication
+    url: authentication/archastro-authentication.yml
+  - type: Conventions
+    url: conventions/archastro-conventions.yml
+  - type: Idempotency
+    url: conventions/archastro-conventions.yml
+  - type: ErrorCatalog
+    url: errors/archastro-problem-types.yml
+  - type: DataModel
+    url: data-model/archastro-data-model.yml
+  - type: Conformance
+    url: conformance/archastro-conformance.yml
+  - type: Webhooks
+    url: asyncapi/archastro-webhooks.yml
+  - type: Sandbox
+    url: sandbox/archastro-sandbox.yml
+- aid: archastro:archastro-oauth-api
+  name: Archastro OAUTH API
+  description: The Oauth API from Archastro — 5 operation(s) for oauth.
+  humanURL: https://docs.archastro.ai/docs/api-reference
+  baseURL: https://developers.archastro.ai
+  tags:
+  - Oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/archastro-oauth-api-openapi.yml
   - type: Authentication
     url: authentication/archastro-authentication.yml
   - type: Conventions
