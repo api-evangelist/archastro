@@ -310,6 +310,8 @@ apis:
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
   tags:
+  - Authentication
+  tags_raw:
   - Oauth
   properties:
   - type: OpenAPI
