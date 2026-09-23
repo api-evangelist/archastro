@@ -1,10 +1,10 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).
-  title: ArchAstro Platform Activity Feed auth API
+  title: ArchAstro Platform Auth API
   version: v1
 tags:
-- name: auth
+- name: Auth
 paths:
   /api/v1/auth/allowed_auth_methods:
     get:
@@ -76,7 +76,7 @@ paths:
           description: Successful response
       summary: List supported auth methods
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
   /api/v1/auth/login:
@@ -133,7 +133,7 @@ paths:
           description: Rate limited
       summary: Authenticate with email and password
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
   /api/v1/auth/login/link:
@@ -183,7 +183,7 @@ paths:
           description: Rate limited
       summary: Request a magic link for login
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
       x-sdk-name: request_login_magic_link
@@ -233,12 +233,32 @@ paths:
           description: Rate limited
       summary: Refresh an access token
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
   /api/v1/auth/register:
     post:
-      description: "Creates a new user account and returns an access token, refresh token, and the new\nuser object. Two registration paths are supported:\n\n- **Team registration**: supply `team_invite` with a valid team invite ID. The new\n  user is added to that team immediately upon registration. Returns HTTP 404 if the\n  invite is not found.\n- **Standard registration**: supply `password`. An `invite_code` may optionally be\n  included for invite-gated apps; an invalid code returns HTTP 404.\n\nExactly one of `team_invite` or `password` must be provided; omitting both returns\nHTTP 400. Password registration must be enabled for the app; disabled apps return\nHTTP 403. The response status is HTTP 201 on success."
+      description: 'Creates a new user account and returns an access token, refresh token, and the new
+
+        user object. Two registration paths are supported:
+
+
+        - **Team registration**: supply `team_invite` with a valid team invite ID. The new
+
+        user is added to that team immediately upon registration. Returns HTTP 404 if the
+
+        invite is not found.
+
+        - **Standard registration**: supply `password`. An `invite_code` may optionally be
+
+        included for invite-gated apps; an invalid code returns HTTP 404.
+
+
+        Exactly one of `team_invite` or `password` must be provided; omitting both returns
+
+        HTTP 400. Password registration must be enabled for the app; disabled apps return
+
+        HTTP 403. The response status is HTTP 201 on success.'
       operationId: post_api_v1_auth_register
       parameters: []
       requestBody:
@@ -303,7 +323,7 @@ paths:
           description: Validation failed
       summary: Register a new user with email and password
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
   /api/v1/auth/register/link:
@@ -370,7 +390,7 @@ paths:
           description: Rate limited
       summary: Request a magic link for registration
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
       x-sdk-name: request_register_magic_link
@@ -423,7 +443,7 @@ paths:
           description: Rate limited
       summary: Request a magic link for login or registration
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
       x-sdk-name: request_magic_link
@@ -482,7 +502,7 @@ paths:
           description: Token exchange failed
       summary: Exchange a one-time login token for session tokens
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
       x-sdk-name: exchange_login_token
@@ -536,12 +556,71 @@ paths:
           description: Rate limited
       summary: Verify a magic link token
       tags:
-      - auth
+      - Auth
       x-auth:
       - publishable_key
       x-sdk-name: verify_magic_link
 components:
   schemas:
+    AuthTokens:
+      description: Credential bundle returned after a successful authentication exchange. Contains the access token, refresh token, and the authenticated user.
+      example:
+        expires_in: 3600
+        metadata:
+          key: value
+        refresh_token: rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        token_type: Bearer
+        user:
+          alias: jdoe
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+          app_name: Example Name
+          email: user@example.com
+          id: usr_0aBcDeFgHiJkLmNoPqRsTu
+          is_system_user: true
+          metadata:
+            key: value
+          name: Example Name
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          org_name: Example Name
+          org_role: member
+          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          sandbox_name: Example Name
+      properties:
+        expires_in:
+          description: Number of seconds until `token` expires. After this period, use `refresh_token` to obtain a new access token.
+          example: 3600
+          type: integer
+          x-sdk: token_expiry
+        metadata:
+          description: Optional auxiliary data associated with this authentication event, such as `onboarding_job_id` when the user is completing onboarding. `null` when no extra context is present.
+          example:
+            key: value
+          type: object
+        refresh_token:
+          description: Long-lived opaque refresh token. Use this to obtain a new access token when `token` expires.
+          example: rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+          type: string
+          x-sdk: refresh_token
+        token:
+          description: 'Short-lived JWT access token. Include this value in the `Authorization: Bearer <token>` header for all authenticated API requests.'
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+          type: string
+          x-sdk: access_token
+        token_type:
+          description: Token scheme. Always `"Bearer"`.
+          example: Bearer
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+          description: The user who authenticated. Contains the user's profile and account details.
+      required:
+      - expires_in
+      - refresh_token
+      - token
+      - token_type
+      - user
+      type: object
     User:
       description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
       example:
@@ -615,65 +694,6 @@ components:
           type: string
       required:
       - id
-      type: object
-    AuthTokens:
-      description: Credential bundle returned after a successful authentication exchange. Contains the access token, refresh token, and the authenticated user.
-      example:
-        expires_in: 3600
-        metadata:
-          key: value
-        refresh_token: rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
-        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-        token_type: Bearer
-        user:
-          alias: jdoe
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
-          app_name: Example Name
-          email: user@example.com
-          id: usr_0aBcDeFgHiJkLmNoPqRsTu
-          is_system_user: true
-          metadata:
-            key: value
-          name: Example Name
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          org_name: Example Name
-          org_role: member
-          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          sandbox_name: Example Name
-      properties:
-        expires_in:
-          description: Number of seconds until `token` expires. After this period, use `refresh_token` to obtain a new access token.
-          example: 3600
-          type: integer
-          x-sdk: token_expiry
-        metadata:
-          description: Optional auxiliary data associated with this authentication event, such as `onboarding_job_id` when the user is completing onboarding. `null` when no extra context is present.
-          example:
-            key: value
-          type: object
-        refresh_token:
-          description: Long-lived opaque refresh token. Use this to obtain a new access token when `token` expires.
-          example: rt_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
-          type: string
-          x-sdk: refresh_token
-        token:
-          description: 'Short-lived JWT access token. Include this value in the `Authorization: Bearer <token>` header for all authenticated API requests.'
-          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c3JfMDEiLCJleHAiOjE3MTcwMDAwMDB9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
-          type: string
-          x-sdk: access_token
-        token_type:
-          description: Token scheme. Always `"Bearer"`.
-          example: Bearer
-          type: string
-        user:
-          $ref: '#/components/schemas/User'
-          description: The user who authenticated. Contains the user's profile and account details.
-      required:
-      - expires_in
-      - refresh_token
-      - token
-      - token_type
-      - user
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:

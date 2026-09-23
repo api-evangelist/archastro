@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).
-  title: ArchAstro Platform Activity Feed Threads API
+  title: ArchAstro Platform Threads API
   version: v1
 tags:
 - name: Threads
@@ -2293,6 +2293,111 @@ paths:
       - Threads
 components:
   schemas:
+    AgentSourceSolution:
+      description: 'Summary of the Solution and AgentTemplate that an agent was last provisioned from.
+
+        Returned on single-agent responses; `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted.'
+      example:
+        solution:
+          category_keys:
+          - string
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: Solution
+          latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+          latest_version: 1.0.0
+          lookup_key: string
+          metadata:
+            key: value
+          name: Example Name
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          org_logo:
+            file: fil_0aBcDeFgHiJkLmNoPqRsTu
+            height: 600
+            media: med_0aBcDeFgHiJkLmNoPqRsTu
+            mime_type: application/json
+            refresh_url: https://example.com
+            url: https://example.com
+            width: 800
+          org_name: Example Name
+          org_slug: example-slug
+          owners:
+          - string
+          readme_url: https://example.com
+          solution_id: 01234567-89ab-cdef-0123-456789abcdef
+          solution_version: 1.2.0
+          tag_keys:
+          - string
+          template_kind: AgentTemplate
+          templates:
+          - description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: AgentTemplate
+            lookup_key: string
+            name: Example Name
+            readme_url: https://example.com
+            virtual_path: string
+          updated_at: '2024-01-01T00:00:00Z'
+          upgrade_available: true
+          virtual_path: string
+        template:
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          display_name: Example Name
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: agent_tool_template
+          lookup_key: string
+          name: Example Name
+          updated_at: '2024-01-01T00:00:00Z'
+          virtual_path: string
+      properties:
+        solution:
+          $ref: '#/components/schemas/SolutionSummary'
+          description: Summary of the parent Solution, including `upgrade_available`, `latest_version`, and `latest_solution` when a newer system-scoped version is available for the agent's org-scoped Solution.
+        template:
+          $ref: '#/components/schemas/UpgradeTemplateSummary'
+          description: Summary of the AgentTemplate config (`cfg_...`) the agent was last provisioned or updated from.
+      required:
+      - solution
+      - template
+      type: object
+    Acl:
+      description: An access-control list payload that supports either full replacement or targeted patch operations on a resource's grants.
+      example:
+        add:
+        - actions:
+          - read
+          - write
+          principal: string
+          principal_type: user
+        grants:
+        - actions:
+          - read
+          - write
+          principal: string
+          principal_type: user
+        remove:
+        - principal: string
+          principal_type: user
+      properties:
+        add:
+          description: 'Patch mode: grants to add or merge into the existing list. Cannot be combined with `grants`.'
+          items:
+            $ref: '#/components/schemas/AclGrant'
+          type: array
+        grants:
+          description: 'Replace mode: the complete new list of grants that replaces all existing entries. Send an empty array (`[]`) to clear all grants. Cannot be combined with `add` or `remove`.'
+          items:
+            $ref: '#/components/schemas/AclGrant'
+          type: array
+        remove:
+          description: 'Patch mode: principals whose grants should be removed from the existing list. Cannot be combined with `grants`.'
+          items:
+            $ref: '#/components/schemas/AclRemoveTarget'
+          type: array
+      type: object
     Attachment:
       description: A rich attachment associated with a message, such as a file, scraped link, artifact, task, media item, or inline action.
       example:
@@ -2416,191 +2521,33 @@ components:
       - id
       - type
       type: object
-    Agent:
-      description: An AI agent that can be configured with tools, routines, and skills, and invoked to handle conversations or tasks.
+    AclRemoveTarget:
+      description: Identifies a principal to be removed from an access-control list.
       example:
-        acl:
-          add:
-          - actions:
-            - read
-            - write
-            principal: string
-            principal_type: user
-          grants:
-          - actions:
-            - read
-            - write
-            principal: string
-            principal_type: user
-          remove:
-          - principal: string
-            principal_type: user
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
-        created_at: '2024-01-01T00:00:00Z'
-        default_model: claude-3-7-sonnet-latest
-        email: user@example.com
-        id: agi_0aBcDeFgHiJkLmNoPqRsTu
-        identity: You are a helpful assistant that answers questions about ArchAstro products.
-        last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
-        lookup_key: string
-        metadata:
-          key: value
-        name: Example Name
-        org: org_0aBcDeFgHiJkLmNoPqRsTu
-        org_name: Example Name
-        originator: deploy-pipeline
-        phone_number: '+15555550123'
-        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-        source_solution:
-          solution:
-            category_keys:
-            - string
-            created_at: '2024-01-01T00:00:00Z'
-            description: An example description.
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: Solution
-            latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-            latest_version: 1.0.0
-            lookup_key: string
-            metadata:
-              key: value
-            name: Example Name
-            org: org_0aBcDeFgHiJkLmNoPqRsTu
-            org_logo:
-              file: fil_0aBcDeFgHiJkLmNoPqRsTu
-              height: 600
-              media: med_0aBcDeFgHiJkLmNoPqRsTu
-              mime_type: application/json
-              refresh_url: https://example.com
-              url: https://example.com
-              width: 800
-            org_name: Example Name
-            org_slug: example-slug
-            owners:
-            - string
-            readme_url: https://example.com
-            solution_id: 01234567-89ab-cdef-0123-456789abcdef
-            solution_version: 1.2.0
-            tag_keys:
-            - string
-            template_kind: AgentTemplate
-            templates:
-            - description: An example description.
-              display_name: Example Name
-              id: id_0aBcDeFgHiJkLmNoPqRsTu
-              kind: AgentTemplate
-              lookup_key: string
-              name: Example Name
-              readme_url: https://example.com
-              virtual_path: string
-            updated_at: '2024-01-01T00:00:00Z'
-            upgrade_available: true
-            virtual_path: string
-          template:
-            created_at: '2024-01-01T00:00:00Z'
-            description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: agent_tool_template
-            lookup_key: string
-            name: Example Name
-            updated_at: '2024-01-01T00:00:00Z'
-            virtual_path: string
-        team: tem_0aBcDeFgHiJkLmNoPqRsTu
-        updated_at: '2024-01-01T00:00:00Z'
-        user: usr_0aBcDeFgHiJkLmNoPqRsTu
+        principal: string
+        principal_type: user
       properties:
-        acl:
-          $ref: '#/components/schemas/Acl'
-          description: Access control list for the agent. Contains a `grants` array where each entry specifies `principal_type`, `principal`, and `actions`. `null` when no ACL restrictions are applied and the agent is accessible to all members of its scope.
-        app:
-          description: ID of the application that owns this agent (`dap_...`).
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        created_at:
-          description: When the agent was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        default_model:
-          description: Default LLM model identifier used by this agent when no model is specified at runtime (e.g. `"claude-3-7-sonnet-latest"`).
-          example: claude-3-7-sonnet-latest
-          type: string
-        email:
-          description: Email address provisioned for this agent. `null` if email delivery is not configured.
-          example: user@example.com
-          type: string
-        id:
-          description: Agent ID (`agi_...`).
-          example: agi_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        identity:
-          description: System-level identity prompt that shapes the agent's persona and behavior.
-          example: You are a helpful assistant that answers questions about ArchAstro products.
-          type: string
-        last_applied_template_config:
-          description: ID of the AgentTemplate config (`cfg_...`) this agent was last provisioned or updated from. `null` for manually created agents.
-          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        lookup_key:
-          description: Stable, user-defined identifier for this agent within the application. Unique per app.
+        principal:
+          description: The identifier of the principal to remove. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`. Omit when `principal_type` is `"everyone"`.
           example: string
           type: string
-        metadata:
-          description: Arbitrary key-value metadata attached to the agent. Not interpreted by the platform.
-          example:
-            key: value
-          type: object
-        name:
-          description: Human-readable display name for the agent. `null` if not set.
-          example: Example Name
-          type: string
-        org:
-          description: ID of the organization this agent belongs to (`org_...`). `null` if the agent is not org-scoped.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        org_name:
-          description: Display name of the organization this agent belongs to. `null` when the agent is not org-scoped or when the org association was not preloaded.
-          example: Example Name
-          type: string
-        originator:
-          description: Free-form label identifying the source or author that created this agent (e.g. a username or pipeline name).
-          example: deploy-pipeline
-          type: string
-        phone_number:
-          description: Phone number provisioned for this agent. `null` if SMS is not configured.
-          example: '+15555550123'
-          type: string
-        sandbox:
-          description: ID of the sandbox environment this agent is scoped to (`dsb_...`). `null` in production deployments.
-          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        source_solution:
-          $ref: '#/components/schemas/AgentSourceSolution'
-          description: Source Solution and AgentTemplate summary for agents provisioned from a Solution. Includes `upgrade_available`, `latest_version`, and `latest_solution` so you can render an upgrade badge without a separate dry-run call. `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted. Populated only on single-agent GET responses, never on list endpoints.
-        team:
-          description: ID of the team that owns this agent (`tem_...`). `null` if the agent is not team-scoped.
-          example: tem_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        updated_at:
-          description: When the agent was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        user:
-          description: ID of the user that owns this agent (`usr_...`). `null` if the agent is not user-scoped.
-          example: usr_0aBcDeFgHiJkLmNoPqRsTu
+        principal_type:
+          description: The kind of principal to remove. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
+          example: user
           type: string
       required:
-      - id
+      - principal_type
       type: object
-    Actor:
-      description: The entity that authored a message, either a human user or an agent.
+    MediaVariant:
+      description: A processed variant of a media item, such as the original upload or a resized thumbnail, including a signed download URL resolved at request time.
       example:
-        alias: alice
-        id: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
-        name: Example Name
-        profile_picture:
+        content_type: application/json
+        created_at: '2024-01-01T00:00:00Z'
+        file: fil_0aBcDeFgHiJkLmNoPqRsTu
+        filename: string
+        height: 600
+        id: mvr_0aBcDeFgHiJkLmNoPqRsTu
+        image_source:
           file: fil_0aBcDeFgHiJkLmNoPqRsTu
           height: 600
           media: med_0aBcDeFgHiJkLmNoPqRsTu
@@ -2608,67 +2555,58 @@ components:
           refresh_url: https://example.com
           url: https://example.com
           width: 800
+        updated_at: '2024-01-01T00:00:00Z'
+        url: https://example.com
+        variant_key: original
+        width: 800
       properties:
-        alias:
-          description: Short handle or alias for the actor, used as an alternate display identifier. `null` if not configured.
-          example: alice
+        content_type:
+          description: MIME type of this variant's file (e.g., `"image/jpeg"`, `"video/mp4"`). `null` if the file is not loaded.
+          example: application/json
           type: string
+        created_at:
+          description: When this variant was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        file:
+          description: ID of the underlying storage file that backs this variant (`fil_...`).
+          example: fil_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        filename:
+          description: Original filename of the uploaded file for this variant. `null` if the file is not loaded.
+          example: string
+          type: string
+        height:
+          description: Height of this variant in pixels. `null` if not recorded.
+          example: 600
+          type: integer
         id:
-          description: Composite actor identifier. Format is `"user-<usr_...>"` for human users or `"agent-<agi_...>"` for agents.
-          example: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
+          description: Media variant ID (`mvr_...`).
+          example: mvr_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        name:
-          description: Display name of the actor shown in the UI. `null` if no name is set.
-          example: Example Name
-          type: string
-        profile_picture:
+        image_source:
           $ref: '#/components/schemas/ImageSource'
-          description: Profile picture for the actor. `null` if the actor has no profile picture.
-      type: object
-    Acl:
-      description: An access-control list payload that supports either full replacement or targeted patch operations on a resource's grants.
-      example:
-        add:
-        - actions:
-          - read
-          - write
-          principal: string
-          principal_type: user
-        grants:
-        - actions:
-          - read
-          - write
-          principal: string
-          principal_type: user
-        remove:
-        - principal: string
-          principal_type: user
-      properties:
-        add:
-          description: 'Patch mode: grants to add or merge into the existing list. Cannot be combined with `grants`.'
-          items:
-            $ref: '#/components/schemas/AclGrant'
-          type: array
-        grants:
-          description: 'Replace mode: the complete new list of grants that replaces all existing entries. Send an empty array (`[]`) to clear all grants. Cannot be combined with `add` or `remove`.'
-          items:
-            $ref: '#/components/schemas/AclGrant'
-          type: array
-        remove:
-          description: 'Patch mode: principals whose grants should be removed from the existing list. Cannot be combined with `grants`.'
-          items:
-            $ref: '#/components/schemas/AclRemoveTarget'
-          type: array
-      type: object
-    ThreadSettings:
-      description: Configuration settings for a thread that control AI agent behavior and other thread-level preferences.
-      example:
-        agent_enabled: true
-      properties:
-        agent_enabled:
-          description: Whether the AI agent is active for this thread. `true` enables AI responses; `false` disables them. Defaults to `true` when settings have not been explicitly configured.
-          example: true
-          type: boolean
+          description: Resolved image delivery metadata for this variant, including dimensions and CDN URL. `null` for non-image content types.
+        updated_at:
+          description: When this variant was last updated (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        url:
+          description: Signed download URL for this variant, resolved at request time. `null` if the file is unavailable.
+          example: https://example.com
+          type: string
+        variant_key:
+          description: Identifier for this variant's processing tier. Common values include `"original"` (the unmodified upload) and `"thumbnail"` (a resized preview).
+          example: original
+          type: string
+        width:
+          description: Width of this variant in pixels. `null` if not recorded.
+          example: 800
+          type: integer
+      required:
+      - id
       type: object
     Message:
       description: A chat message posted in a thread, including its content, author, attachments, reactions, and optional reply metadata.
@@ -3026,79 +2964,60 @@ components:
       required:
       - id
       type: object
-    User:
-      description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
+    UpgradeTemplateSummary:
+      description: Compact summary of an AgentTemplate config referenced by an agent upgrade or source-solution response.
       example:
-        alias: jdoe
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
-        app_name: Example Name
-        email: user@example.com
-        id: usr_0aBcDeFgHiJkLmNoPqRsTu
-        is_system_user: true
-        metadata:
-          key: value
+        created_at: '2024-01-01T00:00:00Z'
+        description: An example description.
+        display_name: Example Name
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        kind: agent_tool_template
+        lookup_key: string
         name: Example Name
-        org: org_0aBcDeFgHiJkLmNoPqRsTu
-        org_name: Example Name
-        org_role: member
-        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-        sandbox_name: Example Name
+        updated_at: '2024-01-01T00:00:00Z'
+        virtual_path: string
       properties:
-        alias:
-          description: Short handle or alias for the user. `null` if not set.
-          example: jdoe
+        created_at:
+          description: When this template config was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
           type: string
-        app:
-          description: ID of the app this user (and their access token) is scoped to (`dap_...`). `null` if the user is not scoped to an app.
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+        description:
+          description: Description of the template from the config body. `null` if the current version has no `description` field.
+          example: An example description.
           type: string
-        app_name:
-          description: Display name of the user's app. `null` when the app association was not preloaded by the caller.
+        display_name:
+          description: Human-readable display name from the config body. `null` if the current version has no `display_name` field.
           example: Example Name
-          type: string
-        email:
-          description: Email address of the user.
-          example: user@example.com
           type: string
         id:
-          description: User ID (`usr_...`).
-          example: usr_0aBcDeFgHiJkLmNoPqRsTu
+          description: Template config ID (`cfg_...`).
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        is_system_user:
-          description: '`true` if this account is an internal system user rather than a human. System users are created automatically by the platform.'
-          example: true
-          type: boolean
-        metadata:
-          description: Arbitrary key-value metadata attached to the user. Defaults to an empty object.
-          example:
-            key: value
-          type: object
+        kind:
+          description: Config kind identifier for this template (e.g. `"agent_tool_template"`).
+          example: agent_tool_template
+          type: string
+        lookup_key:
+          description: Stable lookup key assigned to this template config. `null` if no lookup key is set.
+          example: string
+          type: string
         name:
-          description: Full display name of the user. `null` if the user has not set a name.
+          description: Template name as stored in the config body. `null` if the current version has no `name` field.
           example: Example Name
           type: string
-        org:
-          description: ID of the organization this user belongs to (`org_...`). `null` if the user is not a member of any organization.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
+        updated_at:
+          description: When this template config was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
           type: string
-        org_name:
-          description: Display name of the user's organization. `null` when the user is not in an org, or when the org association was not preloaded by the caller.
-          example: Example Name
-          type: string
-        org_role:
-          description: Role of the user within their organization. One of `"admin"`, `"member"`, or `"viewer"`. `null` when the user is not a member of any organization.
-          example: member
-          type: string
-        sandbox:
-          description: ID of the sandbox environment this user is scoped to (`sbx_...`). `null` for production users.
-          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        sandbox_name:
-          description: Display name of the user's sandbox environment. `null` for production users, or when the sandbox association was not preloaded by the caller.
-          example: Example Name
+        virtual_path:
+          description: Virtual filesystem path for this template config. `null` if not set.
+          example: string
           type: string
       required:
       - id
+      - kind
       type: object
     ThreadMember:
       description: A user's membership record in a thread, capturing their role and full user profile.
@@ -3132,152 +3051,6 @@ components:
         user:
           $ref: '#/components/schemas/User'
           description: Full user object for the member (`usr_...`). Present when the association is preloaded; `null` otherwise.
-      type: object
-    SolutionTemplateSummary:
-      description: Identity and display metadata for a single template bundled by a Solution, used to represent each wrapped or sibling template at template granularity.
-      example:
-        description: An example description.
-        display_name: Example Name
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: AgentTemplate
-        lookup_key: string
-        name: Example Name
-        readme_url: https://example.com
-        virtual_path: string
-      properties:
-        description:
-          description: Short prose blurb from the template body's `description:` field. `null` when the body doesn't set one. Used as the card subhead in the Library carousel.
-          example: An example description.
-          type: string
-        display_name:
-          description: Human-facing label from the template body's `display_name:` field. `null` when the body doesn't set one. Library carousels use this for the card title, falling back to a humanized `name`.
-          example: Example Name
-          type: string
-        id:
-          description: Template config ID (`cfg_...`). `null` for inline-only templates.
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        kind:
-          description: Template config kind, or `SolutionTemplateRef` / `SolutionTemplatePath` when unresolved.
-          example: AgentTemplate
-          type: string
-        lookup_key:
-          description: Lookup key stamped on the template config at import time. `null` when no lookup key was assigned.
-          example: string
-          type: string
-        name:
-          description: Canonical name from the template body. For `AgentTemplate` this doubles as the human-facing label; for `AgentToolTemplate` it's the LLM-facing tool function identifier (snake_case); for `AgentRoutineTemplate` it's the routine identifier (kebab-case). Clients rendering carousels should prefer `display_name` and fall back to humanizing `name`.
-          example: Example Name
-          type: string
-        readme_url:
-          description: Relative path to the public README endpoint with a signed token already embedded, scoped to this template's bundled markdown asset. `null` when the Solution body's `templates[].readme_path` is unset for this entry. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
-          example: https://example.com
-          type: string
-        virtual_path:
-          description: Stable virtual path assigned to the template config. `null` when no virtual path was set.
-          example: string
-          type: string
-      required:
-      - kind
-      type: object
-    AgentSourceSolution:
-      description: 'Summary of the Solution and AgentTemplate that an agent was last provisioned from.
-
-        Returned on single-agent responses; `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted.'
-      example:
-        solution:
-          category_keys:
-          - string
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: Solution
-          latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-          latest_version: 1.0.0
-          lookup_key: string
-          metadata:
-            key: value
-          name: Example Name
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          org_logo:
-            file: fil_0aBcDeFgHiJkLmNoPqRsTu
-            height: 600
-            media: med_0aBcDeFgHiJkLmNoPqRsTu
-            mime_type: application/json
-            refresh_url: https://example.com
-            url: https://example.com
-            width: 800
-          org_name: Example Name
-          org_slug: example-slug
-          owners:
-          - string
-          readme_url: https://example.com
-          solution_id: 01234567-89ab-cdef-0123-456789abcdef
-          solution_version: 1.2.0
-          tag_keys:
-          - string
-          template_kind: AgentTemplate
-          templates:
-          - description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: AgentTemplate
-            lookup_key: string
-            name: Example Name
-            readme_url: https://example.com
-            virtual_path: string
-          updated_at: '2024-01-01T00:00:00Z'
-          upgrade_available: true
-          virtual_path: string
-        template:
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          display_name: Example Name
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: agent_tool_template
-          lookup_key: string
-          name: Example Name
-          updated_at: '2024-01-01T00:00:00Z'
-          virtual_path: string
-      properties:
-        solution:
-          $ref: '#/components/schemas/SolutionSummary'
-          description: Summary of the parent Solution, including `upgrade_available`, `latest_version`, and `latest_solution` when a newer system-scoped version is available for the agent's org-scoped Solution.
-        template:
-          $ref: '#/components/schemas/UpgradeTemplateSummary'
-          description: Summary of the AgentTemplate config (`cfg_...`) the agent was last provisioned or updated from.
-      required:
-      - solution
-      - template
-      type: object
-    AclGrant:
-      description: A single access-control grant that pairs a principal with the set of actions it is allowed to perform.
-      example:
-        actions:
-        - read
-        - write
-        principal: string
-        principal_type: user
-      properties:
-        actions:
-          description: Array of action strings the principal is permitted to perform, e.g. `["read", "write"]`. Must contain at least one entry.
-          example:
-          - read
-          - write
-          items:
-            type: string
-          type: array
-        principal:
-          description: The identifier of the principal. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`; omit entirely when `principal_type` is `"everyone"`.
-          example: string
-          type: string
-        principal_type:
-          description: The kind of principal receiving the grant. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
-          example: user
-          type: string
-      required:
-      - actions
-      - principal_type
       type: object
     Thread:
       description: A chat thread, representing a conversation channel that can be owned by a user, team, or agent and may contain messages, participants, and AI agent activity.
@@ -3654,6 +3427,194 @@ components:
       required:
       - id
       type: object
+    Agent:
+      description: An AI agent that can be configured with tools, routines, and skills, and invoked to handle conversations or tasks.
+      example:
+        acl:
+          add:
+          - actions:
+            - read
+            - write
+            principal: string
+            principal_type: user
+          grants:
+          - actions:
+            - read
+            - write
+            principal: string
+            principal_type: user
+          remove:
+          - principal: string
+            principal_type: user
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        created_at: '2024-01-01T00:00:00Z'
+        default_model: claude-3-7-sonnet-latest
+        email: user@example.com
+        id: agi_0aBcDeFgHiJkLmNoPqRsTu
+        identity: You are a helpful assistant that answers questions about ArchAstro products.
+        last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+        lookup_key: string
+        metadata:
+          key: value
+        name: Example Name
+        org: org_0aBcDeFgHiJkLmNoPqRsTu
+        org_name: Example Name
+        originator: deploy-pipeline
+        phone_number: '+15555550123'
+        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+        source_solution:
+          solution:
+            category_keys:
+            - string
+            created_at: '2024-01-01T00:00:00Z'
+            description: An example description.
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: Solution
+            latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+            latest_version: 1.0.0
+            lookup_key: string
+            metadata:
+              key: value
+            name: Example Name
+            org: org_0aBcDeFgHiJkLmNoPqRsTu
+            org_logo:
+              file: fil_0aBcDeFgHiJkLmNoPqRsTu
+              height: 600
+              media: med_0aBcDeFgHiJkLmNoPqRsTu
+              mime_type: application/json
+              refresh_url: https://example.com
+              url: https://example.com
+              width: 800
+            org_name: Example Name
+            org_slug: example-slug
+            owners:
+            - string
+            readme_url: https://example.com
+            solution_id: 01234567-89ab-cdef-0123-456789abcdef
+            solution_version: 1.2.0
+            tag_keys:
+            - string
+            template_kind: AgentTemplate
+            templates:
+            - description: An example description.
+              display_name: Example Name
+              id: id_0aBcDeFgHiJkLmNoPqRsTu
+              kind: AgentTemplate
+              lookup_key: string
+              name: Example Name
+              readme_url: https://example.com
+              virtual_path: string
+            updated_at: '2024-01-01T00:00:00Z'
+            upgrade_available: true
+            virtual_path: string
+          template:
+            created_at: '2024-01-01T00:00:00Z'
+            description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: agent_tool_template
+            lookup_key: string
+            name: Example Name
+            updated_at: '2024-01-01T00:00:00Z'
+            virtual_path: string
+        team: tem_0aBcDeFgHiJkLmNoPqRsTu
+        updated_at: '2024-01-01T00:00:00Z'
+        user: usr_0aBcDeFgHiJkLmNoPqRsTu
+      properties:
+        acl:
+          $ref: '#/components/schemas/Acl'
+          description: Access control list for the agent. Contains a `grants` array where each entry specifies `principal_type`, `principal`, and `actions`. `null` when no ACL restrictions are applied and the agent is accessible to all members of its scope.
+        app:
+          description: ID of the application that owns this agent (`dap_...`).
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        created_at:
+          description: When the agent was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        default_model:
+          description: Default LLM model identifier used by this agent when no model is specified at runtime (e.g. `"claude-3-7-sonnet-latest"`).
+          example: claude-3-7-sonnet-latest
+          type: string
+        email:
+          description: Email address provisioned for this agent. `null` if email delivery is not configured.
+          example: user@example.com
+          type: string
+        id:
+          description: Agent ID (`agi_...`).
+          example: agi_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        identity:
+          description: System-level identity prompt that shapes the agent's persona and behavior.
+          example: You are a helpful assistant that answers questions about ArchAstro products.
+          type: string
+        last_applied_template_config:
+          description: ID of the AgentTemplate config (`cfg_...`) this agent was last provisioned or updated from. `null` for manually created agents.
+          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        lookup_key:
+          description: Stable, user-defined identifier for this agent within the application. Unique per app.
+          example: string
+          type: string
+        metadata:
+          description: Arbitrary key-value metadata attached to the agent. Not interpreted by the platform.
+          example:
+            key: value
+          type: object
+        name:
+          description: Human-readable display name for the agent. `null` if not set.
+          example: Example Name
+          type: string
+        org:
+          description: ID of the organization this agent belongs to (`org_...`). `null` if the agent is not org-scoped.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        org_name:
+          description: Display name of the organization this agent belongs to. `null` when the agent is not org-scoped or when the org association was not preloaded.
+          example: Example Name
+          type: string
+        originator:
+          description: Free-form label identifying the source or author that created this agent (e.g. a username or pipeline name).
+          example: deploy-pipeline
+          type: string
+        phone_number:
+          description: Phone number provisioned for this agent. `null` if SMS is not configured.
+          example: '+15555550123'
+          type: string
+        sandbox:
+          description: ID of the sandbox environment this agent is scoped to (`dsb_...`). `null` in production deployments.
+          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        source_solution:
+          $ref: '#/components/schemas/AgentSourceSolution'
+          description: Source Solution and AgentTemplate summary for agents provisioned from a Solution. Includes `upgrade_available`, `latest_version`, and `latest_solution` so you can render an upgrade badge without a separate dry-run call. `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted. Populated only on single-agent GET responses, never on list endpoints.
+        team:
+          description: ID of the team that owns this agent (`tem_...`). `null` if the agent is not team-scoped.
+          example: tem_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        updated_at:
+          description: When the agent was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        user:
+          description: ID of the user that owns this agent (`usr_...`). `null` if the agent is not user-scoped.
+          example: usr_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+      required:
+      - id
+      type: object
+    ThreadSettings:
+      description: Configuration settings for a thread that control AI agent behavior and other thread-level preferences.
+      example:
+        agent_enabled: true
+      properties:
+        agent_enabled:
+          description: Whether the AI agent is active for this thread. `true` enables AI responses; `false` disables them. Defaults to `true` when settings have not been explicitly configured.
+          example: true
+          type: boolean
+      type: object
     ImageSource:
       description: Resolved metadata for an image, including its delivery URL, dimensions, and optional references to the underlying storage file or media record.
       example:
@@ -3694,92 +3655,29 @@ components:
           example: 800
           type: integer
       type: object
-    AclRemoveTarget:
-      description: Identifies a principal to be removed from an access-control list.
+    MessageReaction:
+      description: A compact reaction record embedded in a message's `reactions` array, representing a single user's reaction to a message.
       example:
-        principal: string
-        principal_type: user
+        payload:
+          key: value
+        type: emoji_reaction
+        user: string
       properties:
-        principal:
-          description: The identifier of the principal to remove. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`. Omit when `principal_type` is `"everyone"`.
+        payload:
+          description: Type-specific reaction data. For `"emoji_reaction"` reactions, contains an `emoji` key with the Unicode emoji string (e.g., `"👍"`).
+          example:
+            key: value
+          type: object
+        type:
+          description: Reaction type identifier. Currently always `"emoji_reaction"` for emoji-based reactions.
+          example: emoji_reaction
+          type: string
+        user:
+          description: Public ID of the user who added the reaction (`usr_...`).
           example: string
           type: string
-        principal_type:
-          description: The kind of principal to remove. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
-          example: user
-          type: string
       required:
-      - principal_type
-      type: object
-    MediaVariant:
-      description: A processed variant of a media item, such as the original upload or a resized thumbnail, including a signed download URL resolved at request time.
-      example:
-        content_type: application/json
-        created_at: '2024-01-01T00:00:00Z'
-        file: fil_0aBcDeFgHiJkLmNoPqRsTu
-        filename: string
-        height: 600
-        id: mvr_0aBcDeFgHiJkLmNoPqRsTu
-        image_source:
-          file: fil_0aBcDeFgHiJkLmNoPqRsTu
-          height: 600
-          media: med_0aBcDeFgHiJkLmNoPqRsTu
-          mime_type: application/json
-          refresh_url: https://example.com
-          url: https://example.com
-          width: 800
-        updated_at: '2024-01-01T00:00:00Z'
-        url: https://example.com
-        variant_key: original
-        width: 800
-      properties:
-        content_type:
-          description: MIME type of this variant's file (e.g., `"image/jpeg"`, `"video/mp4"`). `null` if the file is not loaded.
-          example: application/json
-          type: string
-        created_at:
-          description: When this variant was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        file:
-          description: ID of the underlying storage file that backs this variant (`fil_...`).
-          example: fil_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        filename:
-          description: Original filename of the uploaded file for this variant. `null` if the file is not loaded.
-          example: string
-          type: string
-        height:
-          description: Height of this variant in pixels. `null` if not recorded.
-          example: 600
-          type: integer
-        id:
-          description: Media variant ID (`mvr_...`).
-          example: mvr_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        image_source:
-          $ref: '#/components/schemas/ImageSource'
-          description: Resolved image delivery metadata for this variant, including dimensions and CDN URL. `null` for non-image content types.
-        updated_at:
-          description: When this variant was last updated (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        url:
-          description: Signed download URL for this variant, resolved at request time. `null` if the file is unavailable.
-          example: https://example.com
-          type: string
-        variant_key:
-          description: Identifier for this variant's processing tier. Common values include `"original"` (the unmodified upload) and `"thumbnail"` (a resized preview).
-          example: original
-          type: string
-        width:
-          description: Width of this variant in pixels. `null` if not recorded.
-          example: 800
-          type: integer
-      required:
-      - id
+      - type
       type: object
     SolutionSummary:
       description: A catalog entry for an imported Solution, including its display metadata, bundled templates, owner scopes, and any available upgrade information.
@@ -3943,6 +3841,84 @@ components:
       - templates
       - upgrade_available
       type: object
+    SolutionTemplateSummary:
+      description: Identity and display metadata for a single template bundled by a Solution, used to represent each wrapped or sibling template at template granularity.
+      example:
+        description: An example description.
+        display_name: Example Name
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        kind: AgentTemplate
+        lookup_key: string
+        name: Example Name
+        readme_url: https://example.com
+        virtual_path: string
+      properties:
+        description:
+          description: Short prose blurb from the template body's `description:` field. `null` when the body doesn't set one. Used as the card subhead in the Library carousel.
+          example: An example description.
+          type: string
+        display_name:
+          description: Human-facing label from the template body's `display_name:` field. `null` when the body doesn't set one. Library carousels use this for the card title, falling back to a humanized `name`.
+          example: Example Name
+          type: string
+        id:
+          description: Template config ID (`cfg_...`). `null` for inline-only templates.
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        kind:
+          description: Template config kind, or `SolutionTemplateRef` / `SolutionTemplatePath` when unresolved.
+          example: AgentTemplate
+          type: string
+        lookup_key:
+          description: Lookup key stamped on the template config at import time. `null` when no lookup key was assigned.
+          example: string
+          type: string
+        name:
+          description: Canonical name from the template body. For `AgentTemplate` this doubles as the human-facing label; for `AgentToolTemplate` it's the LLM-facing tool function identifier (snake_case); for `AgentRoutineTemplate` it's the routine identifier (kebab-case). Clients rendering carousels should prefer `display_name` and fall back to humanizing `name`.
+          example: Example Name
+          type: string
+        readme_url:
+          description: Relative path to the public README endpoint with a signed token already embedded, scoped to this template's bundled markdown asset. `null` when the Solution body's `templates[].readme_path` is unset for this entry. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
+          example: https://example.com
+          type: string
+        virtual_path:
+          description: Stable virtual path assigned to the template config. `null` when no virtual path was set.
+          example: string
+          type: string
+      required:
+      - kind
+      type: object
+    Actor:
+      description: The entity that authored a message, either a human user or an agent.
+      example:
+        alias: alice
+        id: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
+        name: Example Name
+        profile_picture:
+          file: fil_0aBcDeFgHiJkLmNoPqRsTu
+          height: 600
+          media: med_0aBcDeFgHiJkLmNoPqRsTu
+          mime_type: application/json
+          refresh_url: https://example.com
+          url: https://example.com
+          width: 800
+      properties:
+        alias:
+          description: Short handle or alias for the actor, used as an alternate display identifier. `null` if not configured.
+          example: alice
+          type: string
+        id:
+          description: Composite actor identifier. Format is `"user-<usr_...>"` for human users or `"agent-<agi_...>"` for agents.
+          example: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
+          type: string
+        name:
+          description: Display name of the actor shown in the UI. `null` if no name is set.
+          example: Example Name
+          type: string
+        profile_picture:
+          $ref: '#/components/schemas/ImageSource'
+          description: Profile picture for the actor. `null` if the actor has no profile picture.
+      type: object
     ThreadReadStatus:
       description: The read status of a thread for a specific user, indicating how far they have read and how many messages remain unread.
       example:
@@ -3966,84 +3942,108 @@ components:
       - thread
       - unread_count
       type: object
-    UpgradeTemplateSummary:
-      description: Compact summary of an AgentTemplate config referenced by an agent upgrade or source-solution response.
+    User:
+      description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
       example:
-        created_at: '2024-01-01T00:00:00Z'
-        description: An example description.
-        display_name: Example Name
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: agent_tool_template
-        lookup_key: string
+        alias: jdoe
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        app_name: Example Name
+        email: user@example.com
+        id: usr_0aBcDeFgHiJkLmNoPqRsTu
+        is_system_user: true
+        metadata:
+          key: value
         name: Example Name
-        updated_at: '2024-01-01T00:00:00Z'
-        virtual_path: string
+        org: org_0aBcDeFgHiJkLmNoPqRsTu
+        org_name: Example Name
+        org_role: member
+        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+        sandbox_name: Example Name
       properties:
-        created_at:
-          description: When this template config was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
+        alias:
+          description: Short handle or alias for the user. `null` if not set.
+          example: jdoe
           type: string
-        description:
-          description: Description of the template from the config body. `null` if the current version has no `description` field.
-          example: An example description.
+        app:
+          description: ID of the app this user (and their access token) is scoped to (`dap_...`). `null` if the user is not scoped to an app.
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        display_name:
-          description: Human-readable display name from the config body. `null` if the current version has no `display_name` field.
+        app_name:
+          description: Display name of the user's app. `null` when the app association was not preloaded by the caller.
           example: Example Name
+          type: string
+        email:
+          description: Email address of the user.
+          example: user@example.com
           type: string
         id:
-          description: Template config ID (`cfg_...`).
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          description: User ID (`usr_...`).
+          example: usr_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        kind:
-          description: Config kind identifier for this template (e.g. `"agent_tool_template"`).
-          example: agent_tool_template
-          type: string
-        lookup_key:
-          description: Stable lookup key assigned to this template config. `null` if no lookup key is set.
-          example: string
-          type: string
-        name:
-          description: Template name as stored in the config body. `null` if the current version has no `name` field.
-          example: Example Name
-          type: string
-        updated_at:
-          description: When this template config was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        virtual_path:
-          description: Virtual filesystem path for this template config. `null` if not set.
-          example: string
-          type: string
-      required:
-      - id
-      - kind
-      type: object
-    MessageReaction:
-      description: A compact reaction record embedded in a message's `reactions` array, representing a single user's reaction to a message.
-      example:
-        payload:
-          key: value
-        type: emoji_reaction
-        user: string
-      properties:
-        payload:
-          description: Type-specific reaction data. For `"emoji_reaction"` reactions, contains an `emoji` key with the Unicode emoji string (e.g., `"👍"`).
+        is_system_user:
+          description: '`true` if this account is an internal system user rather than a human. System users are created automatically by the platform.'
+          example: true
+          type: boolean
+        metadata:
+          description: Arbitrary key-value metadata attached to the user. Defaults to an empty object.
           example:
             key: value
           type: object
-        type:
-          description: Reaction type identifier. Currently always `"emoji_reaction"` for emoji-based reactions.
-          example: emoji_reaction
+        name:
+          description: Full display name of the user. `null` if the user has not set a name.
+          example: Example Name
           type: string
-        user:
-          description: Public ID of the user who added the reaction (`usr_...`).
-          example: string
+        org:
+          description: ID of the organization this user belongs to (`org_...`). `null` if the user is not a member of any organization.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        org_name:
+          description: Display name of the user's organization. `null` when the user is not in an org, or when the org association was not preloaded by the caller.
+          example: Example Name
+          type: string
+        org_role:
+          description: Role of the user within their organization. One of `"admin"`, `"member"`, or `"viewer"`. `null` when the user is not a member of any organization.
+          example: member
+          type: string
+        sandbox:
+          description: ID of the sandbox environment this user is scoped to (`sbx_...`). `null` for production users.
+          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        sandbox_name:
+          description: Display name of the user's sandbox environment. `null` for production users, or when the sandbox association was not preloaded by the caller.
+          example: Example Name
           type: string
       required:
-      - type
+      - id
+      type: object
+    AclGrant:
+      description: A single access-control grant that pairs a principal with the set of actions it is allowed to perform.
+      example:
+        actions:
+        - read
+        - write
+        principal: string
+        principal_type: user
+      properties:
+        actions:
+          description: Array of action strings the principal is permitted to perform, e.g. `["read", "write"]`. Must contain at least one entry.
+          example:
+          - read
+          - write
+          items:
+            type: string
+          type: array
+        principal:
+          description: The identifier of the principal. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`; omit entirely when `principal_type` is `"everyone"`.
+          example: string
+          type: string
+        principal_type:
+          description: The kind of principal receiving the grant. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
+          example: user
+          type: string
+      required:
+      - actions
+      - principal_type
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:

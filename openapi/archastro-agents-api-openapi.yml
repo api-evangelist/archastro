@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).
-  title: ArchAstro Platform Activity Feed Agents API
+  title: ArchAstro Platform Agents API
   version: v1
 tags:
 - name: Agents
@@ -2540,7 +2540,33 @@ paths:
       - Agents
   /api/v1/agents/{agent}/search:
     post:
-      description: "Performs a semantic search over an agent's knowledge base and returns a ranked,\n`kind`-discriminated list of matching items.\n\nTwo item kinds may appear in `data`:\n\n- `\"chunk\"` — chunk-level results from the agent's context store. Present for all agents.\n- `\"document\"` — document-level results. Present only when the agent has an active\n  `archastro/knowledge` installation.\n\nResults from both kinds are scored with Reciprocal Rank Fusion (RRF), normalized to\nbe comparable across kinds, then merged into a single ranked list. On a relevance tie,\nchunks appear before documents. The total number of results is capped at `max_results`\nacross both kinds.\n\nUse `mode` to choose the retrieval strategy: `\"hybrid\"` (default) combines vector and\nfull-text search; `\"vector\"` and `\"fulltext\"` select each strategy independently."
+      description: 'Performs a semantic search over an agent''s knowledge base and returns a ranked,
+
+        `kind`-discriminated list of matching items.
+
+
+        Two item kinds may appear in `data`:
+
+
+        - `"chunk"` — chunk-level results from the agent''s context store. Present for all agents.
+
+        - `"document"` — document-level results. Present only when the agent has an active
+
+        `archastro/knowledge` installation.
+
+
+        Results from both kinds are scored with Reciprocal Rank Fusion (RRF), normalized to
+
+        be comparable across kinds, then merged into a single ranked list. On a relevance tie,
+
+        chunks appear before documents. The total number of results is capped at `max_results`
+
+        across both kinds.
+
+
+        Use `mode` to choose the retrieval strategy: `"hybrid"` (default) combines vector and
+
+        full-text search; `"vector"` and `"fulltext"` select each strategy independently.'
       operationId: post_api_v1_agents__agent_search
       parameters:
       - description: ID (`agi_...`) or `lookup_key` of the agent whose knowledge base to search.
@@ -2844,7 +2870,41 @@ paths:
       - Agents
   /api/v1/agents/{agent}/upgrade:
     post:
-      description: "Upgrades an existing agent by reconciling it against an AgentTemplate from a\nSolution. Supports two modes:\n\n- `\"reapply\"` (default) — re-applies the agent's currently tracked template,\n  picking up any changes the template author has made since the last apply.\n- `\"replace\"` — moves the agent to a different template. `template` is required\n  in this mode.\n\nSet `dry_run: true` to compute and return the full upgrade diff (adds, updates,\nremoves, noops) without writing any changes. The response includes a\n`review_fingerprint` you can pass back via `expected_review_fingerprint` on the\nlive apply to guard against the diff changing between review and execution.\n\nSafe overrides (`name`, `email`, `phone_number`, `metadata`, `identity`,\n`originator`, `model`) let you pin instance-specific values that should not be\noverwritten by the template during the upgrade.\n\nThe authenticated caller must own the agent or hold write permissions within its\nowning org or team. When called under a developer app scope, the caller must hold\nthe app scope for the target app."
+      description: 'Upgrades an existing agent by reconciling it against an AgentTemplate from a
+
+        Solution. Supports two modes:
+
+
+        - `"reapply"` (default) — re-applies the agent''s currently tracked template,
+
+        picking up any changes the template author has made since the last apply.
+
+        - `"replace"` — moves the agent to a different template. `template` is required
+
+        in this mode.
+
+
+        Set `dry_run: true` to compute and return the full upgrade diff (adds, updates,
+
+        removes, noops) without writing any changes. The response includes a
+
+        `review_fingerprint` you can pass back via `expected_review_fingerprint` on the
+
+        live apply to guard against the diff changing between review and execution.
+
+
+        Safe overrides (`name`, `email`, `phone_number`, `metadata`, `identity`,
+
+        `originator`, `model`) let you pin instance-specific values that should not be
+
+        overwritten by the template during the upgrade.
+
+
+        The authenticated caller must own the agent or hold write permissions within its
+
+        owning org or team. When called under a developer app scope, the caller must hold
+
+        the app scope for the target app.'
       operationId: post_api_v1_agents__agent_upgrade
       parameters:
       - description: ID (`agi_...`) or `lookup_key` of the agent to upgrade.
@@ -2949,239 +3009,222 @@ paths:
       - Agents
 components:
   schemas:
-    AgentHealth:
-      description: Aggregate health profile for an agent, summarizing its current operational status, score, and the full list of setup and health actions.
+    AgentSourceSolution:
+      description: 'Summary of the Solution and AgentTemplate that an agent was last provisioned from.
+
+        Returned on single-agent responses; `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted.'
       example:
-        activity: {}
-        agent:
-          acl:
-            add:
-            - actions:
-              - read
-              - write
-              principal: string
-              principal_type: user
-            grants:
-            - actions:
-              - read
-              - write
-              principal: string
-              principal_type: user
-            remove:
-            - principal: string
-              principal_type: user
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        solution:
+          category_keys:
+          - string
           created_at: '2024-01-01T00:00:00Z'
-          default_model: claude-3-7-sonnet-latest
-          email: user@example.com
-          id: agi_0aBcDeFgHiJkLmNoPqRsTu
-          identity: You are a helpful assistant that answers questions about ArchAstro products.
-          last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          description: An example description.
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: Solution
+          latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+          latest_version: 1.0.0
           lookup_key: string
           metadata:
             key: value
           name: Example Name
           org: org_0aBcDeFgHiJkLmNoPqRsTu
+          org_logo:
+            file: fil_0aBcDeFgHiJkLmNoPqRsTu
+            height: 600
+            media: med_0aBcDeFgHiJkLmNoPqRsTu
+            mime_type: application/json
+            refresh_url: https://example.com
+            url: https://example.com
+            width: 800
           org_name: Example Name
-          originator: deploy-pipeline
-          phone_number: '+15555550123'
-          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          source_solution:
-            solution:
-              category_keys:
-              - string
-              created_at: '2024-01-01T00:00:00Z'
-              description: An example description.
-              id: id_0aBcDeFgHiJkLmNoPqRsTu
-              kind: Solution
-              latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-              latest_version: 1.0.0
-              lookup_key: string
-              metadata:
-                key: value
-              name: Example Name
-              org: org_0aBcDeFgHiJkLmNoPqRsTu
-              org_logo:
-                file: fil_0aBcDeFgHiJkLmNoPqRsTu
-                height: 600
-                media: med_0aBcDeFgHiJkLmNoPqRsTu
-                mime_type: application/json
-                refresh_url: https://example.com
-                url: https://example.com
-                width: 800
-              org_name: Example Name
-              org_slug: example-slug
-              owners:
-              - string
-              readme_url: https://example.com
-              solution_id: 01234567-89ab-cdef-0123-456789abcdef
-              solution_version: 1.2.0
-              tag_keys:
-              - string
-              template_kind: AgentTemplate
-              templates:
-              - description: An example description.
-                display_name: Example Name
-                id: id_0aBcDeFgHiJkLmNoPqRsTu
-                kind: AgentTemplate
-                lookup_key: string
-                name: Example Name
-                readme_url: https://example.com
-                virtual_path: string
-              updated_at: '2024-01-01T00:00:00Z'
-              upgrade_available: true
-              virtual_path: string
-            template:
-              created_at: '2024-01-01T00:00:00Z'
-              description: An example description.
-              display_name: Example Name
-              id: id_0aBcDeFgHiJkLmNoPqRsTu
-              kind: agent_tool_template
-              lookup_key: string
-              name: Example Name
-              updated_at: '2024-01-01T00:00:00Z'
-              virtual_path: string
-          team: tem_0aBcDeFgHiJkLmNoPqRsTu
-          updated_at: '2024-01-01T00:00:00Z'
-          user: usr_0aBcDeFgHiJkLmNoPqRsTu
-        checked_at: '2024-01-01T00:00:00Z'
-        checks:
-        - {}
-        counts: {}
-        health_actions:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
-          created_at: '2024-01-01T00:00:00Z'
-          depends_on:
+          org_slug: example-slug
+          owners:
           - string
-          description: An example description.
-          id: aha_0aBcDeFgHiJkLmNoPqRsTu
-          kind: env_var
-          last_verified_at: '2024-01-01T00:00:00Z'
-          last_verifier_message: string
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          params:
-            key: value
-          required: true
-          sort_order: 1
-          source: setup
-          status: pending
-          title: Example Title
+          readme_url: https://example.com
+          solution_id: 01234567-89ab-cdef-0123-456789abcdef
+          solution_version: 1.2.0
+          tag_keys:
+          - string
+          template_kind: AgentTemplate
+          templates:
+          - description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: AgentTemplate
+            lookup_key: string
+            name: Example Name
+            readme_url: https://example.com
+            virtual_path: string
           updated_at: '2024-01-01T00:00:00Z'
-          verify_config: {}
-        recent: {}
-        score: 85
-        status: ok
+          upgrade_available: true
+          virtual_path: string
+        template:
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          display_name: Example Name
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: agent_tool_template
+          lookup_key: string
+          name: Example Name
+          updated_at: '2024-01-01T00:00:00Z'
+          virtual_path: string
       properties:
-        activity:
-          description: Timestamps for the agent's most recent and next scheduled activity, used to surface last-run and upcoming-run information.
-          example: {}
-          type: object
+        solution:
+          $ref: '#/components/schemas/SolutionSummary'
+          description: Summary of the parent Solution, including `upgrade_available`, `latest_version`, and `latest_solution` when a newer system-scoped version is available for the agent's org-scoped Solution.
+        template:
+          $ref: '#/components/schemas/UpgradeTemplateSummary'
+          description: Summary of the AgentTemplate config (`cfg_...`) the agent was last provisioned or updated from.
+      required:
+      - solution
+      - template
+      type: object
+    Acl:
+      description: An access-control list payload that supports either full replacement or targeted patch operations on a resource's grants.
+      example:
+        add:
+        - actions:
+          - read
+          - write
+          principal: string
+          principal_type: user
+        grants:
+        - actions:
+          - read
+          - write
+          principal: string
+          principal_type: user
+        remove:
+        - principal: string
+          principal_type: user
+      properties:
+        add:
+          description: 'Patch mode: grants to add or merge into the existing list. Cannot be combined with `grants`.'
+          items:
+            $ref: '#/components/schemas/AclGrant'
+          type: array
+        grants:
+          description: 'Replace mode: the complete new list of grants that replaces all existing entries. Send an empty array (`[]`) to clear all grants. Cannot be combined with `add` or `remove`.'
+          items:
+            $ref: '#/components/schemas/AclGrant'
+          type: array
+        remove:
+          description: 'Patch mode: principals whose grants should be removed from the existing list. Cannot be combined with `grants`.'
+          items:
+            $ref: '#/components/schemas/AclRemoveTarget'
+          type: array
+      type: object
+    AgentHealthAction:
+      description: A single actionable item in an agent's health or setup checklist, carrying the structured data needed to render the item and deep-link to the resolution flow.
+      example:
+        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        created_at: '2024-01-01T00:00:00Z'
+        depends_on:
+        - string
+        description: An example description.
+        id: aha_0aBcDeFgHiJkLmNoPqRsTu
+        kind: env_var
+        last_verified_at: '2024-01-01T00:00:00Z'
+        last_verifier_message: string
+        org: org_0aBcDeFgHiJkLmNoPqRsTu
+        params:
+          key: value
+        required: true
+        sort_order: 1
+        source: setup
+        status: pending
+        title: Example Title
+        updated_at: '2024-01-01T00:00:00Z'
+        verify_config: {}
+      properties:
         agent:
-          $ref: '#/components/schemas/Agent'
-          description: The agent this health profile describes.
-        checked_at:
-          description: When the health profile was last computed (ISO 8601).
+          description: ID of the agent this action is scoped to (`agt_...`). `null` for org-level actions.
+          example: agi_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        app:
+          description: ID of the application this action is associated with (`app_...`). `null` when not app-scoped.
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        created_at:
+          description: When this health action was first created (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
           type: string
-        checks:
-          description: Renderable health check results. Each object includes at minimum `key`, `label`, `status`, and `summary` fields.
+        depends_on:
+          description: IDs of other health actions that must reach `"completed"` status before this action can be started. Empty array when there are no dependencies.
           example:
-          - {}
+          - string
           items:
-            type: object
+            type: string
           type: array
-        counts:
-          description: Action counts broken down by dependency area and resolution status, used to render progress indicators per category.
-          example: {}
-          type: object
-        health_actions:
-          description: All actionable items tracked for this agent, including both `"setup"` items (post-install checklist) and `"health"` items (probe-detected issues). Sorted by `(source, sort_order, id)`. Use each item's `params` field to construct deep-links that route the user to the correct resolution flow.
-          items:
-            $ref: '#/components/schemas/AgentHealthAction'
-          type: array
-        recent:
-          description: Recent execution metrics for the agent, including run counts and failure counts over a recent time window.
-          example: {}
-          type: object
-        score:
-          description: Normalized health score from `0` (fully degraded) to `100` (fully healthy), derived from the weight and status of all health actions.
-          example: 85
-          type: integer
-        status:
-          description: Overall health status of the agent. One of `"ok"`, `"warning"`, or `"critical"`.
-          example: ok
+        description:
+          description: Longer Markdown-formatted explanation of what the action requires and why. `null` if not provided.
+          example: An example description.
           type: string
+        id:
+          description: Health action ID (`aha_...`).
+          example: aha_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        kind:
+          description: Category of action to take. One of `"env_var"` (set a secret), `"install"` (authorize an OAuth integration), or `"custom"` (agent-defined step).
+          example: env_var
+          type: string
+        last_verified_at:
+          description: When the verifier last ran for this action (ISO 8601). `null` until the verifier has been invoked at least once.
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        last_verifier_message:
+          description: Human-readable output from the most recent verifier run. `null` if the verifier has not run yet.
+          example: string
+          type: string
+        org:
+          description: ID of the organization this action is associated with (`org_...`). `null` when not org-scoped.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        params:
+          description: Kind-specific structured data used to construct the deep-link for this action. For `"env_var"` actions includes `key` and `scope`; for `"install"` actions includes `installation_kind`. Empty object `{}` when no additional parameters are needed.
+          example:
+            key: value
+          type: object
+        required:
+          description: '`true` if this action must be completed before the agent is considered fully operational and counts toward the blocking checklist progress bar.'
+          example: true
+          type: boolean
+        sort_order:
+          description: Display order within the same `source` group. Lower values appear first.
+          example: 1
+          type: integer
+        source:
+          description: Lifecycle stage that produced this action. One of `"setup"` (post-install checklist item) or `"health"` (probe-detected issue).
+          example: setup
+          type: string
+        status:
+          description: Current resolution state. One of `"pending"` (not yet completed), `"completed"` (resolved), `"skipped"` (dismissed by the user), or `"degraded"` (completed but the verifier is reporting a warning).
+          example: pending
+          type: string
+        title:
+          description: Short display label for this action, intended for use as a checklist item heading.
+          example: Example Title
+          type: string
+        updated_at:
+          description: When this health action was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        verify_config:
+          description: Configuration for the action's verifier step. Contains at minimum a `type` field that indicates which verification affordance to render. Server-internal fields are stripped before this is returned.
+          example: {}
+          type: object
       required:
-      - activity
-      - agent
-      - checked_at
-      - checks
-      - counts
-      - health_actions
-      - recent
-      - score
+      - id
+      - kind
+      - required
+      - sort_order
+      - source
       - status
-      type: object
-    AgentComputerListResponse:
-      description: A list of agent computers returned by a list query.
-      example:
-        data:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
-          config:
-            key: value
-          created_at: '2024-01-01T00:00:00Z'
-          error_message: string
-          id: cmp_0aBcDeFgHiJkLmNoPqRsTu
-          last_active_at: '2024-01-01T00:00:00Z'
-          lookup_key: main-computer
-          metadata:
-            key: value
-          name: Example Name
-          region: us-east-1
-          sprite_url: https://example.com
-          status: ready
-          updated_at: '2024-01-01T00:00:00Z'
-      properties:
-        data:
-          description: Array of agent computer objects matching the query.
-          items:
-            $ref: '#/components/schemas/AgentComputer'
-          type: array
-      required:
-      - data
-      type: object
-    AgentUpgradeSummary:
-      description: Aggregate counts of each change type produced by an agent upgrade diff.
-      example:
-        adds: 1
-        noops: 1
-        removes: 1
-        updates: 1
-      properties:
-        adds:
-          description: Number of child resources that will be created by this upgrade.
-          example: 1
-          type: integer
-        noops:
-          description: Number of child resources with no changes in this upgrade.
-          example: 1
-          type: integer
-        removes:
-          description: Number of child resources that will be removed by this upgrade.
-          example: 1
-          type: integer
-        updates:
-          description: Number of child resources that will be updated by this upgrade.
-          example: 1
-          type: integer
-      required:
-      - adds
-      - noops
-      - removes
-      - updates
+      - title
       type: object
     Attachment:
       description: A rich attachment associated with a message, such as a file, scraped link, artifact, task, media item, or inline action.
@@ -3306,214 +3349,134 @@ components:
       - id
       - type
       type: object
-    Agent:
-      description: An AI agent that can be configured with tools, routines, and skills, and invoked to handle conversations or tasks.
+    AgentComputer:
+      description: A cloud computer resource provisioned for an agent to use for browser and desktop automation tasks.
       example:
-        acl:
-          add:
-          - actions:
-            - read
-            - write
-            principal: string
-            principal_type: user
-          grants:
-          - actions:
-            - read
-            - write
-            principal: string
-            principal_type: user
-          remove:
-          - principal: string
-            principal_type: user
+        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
         app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        config:
+          key: value
         created_at: '2024-01-01T00:00:00Z'
-        default_model: claude-3-7-sonnet-latest
-        email: user@example.com
-        id: agi_0aBcDeFgHiJkLmNoPqRsTu
-        identity: You are a helpful assistant that answers questions about ArchAstro products.
-        last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
-        lookup_key: string
+        error_message: string
+        id: cmp_0aBcDeFgHiJkLmNoPqRsTu
+        last_active_at: '2024-01-01T00:00:00Z'
+        lookup_key: main-computer
         metadata:
           key: value
         name: Example Name
-        org: org_0aBcDeFgHiJkLmNoPqRsTu
-        org_name: Example Name
-        originator: deploy-pipeline
-        phone_number: '+15555550123'
-        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-        source_solution:
-          solution:
-            category_keys:
-            - string
-            created_at: '2024-01-01T00:00:00Z'
-            description: An example description.
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: Solution
-            latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-            latest_version: 1.0.0
-            lookup_key: string
-            metadata:
-              key: value
-            name: Example Name
-            org: org_0aBcDeFgHiJkLmNoPqRsTu
-            org_logo:
-              file: fil_0aBcDeFgHiJkLmNoPqRsTu
-              height: 600
-              media: med_0aBcDeFgHiJkLmNoPqRsTu
-              mime_type: application/json
-              refresh_url: https://example.com
-              url: https://example.com
-              width: 800
-            org_name: Example Name
-            org_slug: example-slug
-            owners:
-            - string
-            readme_url: https://example.com
-            solution_id: 01234567-89ab-cdef-0123-456789abcdef
-            solution_version: 1.2.0
-            tag_keys:
-            - string
-            template_kind: AgentTemplate
-            templates:
-            - description: An example description.
-              display_name: Example Name
-              id: id_0aBcDeFgHiJkLmNoPqRsTu
-              kind: AgentTemplate
-              lookup_key: string
-              name: Example Name
-              readme_url: https://example.com
-              virtual_path: string
-            updated_at: '2024-01-01T00:00:00Z'
-            upgrade_available: true
-            virtual_path: string
-          template:
-            created_at: '2024-01-01T00:00:00Z'
-            description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: agent_tool_template
-            lookup_key: string
-            name: Example Name
-            updated_at: '2024-01-01T00:00:00Z'
-            virtual_path: string
-        team: tem_0aBcDeFgHiJkLmNoPqRsTu
+        region: us-east-1
+        sprite_url: https://example.com
+        status: ready
         updated_at: '2024-01-01T00:00:00Z'
-        user: usr_0aBcDeFgHiJkLmNoPqRsTu
       properties:
-        acl:
-          $ref: '#/components/schemas/Acl'
-          description: Access control list for the agent. Contains a `grants` array where each entry specifies `principal_type`, `principal`, and `actions`. `null` when no ACL restrictions are applied and the agent is accessible to all members of its scope.
+        agent:
+          description: ID of the agent that owns this computer (`agi_...`). `null` if the computer is not yet assigned to an agent.
+          example: agi_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
         app:
-          description: ID of the application that owns this agent (`dap_...`).
+          description: ID of the app this computer belongs to (`dap_...`).
           example: dap_0aBcDeFgHiJkLmNoPqRsTu
           type: string
+        config:
+          description: Provider-specific configuration key-value pairs for the computer. Structure depends on the underlying compute provider.
+          example:
+            key: value
+          type: object
         created_at:
-          description: When the agent was created (ISO 8601).
+          description: When the computer was created (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
           type: string
-        default_model:
-          description: Default LLM model identifier used by this agent when no model is specified at runtime (e.g. `"claude-3-7-sonnet-latest"`).
-          example: claude-3-7-sonnet-latest
-          type: string
-        email:
-          description: Email address provisioned for this agent. `null` if email delivery is not configured.
-          example: user@example.com
-          type: string
-        id:
-          description: Agent ID (`agi_...`).
-          example: agi_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        identity:
-          description: System-level identity prompt that shapes the agent's persona and behavior.
-          example: You are a helpful assistant that answers questions about ArchAstro products.
-          type: string
-        last_applied_template_config:
-          description: ID of the AgentTemplate config (`cfg_...`) this agent was last provisioned or updated from. `null` for manually created agents.
-          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        lookup_key:
-          description: Stable, user-defined identifier for this agent within the application. Unique per app.
+        error_message:
+          description: Human-readable error description when `status` is `"error"`. `null` otherwise.
           example: string
           type: string
+        id:
+          description: Computer ID (`cmp_...`).
+          example: cmp_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        last_active_at:
+          description: When the computer last reported activity or received a command. `null` if the computer has never been active.
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        lookup_key:
+          description: Unique, stable identifier you assign to this computer within its app. `null` if not set.
+          example: main-computer
+          type: string
         metadata:
-          description: Arbitrary key-value metadata attached to the agent. Not interpreted by the platform.
+          description: Arbitrary key-value metadata you attached to the computer. `null` if none was provided.
           example:
             key: value
           type: object
         name:
-          description: Human-readable display name for the agent. `null` if not set.
+          description: Human-readable display name for the computer. `null` if not set.
           example: Example Name
           type: string
-        org:
-          description: ID of the organization this agent belongs to (`org_...`). `null` if the agent is not org-scoped.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
+        region:
+          description: Cloud region where the computer is hosted, e.g. `"us-east-1"`. `null` if not yet assigned.
+          example: us-east-1
           type: string
-        org_name:
-          description: Display name of the organization this agent belongs to. `null` when the agent is not org-scoped or when the org association was not preloaded.
-          example: Example Name
+        sprite_url:
+          description: URL of the live screenshot sprite used to render a real-time preview of the computer's screen. `null` when no sprite is available.
+          example: https://example.com
           type: string
-        originator:
-          description: Free-form label identifying the source or author that created this agent (e.g. a username or pipeline name).
-          example: deploy-pipeline
-          type: string
-        phone_number:
-          description: Phone number provisioned for this agent. `null` if SMS is not configured.
-          example: '+15555550123'
-          type: string
-        sandbox:
-          description: ID of the sandbox environment this agent is scoped to (`dsb_...`). `null` in production deployments.
-          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        source_solution:
-          $ref: '#/components/schemas/AgentSourceSolution'
-          description: Source Solution and AgentTemplate summary for agents provisioned from a Solution. Includes `upgrade_available`, `latest_version`, and `latest_solution` so you can render an upgrade badge without a separate dry-run call. `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted. Populated only on single-agent GET responses, never on list endpoints.
-        team:
-          description: ID of the team that owns this agent (`tem_...`). `null` if the agent is not team-scoped.
-          example: tem_0aBcDeFgHiJkLmNoPqRsTu
+        status:
+          description: Current lifecycle state of the computer. Common values include `"provisioning"`, `"ready"`, `"error"`, and `"terminated"`.
+          example: ready
           type: string
         updated_at:
-          description: When the agent was last modified (ISO 8601).
+          description: When the computer record was last modified (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
-          type: string
-        user:
-          description: ID of the user that owns this agent (`usr_...`). `null` if the agent is not user-scoped.
-          example: usr_0aBcDeFgHiJkLmNoPqRsTu
           type: string
       required:
       - id
       type: object
-    Actor:
-      description: The entity that authored a message, either a human user or an agent.
+    AgentExport:
+      description: A portable export bundle for an agent, containing everything needed to re-deploy it in another workspace or environment.
       example:
-        alias: alice
-        id: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
-        name: Example Name
-        profile_picture:
-          file: fil_0aBcDeFgHiJkLmNoPqRsTu
-          height: 600
-          media: med_0aBcDeFgHiJkLmNoPqRsTu
+        configs:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          created_at: '2024-01-01T00:00:00Z'
+          current_version:
+            change_description: An example description.
+            content_hash: sha256:2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+            created_at: '2024-01-01T00:00:00Z'
+            data: {}
+            id: cfv_0aBcDeFgHiJkLmNoPqRsTu
+            org: org_0aBcDeFgHiJkLmNoPqRsTu
+            sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+            version_number: 1
+          id: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          is_archived: true
+          kind: Agent
+          lookup_key: string
           mime_type: application/json
-          refresh_url: https://example.com
-          url: https://example.com
-          width: 800
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          parent: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          parent_solution: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          raw_content: string
+          relative_path: string
+          sandbox: string
+          team: tem_0aBcDeFgHiJkLmNoPqRsTu
+          updated_at: '2024-01-01T00:00:00Z'
+          user: usr_0aBcDeFgHiJkLmNoPqRsTu
+          virtual_path: agents/my-agent.yaml
+        template: {}
       properties:
-        alias:
-          description: Short handle or alias for the actor, used as an alternate display identifier. `null` if not configured.
-          example: alice
-          type: string
-        id:
-          description: Composite actor identifier. Format is `"user-<usr_...>"` for human users or `"agent-<agi_...>"` for agents.
-          example: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
-          type: string
-        name:
-          description: Display name of the actor shown in the UI. `null` if no name is set.
-          example: Example Name
-          type: string
-        profile_picture:
-          $ref: '#/components/schemas/ImageSource'
-          description: Profile picture for the actor. `null` if the actor has no profile picture.
+        configs:
+          description: Ordered list of config file objects that the agent depends on. Included in full so the import can recreate all dependencies without additional requests.
+          items:
+            $ref: '#/components/schemas/Config'
+          type: array
+        template:
+          description: The agent template definition as a structured map. Pass this directly to the import endpoint to recreate the agent.
+          example: {}
+          type: object
+      required:
+      - configs
+      - template
       type: object
     WorkingMemoryEntryListResponse:
       description: Paginated list of working memory entries stored for an agent. Includes page metadata to support sequential page traversal.
@@ -3565,41 +3528,6 @@ components:
       required:
       - data
       type: object
-    Acl:
-      description: An access-control list payload that supports either full replacement or targeted patch operations on a resource's grants.
-      example:
-        add:
-        - actions:
-          - read
-          - write
-          principal: string
-          principal_type: user
-        grants:
-        - actions:
-          - read
-          - write
-          principal: string
-          principal_type: user
-        remove:
-        - principal: string
-          principal_type: user
-      properties:
-        add:
-          description: 'Patch mode: grants to add or merge into the existing list. Cannot be combined with `grants`.'
-          items:
-            $ref: '#/components/schemas/AclGrant'
-          type: array
-        grants:
-          description: 'Replace mode: the complete new list of grants that replaces all existing entries. Send an empty array (`[]`) to clear all grants. Cannot be combined with `add` or `remove`.'
-          items:
-            $ref: '#/components/schemas/AclGrant'
-          type: array
-        remove:
-          description: 'Patch mode: principals whose grants should be removed from the existing list. Cannot be combined with `grants`.'
-          items:
-            $ref: '#/components/schemas/AclRemoveTarget'
-          type: array
-      type: object
     InstallationKind:
       description: A supported installation kind describing a category of external service or enablement channel an agent can be connected to.
       example:
@@ -3646,6 +3574,29 @@ components:
           type: boolean
       required:
       - kind
+      type: object
+    InstallationListResponse:
+      description: Paginated list response containing installation objects for an agent.
+      example:
+        data:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          config: {}
+          created_at: '2024-01-01T00:00:00Z'
+          id: cin_0aBcDeFgHiJkLmNoPqRsTu
+          kind: enablement/github_app
+          lookup_key: string
+          shared_integration: int_0aBcDeFgHiJkLmNoPqRsTu
+          state: active
+          status_payload: {}
+          updated_at: '2024-01-01T00:00:00Z'
+      properties:
+        data:
+          description: Array of installation objects returned for the current page.
+          items:
+            $ref: '#/components/schemas/Installation'
+          type: array
+      required:
+      - data
       type: object
     ConfigVersion:
       description: A single immutable snapshot of a config's content, created each time the config is saved.
@@ -3696,15 +3647,326 @@ components:
       - id
       - version_number
       type: object
-    ThreadSettings:
-      description: Configuration settings for a thread that control AI agent behavior and other thread-level preferences.
+    Installation:
+      description: An installation representing a connection between an agent and an external service or enablement channel. Tracks configuration, lifecycle state, and any bound integration.
       example:
-        agent_enabled: true
+        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+        config: {}
+        created_at: '2024-01-01T00:00:00Z'
+        id: cin_0aBcDeFgHiJkLmNoPqRsTu
+        kind: enablement/github_app
+        lookup_key: string
+        shared_integration: int_0aBcDeFgHiJkLmNoPqRsTu
+        state: active
+        status_payload: {}
+        updated_at: '2024-01-01T00:00:00Z'
       properties:
-        agent_enabled:
-          description: Whether the AI agent is active for this thread. `true` enables AI responses; `false` disables them. Defaults to `true` when settings have not been explicitly configured.
+        agent:
+          description: ID of the agent that owns this installation (`agi_...`). `null` if the installation has no agent owner.
+          example: agi_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        config:
+          description: Kind-specific configuration object for this installation. Shape depends on the `kind` value. `null` if the kind requires no configuration.
+          example: {}
+          type: object
+        created_at:
+          description: When the installation was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        id:
+          description: Installation ID (`cin_...`).
+          example: cin_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        kind:
+          description: Slug identifying the type of external service this installation connects to, e.g. `"enablement/github_app"` or `"integration/gmail"`. `null` if not set.
+          example: enablement/github_app
+          type: string
+        lookup_key:
+          description: Caller-assigned stable identifier for this installation, used to reference it in knowledge search `source_refs`. `null` if no lookup key was provided at creation time.
+          example: string
+          type: string
+        shared_integration:
+          description: ID of the shared org- or app-level integration bound to this installation (`int_...`). `null` if no integration has been bound.
+          example: int_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        state:
+          description: Current lifecycle state of the installation. One of `"pending"`, `"active"`, `"paused"`, or `"error"`. `"error"` indicates the installation was suspended due to a policy or compliance issue and requires attention.
+          example: active
+          type: string
+        status_payload:
+          description: Provider-supplied status detail for this installation, set during activation or event processing. `null` if no status has been reported.
+          example: {}
+          type: object
+        updated_at:
+          description: When the installation record was last updated (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+      required:
+      - id
+      type: object
+    HealthActionListResponse:
+      description: List response containing agent health actions for a given agent or organization.
+      example:
+        data:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+          created_at: '2024-01-01T00:00:00Z'
+          depends_on:
+          - string
+          description: An example description.
+          id: aha_0aBcDeFgHiJkLmNoPqRsTu
+          kind: env_var
+          last_verified_at: '2024-01-01T00:00:00Z'
+          last_verifier_message: string
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          params:
+            key: value
+          required: true
+          sort_order: 1
+          source: setup
+          status: pending
+          title: Example Title
+          updated_at: '2024-01-01T00:00:00Z'
+          verify_config: {}
+      properties:
+        data:
+          description: Array of agent health action objects representing setup checklist items and probe-detected issues.
+          items:
+            $ref: '#/components/schemas/AgentHealthAction'
+          type: array
+      required:
+      - data
+      type: object
+    AgentUpgradeFieldChange:
+      description: 'One field-level diff entry within an agent upgrade change, describing how a single field will change.
+
+        `baseline` and `locally_edited` are populated only for `agent_base` entries; child resource entries (tools, routines, skills, computers) carry only `field`, `old`, and `new`.'
+      example:
+        field: name
+        locally_edited: true
+      properties:
+        baseline:
+          description: Value that was set by the last-applied template version (pinned baseline). Populated only on `agent_base` field changes. `null` when no baseline is available (legacy agent or deleted version).
+        field:
+          description: Name of the field that will change, e.g. `"name"` or `"identity"`.
+          example: name
+          type: string
+        locally_edited:
+          description: '`true` when the agent''s current value differs from `baseline`, indicating a local edit that this upgrade will overwrite. `false` when the current value matches the baseline. `null` when `baseline` is unavailable. Populated only on `agent_base` field changes.'
           example: true
           type: boolean
+        new:
+          description: Incoming value the field will be set to after the upgrade (string, number, boolean, or `null`).
+        old:
+          description: Current value of the field before the upgrade (string, number, boolean, or `null`).
+      required:
+      - field
+      type: object
+    AgentComputerListResponse:
+      description: A list of agent computers returned by a list query.
+      example:
+        data:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+          config:
+            key: value
+          created_at: '2024-01-01T00:00:00Z'
+          error_message: string
+          id: cmp_0aBcDeFgHiJkLmNoPqRsTu
+          last_active_at: '2024-01-01T00:00:00Z'
+          lookup_key: main-computer
+          metadata:
+            key: value
+          name: Example Name
+          region: us-east-1
+          sprite_url: https://example.com
+          status: ready
+          updated_at: '2024-01-01T00:00:00Z'
+      properties:
+        data:
+          description: Array of agent computer objects matching the query.
+          items:
+            $ref: '#/components/schemas/AgentComputer'
+          type: array
+      required:
+      - data
+      type: object
+    LLMConfig:
+      description: LLM invocation settings for a routine or chain step. When present, overrides the agent-level model selection.
+      example:
+        model: claude-sonnet-4-5
+      properties:
+        model:
+          description: Model identifier to use for this routine or step, e.g. `"claude-sonnet-4-5"`. When omitted, the agent's default model is used.
+          example: claude-sonnet-4-5
+          type: string
+      type: object
+    AclRemoveTarget:
+      description: Identifies a principal to be removed from an access-control list.
+      example:
+        principal: string
+        principal_type: user
+      properties:
+        principal:
+          description: The identifier of the principal to remove. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`. Omit when `principal_type` is `"everyone"`.
+          example: string
+          type: string
+        principal_type:
+          description: The kind of principal to remove. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
+          example: user
+          type: string
+      required:
+      - principal_type
+      type: object
+    AgentUpgradeChange:
+      description: One child-resource change produced by an agent upgrade, describing the action to be taken on a single resource.
+      example:
+        action: update
+        description: An example description.
+        field_changes:
+        - field: name
+          locally_edited: true
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        key: string
+        name: Example Name
+        parent_template_config:
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          display_name: Example Name
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: agent_tool_template
+          lookup_key: string
+          name: Example Name
+          updated_at: '2024-01-01T00:00:00Z'
+          virtual_path: string
+        resource: {}
+        resource_type: tool
+        source_template_config:
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          display_name: Example Name
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: agent_tool_template
+          lookup_key: string
+          name: Example Name
+          updated_at: '2024-01-01T00:00:00Z'
+          virtual_path: string
+      properties:
+        action:
+          description: The operation that will be performed. One of `"add"`, `"update"`, `"remove"`, or `"noop"`.
+          example: update
+          type: string
+        description:
+          description: Description of the child resource this change touches, when one is set. `null` when no description is available.
+          example: An example description.
+          type: string
+        field_changes:
+          description: Field-level diff entries for this change. Populated only when `action` is `"update"`; empty or absent for `add`, `remove`, and `noop` entries.
+          items:
+            $ref: '#/components/schemas/AgentUpgradeFieldChange'
+          type: array
+        id:
+          description: Public ID of the existing resource being updated or removed (e.g. `atl_...`, `arn_...`). `null` for `add` entries.
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        key:
+          description: Lookup key of the resource derived from its source template. `null` when the template has no lookup key.
+          example: string
+          type: string
+        name:
+          description: Human-facing name of the child resource this change touches (tool/routine/skill/computer name, or builtin tool key for unnamed builtin tools). Falls back to the source template's name. `null` for the synthetic `agent_base` entry.
+          example: Example Name
+          type: string
+        parent_template_config:
+          $ref: '#/components/schemas/UpgradeTemplateSummary'
+          description: Summary of the parent AgentTemplate config (`cfg_...`) being applied in this upgrade.
+        resource:
+          description: 'Resource-type-specific identity details. Tools: `tool_type`, `builtin_tool_key`, `name_prefix`, `handler_type`, `instruction`. Routines: `handler_type`, `preset_name`, `event_type`, `schedule`, `trigger_context`. Skills: `instruction`. Computers: `region`. Only populated keys are present; `null` when nothing is known.'
+          example: {}
+          type: object
+        resource_type:
+          description: Type of the child resource being changed. One of `"agent"`, `"tool"`, `"routine"`, `"skill"`, or `"computer"`.
+          example: tool
+          type: string
+        source_template_config:
+          $ref: '#/components/schemas/UpgradeTemplateSummary'
+          description: Summary of the specific child template config (`cfg_...`) that defines this resource. `null` when no source template is resolvable.
+      required:
+      - action
+      - parent_template_config
+      - resource_type
+      type: object
+    MediaVariant:
+      description: A processed variant of a media item, such as the original upload or a resized thumbnail, including a signed download URL resolved at request time.
+      example:
+        content_type: application/json
+        created_at: '2024-01-01T00:00:00Z'
+        file: fil_0aBcDeFgHiJkLmNoPqRsTu
+        filename: string
+        height: 600
+        id: mvr_0aBcDeFgHiJkLmNoPqRsTu
+        image_source:
+          file: fil_0aBcDeFgHiJkLmNoPqRsTu
+          height: 600
+          media: med_0aBcDeFgHiJkLmNoPqRsTu
+          mime_type: application/json
+          refresh_url: https://example.com
+          url: https://example.com
+          width: 800
+        updated_at: '2024-01-01T00:00:00Z'
+        url: https://example.com
+        variant_key: original
+        width: 800
+      properties:
+        content_type:
+          description: MIME type of this variant's file (e.g., `"image/jpeg"`, `"video/mp4"`). `null` if the file is not loaded.
+          example: application/json
+          type: string
+        created_at:
+          description: When this variant was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        file:
+          description: ID of the underlying storage file that backs this variant (`fil_...`).
+          example: fil_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        filename:
+          description: Original filename of the uploaded file for this variant. `null` if the file is not loaded.
+          example: string
+          type: string
+        height:
+          description: Height of this variant in pixels. `null` if not recorded.
+          example: 600
+          type: integer
+        id:
+          description: Media variant ID (`mvr_...`).
+          example: mvr_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        image_source:
+          $ref: '#/components/schemas/ImageSource'
+          description: Resolved image delivery metadata for this variant, including dimensions and CDN URL. `null` for non-image content types.
+        updated_at:
+          description: When this variant was last updated (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        url:
+          description: Signed download URL for this variant, resolved at request time. `null` if the file is unavailable.
+          example: https://example.com
+          type: string
+        variant_key:
+          description: Identifier for this variant's processing tier. Common values include `"original"` (the unmodified upload) and `"thumbnail"` (a resized preview).
+          example: original
+          type: string
+        width:
+          description: Width of this variant in pixels. `null` if not recorded.
+          example: 800
+          type: integer
+      required:
+      - id
       type: object
     Message:
       description: A chat message posted in a thread, including its content, author, attachments, reactions, and optional reply metadata.
@@ -4062,589 +4324,168 @@ components:
       required:
       - id
       type: object
-    User:
-      description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
+    AgentUpgradeResult:
+      description: The computed diff and outcome of an agent upgrade operation, including the full list of per-resource changes.
       example:
-        alias: jdoe
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
-        app_name: Example Name
-        email: user@example.com
-        id: usr_0aBcDeFgHiJkLmNoPqRsTu
-        is_system_user: true
-        metadata:
-          key: value
-        name: Example Name
-        org: org_0aBcDeFgHiJkLmNoPqRsTu
-        org_name: Example Name
-        org_role: member
-        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-        sandbox_name: Example Name
+        changes:
+        - action: update
+          description: An example description.
+          field_changes:
+          - field: name
+            locally_edited: true
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          key: string
+          name: Example Name
+          parent_template_config:
+            created_at: '2024-01-01T00:00:00Z'
+            description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: agent_tool_template
+            lookup_key: string
+            name: Example Name
+            updated_at: '2024-01-01T00:00:00Z'
+            virtual_path: string
+          resource: {}
+          resource_type: tool
+          source_template_config:
+            created_at: '2024-01-01T00:00:00Z'
+            description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: agent_tool_template
+            lookup_key: string
+            name: Example Name
+            updated_at: '2024-01-01T00:00:00Z'
+            virtual_path: string
+        dry_run: true
+        mode: full
+        review_fingerprint: string
+        status: upgraded
+        summary:
+          adds: 1
+          noops: 1
+          removes: 1
+          updates: 1
       properties:
-        alias:
-          description: Short handle or alias for the user. `null` if not set.
-          example: jdoe
-          type: string
-        app:
-          description: ID of the app this user (and their access token) is scoped to (`dap_...`). `null` if the user is not scoped to an app.
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        app_name:
-          description: Display name of the user's app. `null` when the app association was not preloaded by the caller.
-          example: Example Name
-          type: string
-        email:
-          description: Email address of the user.
-          example: user@example.com
-          type: string
-        id:
-          description: User ID (`usr_...`).
-          example: usr_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        is_system_user:
-          description: '`true` if this account is an internal system user rather than a human. System users are created automatically by the platform.'
+        changes:
+          description: Ordered list of per-resource changes that will be (or were) applied by this upgrade.
+          items:
+            $ref: '#/components/schemas/AgentUpgradeChange'
+          type: array
+        dry_run:
+          description: '`true` when the request was a dry run and no changes were persisted to the agent.'
           example: true
           type: boolean
-        metadata:
-          description: Arbitrary key-value metadata attached to the user. Defaults to an empty object.
-          example:
-            key: value
-          type: object
-        name:
-          description: Full display name of the user. `null` if the user has not set a name.
-          example: Example Name
+        mode:
+          description: Upgrade mode that was used. One of `"full"` (apply all changes) or `"review"` (require fingerprint confirmation).
+          example: full
           type: string
-        org:
-          description: ID of the organization this user belongs to (`org_...`). `null` if the user is not a member of any organization.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        org_name:
-          description: Display name of the user's organization. `null` when the user is not in an org, or when the org association was not preloaded by the caller.
-          example: Example Name
-          type: string
-        org_role:
-          description: Role of the user within their organization. One of `"admin"`, `"member"`, or `"viewer"`. `null` when the user is not a member of any organization.
-          example: member
-          type: string
-        sandbox:
-          description: ID of the sandbox environment this user is scoped to (`sbx_...`). `null` for production users.
-          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        sandbox_name:
-          description: Display name of the user's sandbox environment. `null` for production users, or when the sandbox association was not preloaded by the caller.
-          example: Example Name
-          type: string
-      required:
-      - id
-      type: object
-    AgentUpgradeChange:
-      description: One child-resource change produced by an agent upgrade, describing the action to be taken on a single resource.
-      example:
-        action: update
-        description: An example description.
-        field_changes:
-        - field: name
-          locally_edited: true
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        key: string
-        name: Example Name
-        parent_template_config:
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          display_name: Example Name
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: agent_tool_template
-          lookup_key: string
-          name: Example Name
-          updated_at: '2024-01-01T00:00:00Z'
-          virtual_path: string
-        resource: {}
-        resource_type: tool
-        source_template_config:
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          display_name: Example Name
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: agent_tool_template
-          lookup_key: string
-          name: Example Name
-          updated_at: '2024-01-01T00:00:00Z'
-          virtual_path: string
-      properties:
-        action:
-          description: The operation that will be performed. One of `"add"`, `"update"`, `"remove"`, or `"noop"`.
-          example: update
-          type: string
-        description:
-          description: Description of the child resource this change touches, when one is set. `null` when no description is available.
-          example: An example description.
-          type: string
-        field_changes:
-          description: Field-level diff entries for this change. Populated only when `action` is `"update"`; empty or absent for `add`, `remove`, and `noop` entries.
-          items:
-            $ref: '#/components/schemas/AgentUpgradeFieldChange'
-          type: array
-        id:
-          description: Public ID of the existing resource being updated or removed (e.g. `atl_...`, `arn_...`). `null` for `add` entries.
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        key:
-          description: Lookup key of the resource derived from its source template. `null` when the template has no lookup key.
+        review_fingerprint:
+          description: Opaque fingerprint of the computed diff. Pass this value back as `review_fingerprint` to confirm and apply a `"review"` mode upgrade.
           example: string
           type: string
-        name:
-          description: Human-facing name of the child resource this change touches (tool/routine/skill/computer name, or builtin tool key for unnamed builtin tools). Falls back to the source template's name. `null` for the synthetic `agent_base` entry.
-          example: Example Name
+        status:
+          description: Outcome of the upgrade. `"ready"` for a dry-run (no changes applied); `"upgraded"` when the upgrade was committed.
+          example: upgraded
           type: string
-        parent_template_config:
-          $ref: '#/components/schemas/UpgradeTemplateSummary'
-          description: Summary of the parent AgentTemplate config (`cfg_...`) being applied in this upgrade.
-        resource:
-          description: 'Resource-type-specific identity details. Tools: `tool_type`, `builtin_tool_key`, `name_prefix`, `handler_type`, `instruction`. Routines: `handler_type`, `preset_name`, `event_type`, `schedule`, `trigger_context`. Skills: `instruction`. Computers: `region`. Only populated keys are present; `null` when nothing is known.'
-          example: {}
-          type: object
-        resource_type:
-          description: Type of the child resource being changed. One of `"agent"`, `"tool"`, `"routine"`, `"skill"`, or `"computer"`.
-          example: tool
-          type: string
-        source_template_config:
-          $ref: '#/components/schemas/UpgradeTemplateSummary'
-          description: Summary of the specific child template config (`cfg_...`) that defines this resource. `null` when no source template is resolvable.
+        summary:
+          $ref: '#/components/schemas/AgentUpgradeSummary'
+          description: Aggregate counts of adds, updates, removes, and noops across all child resources.
       required:
-      - action
-      - parent_template_config
-      - resource_type
+      - changes
+      - dry_run
+      - mode
+      - status
+      - summary
       type: object
-    PresetConfig:
-      description: Configuration for a preset routine handler. Controls the agent's behavior, session persistence, and model selection for a given routine or chain step.
+    AgentUpgradeSummary:
+      description: Aggregate counts of each change type produced by an agent upgrade diff.
       example:
-        instructions: You are a helpful assistant. Answer questions concisely and cite sources when possible.
-        llm:
-          model: claude-sonnet-4-5
-        session_mode: stateless
-        session_scope: per_user
-        structured_message_template_ids:
-        - string
+        adds: 1
+        noops: 1
+        removes: 1
+        updates: 1
       properties:
-        instructions:
-          description: Custom task or behavior instructions for the preset (max 10,000 chars).
-          example: You are a helpful assistant. Answer questions concisely and cite sources when possible.
-          type: string
-        llm:
-          $ref: '#/components/schemas/LLMConfig'
-          description: LLM invocation settings (e.g. a `model` override for this routine/step).
-        session_mode:
-          description: 'Session mode: `stateless` (default, new session per trigger) or `session` (find-or-create a persistent session scoped by `session_scope`).'
-          example: stateless
-          type: string
-        session_scope:
-          description: 'When `session_mode` is `session`, controls session scoping: `per_user` (default), `per_key`, `per_org`, or `global`.'
-          example: per_user
-          type: string
-        structured_message_template_ids:
-          description: IDs of structured message templates that constrain the agent's responses to predefined structured formats.
-          example:
-          - string
-          items:
-            type: string
-          type: array
-      type: object
-    HealthActionListResponse:
-      description: List response containing agent health actions for a given agent or organization.
-      example:
-        data:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
-          created_at: '2024-01-01T00:00:00Z'
-          depends_on:
-          - string
-          description: An example description.
-          id: aha_0aBcDeFgHiJkLmNoPqRsTu
-          kind: env_var
-          last_verified_at: '2024-01-01T00:00:00Z'
-          last_verifier_message: string
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          params:
-            key: value
-          required: true
-          sort_order: 1
-          source: setup
-          status: pending
-          title: Example Title
-          updated_at: '2024-01-01T00:00:00Z'
-          verify_config: {}
-      properties:
-        data:
-          description: Array of agent health action objects representing setup checklist items and probe-detected issues.
-          items:
-            $ref: '#/components/schemas/AgentHealthAction'
-          type: array
-      required:
-      - data
-      type: object
-    AgentSchedule:
-      description: A scheduled task created by an agent. Supports one-time and recurring (cron-based) execution patterns.
-      example:
-        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
-        created_at: '2024-01-01T00:00:00Z'
-        cron_expression: 0 9 * * 1
-        id: asc_0aBcDeFgHiJkLmNoPqRsTu
-        instructions: Send a daily summary of open support tickets to the team Slack channel.
-        last_run_at: '2024-01-01T00:00:00Z'
-        max_runs: 10
-        metadata:
-          key: value
-        next_run_at: '2024-01-01T00:00:00Z'
-        run_count: 1
-        schedule_type: recurring
-        scheduled_at: '2024-01-01T00:00:00Z'
-        status: active
-        thread: thr_0aBcDeFgHiJkLmNoPqRsTu
-        timezone: America/New_York
-        updated_at: '2024-01-01T00:00:00Z'
-      properties:
-        agent:
-          description: ID of the agent that owns this schedule (`agi_...`).
-          example: agi_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        app:
-          description: ID of the application the schedule belongs to (`dap_...`).
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        created_at:
-          description: When the schedule was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        cron_expression:
-          description: Standard cron expression defining the recurrence pattern (e.g. `"0 9 * * 1"`). Present only when `schedule_type` is `"recurring"`. `null` for one-time schedules.
-          example: 0 9 * * 1
-          type: string
-        id:
-          description: Schedule ID (`asc_...`).
-          example: asc_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        instructions:
-          description: The task description the agent will execute when this schedule fires.
-          example: Send a daily summary of open support tickets to the team Slack channel.
-          type: string
-        last_run_at:
-          description: UTC datetime of the most recent successful execution. `null` if the schedule has never run.
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        max_runs:
-          description: Maximum number of times a recurring schedule may fire before automatically transitioning to `"completed"`. `null` means no limit.
-          example: 10
-          type: integer
-        metadata:
-          description: Arbitrary key-value pairs attached to the schedule by the agent. Not interpreted by the platform.
-          example:
-            key: value
-          type: object
-        next_run_at:
-          description: UTC datetime of the next planned execution. `null` if the schedule has completed, been cancelled, or has not yet been computed.
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        run_count:
-          description: Total number of times this schedule has fired.
+        adds:
+          description: Number of child resources that will be created by this upgrade.
           example: 1
           type: integer
-        schedule_type:
-          description: Determines how the schedule repeats. `"once"` fires a single time at `scheduled_at` then transitions to `"completed"`. `"recurring"` fires on the `cron_expression` and reschedules automatically.
-          example: recurring
-          type: string
-        scheduled_at:
-          description: The exact UTC datetime at which a one-time schedule fires. Present only when `schedule_type` is `"once"`. `null` for recurring schedules.
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        status:
-          description: Current lifecycle status of the schedule. One of `"active"` (will fire as planned), `"paused"` (temporarily suspended), `"completed"` (has run its last execution), `"cancelled"` (manually stopped), or `"expired"` (past its valid window).
-          example: active
-          type: string
-        thread:
-          description: Thread ID (`thr_...`) this schedule is bound to. When set, the scheduled task is delivered into the thread rather than creating a new session. `null` for session-based schedules.
-          example: thr_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        timezone:
-          description: IANA timezone name used to interpret the cron expression or `scheduled_at` (e.g. `"America/New_York"`). Defaults to `"Etc/UTC"`.
-          example: America/New_York
-          type: string
-        updated_at:
-          description: When the schedule was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
+        noops:
+          description: Number of child resources with no changes in this upgrade.
+          example: 1
+          type: integer
+        removes:
+          description: Number of child resources that will be removed by this upgrade.
+          example: 1
+          type: integer
+        updates:
+          description: Number of child resources that will be updated by this upgrade.
+          example: 1
+          type: integer
       required:
-      - id
+      - adds
+      - noops
+      - removes
+      - updates
       type: object
-    InstallationListResponse:
-      description: Paginated list response containing installation objects for an agent.
+    UpgradeTemplateSummary:
+      description: Compact summary of an AgentTemplate config referenced by an agent upgrade or source-solution response.
       example:
-        data:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          config: {}
-          created_at: '2024-01-01T00:00:00Z'
-          id: cin_0aBcDeFgHiJkLmNoPqRsTu
-          kind: enablement/github_app
-          lookup_key: string
-          shared_integration: int_0aBcDeFgHiJkLmNoPqRsTu
-          state: active
-          status_payload: {}
-          updated_at: '2024-01-01T00:00:00Z'
-      properties:
-        data:
-          description: Array of installation objects returned for the current page.
-          items:
-            $ref: '#/components/schemas/Installation'
-          type: array
-      required:
-      - data
-      type: object
-    SolutionTemplateSummary:
-      description: Identity and display metadata for a single template bundled by a Solution, used to represent each wrapped or sibling template at template granularity.
-      example:
+        created_at: '2024-01-01T00:00:00Z'
         description: An example description.
         display_name: Example Name
         id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: AgentTemplate
+        kind: agent_tool_template
         lookup_key: string
         name: Example Name
-        readme_url: https://example.com
+        updated_at: '2024-01-01T00:00:00Z'
         virtual_path: string
       properties:
+        created_at:
+          description: When this template config was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
         description:
-          description: Short prose blurb from the template body's `description:` field. `null` when the body doesn't set one. Used as the card subhead in the Library carousel.
+          description: Description of the template from the config body. `null` if the current version has no `description` field.
           example: An example description.
           type: string
         display_name:
-          description: Human-facing label from the template body's `display_name:` field. `null` when the body doesn't set one. Library carousels use this for the card title, falling back to a humanized `name`.
+          description: Human-readable display name from the config body. `null` if the current version has no `display_name` field.
           example: Example Name
           type: string
         id:
-          description: Template config ID (`cfg_...`). `null` for inline-only templates.
+          description: Template config ID (`cfg_...`).
           example: id_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         kind:
-          description: Template config kind, or `SolutionTemplateRef` / `SolutionTemplatePath` when unresolved.
-          example: AgentTemplate
+          description: Config kind identifier for this template (e.g. `"agent_tool_template"`).
+          example: agent_tool_template
           type: string
         lookup_key:
-          description: Lookup key stamped on the template config at import time. `null` when no lookup key was assigned.
+          description: Stable lookup key assigned to this template config. `null` if no lookup key is set.
           example: string
           type: string
         name:
-          description: Canonical name from the template body. For `AgentTemplate` this doubles as the human-facing label; for `AgentToolTemplate` it's the LLM-facing tool function identifier (snake_case); for `AgentRoutineTemplate` it's the routine identifier (kebab-case). Clients rendering carousels should prefer `display_name` and fall back to humanizing `name`.
+          description: Template name as stored in the config body. `null` if the current version has no `name` field.
           example: Example Name
           type: string
-        readme_url:
-          description: Relative path to the public README endpoint with a signed token already embedded, scoped to this template's bundled markdown asset. `null` when the Solution body's `templates[].readme_path` is unset for this entry. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
-          example: https://example.com
+        updated_at:
+          description: When this template config was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
           type: string
         virtual_path:
-          description: Stable virtual path assigned to the template config. `null` when no virtual path was set.
-          example: string
-          type: string
-      required:
-      - kind
-      type: object
-    AgentSourceSolution:
-      description: 'Summary of the Solution and AgentTemplate that an agent was last provisioned from.
-
-        Returned on single-agent responses; `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted.'
-      example:
-        solution:
-          category_keys:
-          - string
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: Solution
-          latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-          latest_version: 1.0.0
-          lookup_key: string
-          metadata:
-            key: value
-          name: Example Name
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          org_logo:
-            file: fil_0aBcDeFgHiJkLmNoPqRsTu
-            height: 600
-            media: med_0aBcDeFgHiJkLmNoPqRsTu
-            mime_type: application/json
-            refresh_url: https://example.com
-            url: https://example.com
-            width: 800
-          org_name: Example Name
-          org_slug: example-slug
-          owners:
-          - string
-          readme_url: https://example.com
-          solution_id: 01234567-89ab-cdef-0123-456789abcdef
-          solution_version: 1.2.0
-          tag_keys:
-          - string
-          template_kind: AgentTemplate
-          templates:
-          - description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: AgentTemplate
-            lookup_key: string
-            name: Example Name
-            readme_url: https://example.com
-            virtual_path: string
-          updated_at: '2024-01-01T00:00:00Z'
-          upgrade_available: true
-          virtual_path: string
-        template:
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          display_name: Example Name
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: agent_tool_template
-          lookup_key: string
-          name: Example Name
-          updated_at: '2024-01-01T00:00:00Z'
-          virtual_path: string
-      properties:
-        solution:
-          $ref: '#/components/schemas/SolutionSummary'
-          description: Summary of the parent Solution, including `upgrade_available`, `latest_version`, and `latest_solution` when a newer system-scoped version is available for the agent's org-scoped Solution.
-        template:
-          $ref: '#/components/schemas/UpgradeTemplateSummary'
-          description: Summary of the AgentTemplate config (`cfg_...`) the agent was last provisioned or updated from.
-      required:
-      - solution
-      - template
-      type: object
-    AclGrant:
-      description: A single access-control grant that pairs a principal with the set of actions it is allowed to perform.
-      example:
-        actions:
-        - read
-        - write
-        principal: string
-        principal_type: user
-      properties:
-        actions:
-          description: Array of action strings the principal is permitted to perform, e.g. `["read", "write"]`. Must contain at least one entry.
-          example:
-          - read
-          - write
-          items:
-            type: string
-          type: array
-        principal:
-          description: The identifier of the principal. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`; omit entirely when `principal_type` is `"everyone"`.
-          example: string
-          type: string
-        principal_type:
-          description: The kind of principal receiving the grant. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
-          example: user
-          type: string
-      required:
-      - actions
-      - principal_type
-      type: object
-    AgentEnvVarMaskedList:
-      description: Flat list of masked environment variables belonging to an agent.
-      example:
-        data:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          id: anv_0aBcDeFgHiJkLmNoPqRsTu
-          key: OPENAI_API_KEY
-          masked_value: '****1234'
-          updated_at: '2024-01-01T00:00:00Z'
-      properties:
-        data:
-          description: Array of masked environment variable objects for the agent.
-          items:
-            $ref: '#/components/schemas/AgentEnvVarMasked'
-          type: array
-      required:
-      - data
-      type: object
-    InstalledConfigEntry:
-      description: A slim summary of a single config record created during an agent install transaction. Returned as an entry in `AgentCreateResponse.installed_configs`.
-      example:
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        key: my-skill
-        kind: Skill
-        lookup_key: my-skill
-      properties:
-        id:
-          description: ID of the persisted config record (`cfg_...`).
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        key:
-          description: Caller-supplied correlation key echoed back from the request. For top-level configs this is the original `lookup_key` (before any suffix is applied). For skill file children it is the composite `"<skill_lookup_key>:<relative_path>"` string, since file rows have no lookup_key of their own.
-          example: my-skill
-          type: string
-        kind:
-          description: Type of config that was created. One of `"Skill"`, `"File"`, `"Script"`, `"AgentTemplate"`, or `"Config"`.
-          example: Skill
-          type: string
-        lookup_key:
-          description: Stored `lookup_key` for this config after any suffix has been applied. `null` for `File` children inside a skill bundle, which are keyed by `(parent_id, relative_path)` rather than by `lookup_key`.
-          example: my-skill
-          type: string
-      required:
-      - id
-      - key
-      - kind
-      type: object
-    WorkingMemoryEntry:
-      description: A key-value memory record stored for an agent, optionally scoped to a user. Memory entries persist across invocations and may carry an expiration time.
-      example:
-        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-        created_at: '2024-01-01T00:00:00Z'
-        expires_at: '2024-01-01T00:00:00Z'
-        id: amm_0aBcDeFgHiJkLmNoPqRsTu
-        key: user_preference
-        updated_at: '2024-01-01T00:00:00Z'
-        value: string
-      properties:
-        agent:
-          description: ID of the agent that owns this memory entry (`agt_...`).
-          example: agi_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        created_at:
-          description: When this memory entry was first written (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        expires_at:
-          description: When this entry will be automatically deleted. `null` if the entry does not expire.
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        id:
-          description: Working memory entry ID (`amm_...`).
-          example: amm_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        key:
-          description: The string key used to look up this memory entry within the agent's memory namespace.
-          example: user_preference
-          type: string
-        updated_at:
-          description: When this memory entry was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        value:
-          description: The string value stored under `key`. May be any serialized content the agent wrote.
+          description: Virtual filesystem path for this template config. `null` if not set.
           example: string
           type: string
       required:
       - id
+      - kind
       type: object
-    AgentCreateResponse:
-      description: The response returned by `POST /api/v1/agents`. Contains all agent fields plus an optional `installed_configs` array when a `template_bundle` was supplied in the request.
+    Agent:
+      description: An AI agent that can be configured with tools, routines, and skills, and invoked to handle conversations or tasks.
       example:
         acl:
           add:
@@ -4664,32 +4505,84 @@ components:
             principal_type: user
         app: dap_0aBcDeFgHiJkLmNoPqRsTu
         created_at: '2024-01-01T00:00:00Z'
-        default_model: claude-3-5-sonnet-20241022
+        default_model: claude-3-7-sonnet-latest
         email: user@example.com
         id: agi_0aBcDeFgHiJkLmNoPqRsTu
-        identity: You are a helpful assistant.
-        installed_configs:
-        - id: id_0aBcDeFgHiJkLmNoPqRsTu
-          key: my-skill
-          kind: Skill
-          lookup_key: my-skill
-        lookup_key: my-agent
+        identity: You are a helpful assistant that answers questions about ArchAstro products.
+        last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+        lookup_key: string
         metadata:
           key: value
         name: Example Name
         org: org_0aBcDeFgHiJkLmNoPqRsTu
-        originator: my-service
+        org_name: Example Name
+        originator: deploy-pipeline
         phone_number: '+15555550123'
         sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+        source_solution:
+          solution:
+            category_keys:
+            - string
+            created_at: '2024-01-01T00:00:00Z'
+            description: An example description.
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: Solution
+            latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+            latest_version: 1.0.0
+            lookup_key: string
+            metadata:
+              key: value
+            name: Example Name
+            org: org_0aBcDeFgHiJkLmNoPqRsTu
+            org_logo:
+              file: fil_0aBcDeFgHiJkLmNoPqRsTu
+              height: 600
+              media: med_0aBcDeFgHiJkLmNoPqRsTu
+              mime_type: application/json
+              refresh_url: https://example.com
+              url: https://example.com
+              width: 800
+            org_name: Example Name
+            org_slug: example-slug
+            owners:
+            - string
+            readme_url: https://example.com
+            solution_id: 01234567-89ab-cdef-0123-456789abcdef
+            solution_version: 1.2.0
+            tag_keys:
+            - string
+            template_kind: AgentTemplate
+            templates:
+            - description: An example description.
+              display_name: Example Name
+              id: id_0aBcDeFgHiJkLmNoPqRsTu
+              kind: AgentTemplate
+              lookup_key: string
+              name: Example Name
+              readme_url: https://example.com
+              virtual_path: string
+            updated_at: '2024-01-01T00:00:00Z'
+            upgrade_available: true
+            virtual_path: string
+          template:
+            created_at: '2024-01-01T00:00:00Z'
+            description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: agent_tool_template
+            lookup_key: string
+            name: Example Name
+            updated_at: '2024-01-01T00:00:00Z'
+            virtual_path: string
         team: tem_0aBcDeFgHiJkLmNoPqRsTu
         updated_at: '2024-01-01T00:00:00Z'
         user: usr_0aBcDeFgHiJkLmNoPqRsTu
       properties:
         acl:
           $ref: '#/components/schemas/Acl'
-          description: Access control list governing who can interact with this agent. Contains a `grants` array where each entry specifies `principal_type`, `principal`, and `actions`. `null` when no ACL restrictions are applied.
+          description: Access control list for the agent. Contains a `grants` array where each entry specifies `principal_type`, `principal`, and `actions`. `null` when no ACL restrictions are applied and the agent is accessible to all members of its scope.
         app:
-          description: ID of the app this agent belongs to (`dap_...`).
+          description: ID of the application that owns this agent (`dap_...`).
           example: dap_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         created_at:
@@ -4698,11 +4591,11 @@ components:
           format: date-time
           type: string
         default_model:
-          description: Default AI model the agent uses when no model is specified at runtime, e.g. `"claude-3-5-sonnet-20241022"`. `null` if not configured.
-          example: claude-3-5-sonnet-20241022
+          description: Default LLM model identifier used by this agent when no model is specified at runtime (e.g. `"claude-3-7-sonnet-latest"`).
+          example: claude-3-7-sonnet-latest
           type: string
         email:
-          description: Email address assigned to this agent for inbound email handling. `null` if not configured.
+          description: Email address provisioned for this agent. `null` if email delivery is not configured.
           example: user@example.com
           type: string
         id:
@@ -4710,20 +4603,19 @@ components:
           example: agi_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         identity:
-          description: System prompt or persona description that shapes the agent's behavior. `null` if not set.
-          example: You are a helpful assistant.
+          description: System-level identity prompt that shapes the agent's persona and behavior.
+          example: You are a helpful assistant that answers questions about ArchAstro products.
           type: string
-        installed_configs:
-          description: List of config records created as part of this request's `template_bundle` install. One entry per persisted config, sorted by `key`. Omitted entirely when the request did not include a `template_bundle`.
-          items:
-            $ref: '#/components/schemas/InstalledConfigEntry'
-          type: array
+        last_applied_template_config:
+          description: ID of the AgentTemplate config (`cfg_...`) this agent was last provisioned or updated from. `null` for manually created agents.
+          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
         lookup_key:
-          description: Unique, stable identifier for the agent within its app. `null` if not set.
-          example: my-agent
+          description: Stable, user-defined identifier for this agent within the application. Unique per app.
+          example: string
           type: string
         metadata:
-          description: Arbitrary key-value metadata attached to the agent. `null` if none was provided.
+          description: Arbitrary key-value metadata attached to the agent. Not interpreted by the platform.
           example:
             key: value
           type: object
@@ -4732,46 +4624,43 @@ components:
           example: Example Name
           type: string
         org:
-          description: ID of the organization this agent belongs to (`org_...`). `null` for agents outside an org.
+          description: ID of the organization this agent belongs to (`org_...`). `null` if the agent is not org-scoped.
           example: org_0aBcDeFgHiJkLmNoPqRsTu
           type: string
+        org_name:
+          description: Display name of the organization this agent belongs to. `null` when the agent is not org-scoped or when the org association was not preloaded.
+          example: Example Name
+          type: string
         originator:
-          description: Free-form label identifying the source or author of the agent, e.g. a username or service name. `null` if not set.
-          example: my-service
+          description: Free-form label identifying the source or author that created this agent (e.g. a username or pipeline name).
+          example: deploy-pipeline
           type: string
         phone_number:
-          description: Phone number assigned to this agent for inbound SMS or voice handling. `null` if not configured.
+          description: Phone number provisioned for this agent. `null` if SMS is not configured.
           example: '+15555550123'
           type: string
         sandbox:
-          description: ID of the sandbox environment this agent is scoped to (`sbx_...`). `null` for agents not scoped to a sandbox.
+          description: ID of the sandbox environment this agent is scoped to (`dsb_...`). `null` in production deployments.
           example: dsb_0aBcDeFgHiJkLmNoPqRsTu
           type: string
+        source_solution:
+          $ref: '#/components/schemas/AgentSourceSolution'
+          description: Source Solution and AgentTemplate summary for agents provisioned from a Solution. Includes `upgrade_available`, `latest_version`, and `latest_solution` so you can render an upgrade badge without a separate dry-run call. `null` for hand-built agents and agents whose tracked template or parent Solution has been deleted. Populated only on single-agent GET responses, never on list endpoints.
         team:
-          description: ID of the team that owns this agent (`tea_...`). `null` if owned by a user rather than a team.
+          description: ID of the team that owns this agent (`tem_...`). `null` if the agent is not team-scoped.
           example: tem_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         updated_at:
-          description: When the agent record was last modified (ISO 8601).
+          description: When the agent was last modified (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
           type: string
         user:
-          description: ID of the user that owns this agent (`usr_...`). `null` if owned by a team.
+          description: ID of the user that owns this agent (`usr_...`). `null` if the agent is not user-scoped.
           example: usr_0aBcDeFgHiJkLmNoPqRsTu
           type: string
       required:
       - id
-      type: object
-    LLMConfig:
-      description: LLM invocation settings for a routine or chain step. When present, overrides the agent-level model selection.
-      example:
-        model: claude-sonnet-4-5
-      properties:
-        model:
-          description: Model identifier to use for this routine or step, e.g. `"claude-sonnet-4-5"`. When omitted, the agent's default model is used.
-          example: claude-sonnet-4-5
-          type: string
       type: object
     Thread:
       description: A chat thread, representing a conversation channel that can be owned by a user, team, or agent and may contain messages, participants, and AI agent activity.
@@ -5148,6 +5037,26 @@ components:
       required:
       - id
       type: object
+    AgentEnvVarMaskedList:
+      description: Flat list of masked environment variables belonging to an agent.
+      example:
+        data:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          id: anv_0aBcDeFgHiJkLmNoPqRsTu
+          key: OPENAI_API_KEY
+          masked_value: '****1234'
+          updated_at: '2024-01-01T00:00:00Z'
+      properties:
+        data:
+          description: Array of masked environment variable objects for the agent.
+          items:
+            $ref: '#/components/schemas/AgentEnvVarMasked'
+          type: array
+      required:
+      - data
+      type: object
     AgentListResponse:
       description: Paginated list of agent objects. Use the pagination fields to traverse multiple pages of results.
       example:
@@ -5281,40 +5190,15 @@ components:
       required:
       - data
       type: object
-    AgentToolListResponse:
-      description: Paginated list response containing the tools attached to an agent.
+    ThreadSettings:
+      description: Configuration settings for a thread that control AI agent behavior and other thread-level preferences.
       example:
-        data:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
-          async: true
-          builtin_tool_config: {}
-          builtin_tool_key: string
-          config: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          handler_type: http
-          id: atl_0aBcDeFgHiJkLmNoPqRsTu
-          instruction: string
-          kind: builtin
-          last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          lookup_key: string
-          metadata:
-            key: value
-          name: Example Name
-          name_prefix: string
-          parameters: {}
-          parameters_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          status: active
-          updated_at: '2024-01-01T00:00:00Z'
+        agent_enabled: true
       properties:
-        data:
-          description: Array of agent tool objects returned for the current request.
-          items:
-            $ref: '#/components/schemas/AgentTool'
-          type: array
-      required:
-      - data
+        agent_enabled:
+          description: Whether the AI agent is active for this thread. `true` enables AI responses; `false` disables them. Defaults to `true` when settings have not been explicitly configured.
+          example: true
+          type: boolean
       type: object
     ImageSource:
       description: Resolved metadata for an image, including its delivery URL, dimensions, and optional references to the underlying storage file or media record.
@@ -5356,26 +5240,10 @@ components:
           example: 800
           type: integer
       type: object
-    AclRemoveTarget:
-      description: Identifies a principal to be removed from an access-control list.
+    AgentHealth:
+      description: Aggregate health profile for an agent, summarizing its current operational status, score, and the full list of setup and health actions.
       example:
-        principal: string
-        principal_type: user
-      properties:
-        principal:
-          description: The identifier of the principal to remove. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`. Omit when `principal_type` is `"everyone"`.
-          example: string
-          type: string
-        principal_type:
-          description: The kind of principal to remove. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
-          example: user
-          type: string
-      required:
-      - principal_type
-      type: object
-    AgentUpgradeResponse:
-      description: Response returned by the agent upgrade endpoint, combining the updated agent, its source Solution and template, and the full upgrade diff.
-      example:
+        activity: {}
         agent:
           acl:
             add:
@@ -5467,186 +5335,157 @@ components:
           team: tem_0aBcDeFgHiJkLmNoPqRsTu
           updated_at: '2024-01-01T00:00:00Z'
           user: usr_0aBcDeFgHiJkLmNoPqRsTu
-        solution:
-          category_keys:
-          - string
+        checked_at: '2024-01-01T00:00:00Z'
+        checks:
+        - {}
+        counts: {}
+        health_actions:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
           created_at: '2024-01-01T00:00:00Z'
+          depends_on:
+          - string
           description: An example description.
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: Solution
-          latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-          latest_version: 1.0.0
-          lookup_key: string
-          metadata:
-            key: value
-          name: Example Name
+          id: aha_0aBcDeFgHiJkLmNoPqRsTu
+          kind: env_var
+          last_verified_at: '2024-01-01T00:00:00Z'
+          last_verifier_message: string
           org: org_0aBcDeFgHiJkLmNoPqRsTu
-          org_logo:
-            file: fil_0aBcDeFgHiJkLmNoPqRsTu
-            height: 600
-            media: med_0aBcDeFgHiJkLmNoPqRsTu
-            mime_type: application/json
-            refresh_url: https://example.com
-            url: https://example.com
-            width: 800
-          org_name: Example Name
-          org_slug: example-slug
-          owners:
-          - string
-          readme_url: https://example.com
-          solution_id: 01234567-89ab-cdef-0123-456789abcdef
-          solution_version: 1.2.0
-          tag_keys:
-          - string
-          template_kind: AgentTemplate
-          templates:
-          - description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: AgentTemplate
-            lookup_key: string
-            name: Example Name
-            readme_url: https://example.com
-            virtual_path: string
+          params:
+            key: value
+          required: true
+          sort_order: 1
+          source: setup
+          status: pending
+          title: Example Title
           updated_at: '2024-01-01T00:00:00Z'
-          upgrade_available: true
-          virtual_path: string
-        template:
-          created_at: '2024-01-01T00:00:00Z'
-          description: An example description.
-          display_name: Example Name
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: agent_tool_template
-          lookup_key: string
-          name: Example Name
-          updated_at: '2024-01-01T00:00:00Z'
-          virtual_path: string
-        upgrade_result:
-          changes:
-          - action: update
-            description: An example description.
-            field_changes:
-            - field: name
-              locally_edited: true
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            key: string
-            name: Example Name
-            parent_template_config:
-              created_at: '2024-01-01T00:00:00Z'
-              description: An example description.
-              display_name: Example Name
-              id: id_0aBcDeFgHiJkLmNoPqRsTu
-              kind: agent_tool_template
-              lookup_key: string
-              name: Example Name
-              updated_at: '2024-01-01T00:00:00Z'
-              virtual_path: string
-            resource: {}
-            resource_type: tool
-            source_template_config:
-              created_at: '2024-01-01T00:00:00Z'
-              description: An example description.
-              display_name: Example Name
-              id: id_0aBcDeFgHiJkLmNoPqRsTu
-              kind: agent_tool_template
-              lookup_key: string
-              name: Example Name
-              updated_at: '2024-01-01T00:00:00Z'
-              virtual_path: string
-          dry_run: true
-          mode: full
-          review_fingerprint: string
-          status: upgraded
-          summary:
-            adds: 1
-            noops: 1
-            removes: 1
-            updates: 1
+          verify_config: {}
+        recent: {}
+        score: 85
+        status: ok
       properties:
+        activity:
+          description: Timestamps for the agent's most recent and next scheduled activity, used to surface last-run and upcoming-run information.
+          example: {}
+          type: object
         agent:
           $ref: '#/components/schemas/Agent'
-          description: The agent after the upgrade has been applied. `null` for dry-run requests where no changes were persisted.
-        solution:
-          $ref: '#/components/schemas/SolutionSummary'
-          description: Summary of the parent Solution the agent was upgraded from.
-        template:
-          $ref: '#/components/schemas/UpgradeTemplateSummary'
-          description: Summary of the AgentTemplate config (`cfg_...`) that was selected for this upgrade.
-        upgrade_result:
-          $ref: '#/components/schemas/AgentUpgradeResult'
-          description: Full upgrade diff including status, mode, dry-run flag, summary counts, and per-resource change list.
+          description: The agent this health profile describes.
+        checked_at:
+          description: When the health profile was last computed (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        checks:
+          description: Renderable health check results. Each object includes at minimum `key`, `label`, `status`, and `summary` fields.
+          example:
+          - {}
+          items:
+            type: object
+          type: array
+        counts:
+          description: Action counts broken down by dependency area and resolution status, used to render progress indicators per category.
+          example: {}
+          type: object
+        health_actions:
+          description: All actionable items tracked for this agent, including both `"setup"` items (post-install checklist) and `"health"` items (probe-detected issues). Sorted by `(source, sort_order, id)`. Use each item's `params` field to construct deep-links that route the user to the correct resolution flow.
+          items:
+            $ref: '#/components/schemas/AgentHealthAction'
+          type: array
+        recent:
+          description: Recent execution metrics for the agent, including run counts and failure counts over a recent time window.
+          example: {}
+          type: object
+        score:
+          description: Normalized health score from `0` (fully degraded) to `100` (fully healthy), derived from the weight and status of all health actions.
+          example: 85
+          type: integer
+        status:
+          description: Overall health status of the agent. One of `"ok"`, `"warning"`, or `"critical"`.
+          example: ok
+          type: string
       required:
-      - solution
-      - template
-      - upgrade_result
+      - activity
+      - agent
+      - checked_at
+      - checks
+      - counts
+      - health_actions
+      - recent
+      - score
+      - status
       type: object
-    MediaVariant:
-      description: A processed variant of a media item, such as the original upload or a resized thumbnail, including a signed download URL resolved at request time.
+    InstalledConfigEntry:
+      description: A slim summary of a single config record created during an agent install transaction. Returned as an entry in `AgentCreateResponse.installed_configs`.
       example:
-        content_type: application/json
-        created_at: '2024-01-01T00:00:00Z'
-        file: fil_0aBcDeFgHiJkLmNoPqRsTu
-        filename: string
-        height: 600
-        id: mvr_0aBcDeFgHiJkLmNoPqRsTu
-        image_source:
-          file: fil_0aBcDeFgHiJkLmNoPqRsTu
-          height: 600
-          media: med_0aBcDeFgHiJkLmNoPqRsTu
-          mime_type: application/json
-          refresh_url: https://example.com
-          url: https://example.com
-          width: 800
-        updated_at: '2024-01-01T00:00:00Z'
-        url: https://example.com
-        variant_key: original
-        width: 800
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        key: my-skill
+        kind: Skill
+        lookup_key: my-skill
       properties:
-        content_type:
-          description: MIME type of this variant's file (e.g., `"image/jpeg"`, `"video/mp4"`). `null` if the file is not loaded.
-          example: application/json
+        id:
+          description: ID of the persisted config record (`cfg_...`).
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        key:
+          description: Caller-supplied correlation key echoed back from the request. For top-level configs this is the original `lookup_key` (before any suffix is applied). For skill file children it is the composite `"<skill_lookup_key>:<relative_path>"` string, since file rows have no lookup_key of their own.
+          example: my-skill
+          type: string
+        kind:
+          description: Type of config that was created. One of `"Skill"`, `"File"`, `"Script"`, `"AgentTemplate"`, or `"Config"`.
+          example: Skill
+          type: string
+        lookup_key:
+          description: Stored `lookup_key` for this config after any suffix has been applied. `null` for `File` children inside a skill bundle, which are keyed by `(parent_id, relative_path)` rather than by `lookup_key`.
+          example: my-skill
+          type: string
+      required:
+      - id
+      - key
+      - kind
+      type: object
+    WorkingMemoryEntry:
+      description: A key-value memory record stored for an agent, optionally scoped to a user. Memory entries persist across invocations and may carry an expiration time.
+      example:
+        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+        created_at: '2024-01-01T00:00:00Z'
+        expires_at: '2024-01-01T00:00:00Z'
+        id: amm_0aBcDeFgHiJkLmNoPqRsTu
+        key: user_preference
+        updated_at: '2024-01-01T00:00:00Z'
+        value: string
+      properties:
+        agent:
+          description: ID of the agent that owns this memory entry (`agt_...`).
+          example: agi_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         created_at:
-          description: When this variant was created (ISO 8601).
+          description: When this memory entry was first written (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
           type: string
-        file:
-          description: ID of the underlying storage file that backs this variant (`fil_...`).
-          example: fil_0aBcDeFgHiJkLmNoPqRsTu
+        expires_at:
+          description: When this entry will be automatically deleted. `null` if the entry does not expire.
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
           type: string
-        filename:
-          description: Original filename of the uploaded file for this variant. `null` if the file is not loaded.
+        id:
+          description: Working memory entry ID (`amm_...`).
+          example: amm_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        key:
+          description: The string key used to look up this memory entry within the agent's memory namespace.
+          example: user_preference
+          type: string
+        updated_at:
+          description: When this memory entry was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        value:
+          description: The string value stored under `key`. May be any serialized content the agent wrote.
           example: string
           type: string
-        height:
-          description: Height of this variant in pixels. `null` if not recorded.
-          example: 600
-          type: integer
-        id:
-          description: Media variant ID (`mvr_...`).
-          example: mvr_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        image_source:
-          $ref: '#/components/schemas/ImageSource'
-          description: Resolved image delivery metadata for this variant, including dimensions and CDN URL. `null` for non-image content types.
-        updated_at:
-          description: When this variant was last updated (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        url:
-          description: Signed download URL for this variant, resolved at request time. `null` if the file is unavailable.
-          example: https://example.com
-          type: string
-        variant_key:
-          description: Identifier for this variant's processing tier. Common values include `"original"` (the unmodified upload) and `"thumbnail"` (a resized preview).
-          example: original
-          type: string
-        width:
-          description: Width of this variant in pixels. `null` if not recorded.
-          example: 800
-          type: integer
       required:
       - id
       type: object
@@ -5667,6 +5506,41 @@ components:
           description: Array of installation kind objects describing the available integration types and their configuration requirements.
           items:
             $ref: '#/components/schemas/InstallationKind'
+          type: array
+      required:
+      - data
+      type: object
+    AgentToolListResponse:
+      description: Paginated list response containing the tools attached to an agent.
+      example:
+        data:
+        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+          async: true
+          builtin_tool_config: {}
+          builtin_tool_key: string
+          config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          handler_type: http
+          id: atl_0aBcDeFgHiJkLmNoPqRsTu
+          instruction: string
+          kind: builtin
+          last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          lookup_key: string
+          metadata:
+            key: value
+          name: Example Name
+          name_prefix: string
+          parameters: {}
+          parameters_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          status: active
+          updated_at: '2024-01-01T00:00:00Z'
+      properties:
+        data:
+          description: Array of agent tool objects returned for the current request.
+          items:
+            $ref: '#/components/schemas/AgentTool'
           type: array
       required:
       - data
@@ -5718,117 +5592,136 @@ components:
       - key
       - masked_value
       type: object
-    AgentHealthAction:
-      description: A single actionable item in an agent's health or setup checklist, carrying the structured data needed to render the item and deep-link to the resolution flow.
+    Config:
+      description: A versioned config file owned by a team or user, representing a typed artifact such as an agent definition or API tool specification.
       example:
         agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
         created_at: '2024-01-01T00:00:00Z'
-        depends_on:
-        - string
-        description: An example description.
-        id: aha_0aBcDeFgHiJkLmNoPqRsTu
-        kind: env_var
-        last_verified_at: '2024-01-01T00:00:00Z'
-        last_verifier_message: string
+        current_version:
+          change_description: An example description.
+          content_hash: sha256:2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+          created_at: '2024-01-01T00:00:00Z'
+          data: {}
+          id: cfv_0aBcDeFgHiJkLmNoPqRsTu
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          version_number: 1
+        id: cfg_0aBcDeFgHiJkLmNoPqRsTu
+        is_archived: true
+        kind: Agent
+        lookup_key: string
+        mime_type: application/json
         org: org_0aBcDeFgHiJkLmNoPqRsTu
-        params:
-          key: value
-        required: true
-        sort_order: 1
-        source: setup
-        status: pending
-        title: Example Title
+        parent: cfg_0aBcDeFgHiJkLmNoPqRsTu
+        parent_solution: cfg_0aBcDeFgHiJkLmNoPqRsTu
+        raw_content: string
+        relative_path: string
+        sandbox: string
+        team: tem_0aBcDeFgHiJkLmNoPqRsTu
         updated_at: '2024-01-01T00:00:00Z'
-        verify_config: {}
+        user: usr_0aBcDeFgHiJkLmNoPqRsTu
+        virtual_path: agents/my-agent.yaml
       properties:
         agent:
-          description: ID of the agent this action is scoped to (`agt_...`). `null` for org-level actions.
+          description: Agent ID (`agt_...`) associated with this config. `null` if not linked to an agent.
           example: agi_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        app:
-          description: ID of the application this action is associated with (`app_...`). `null` when not app-scoped.
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
         created_at:
-          description: When this health action was first created (ISO 8601).
+          description: When this config was first created (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
           type: string
-        depends_on:
-          description: IDs of other health actions that must reach `"completed"` status before this action can be started. Empty array when there are no dependencies.
-          example:
-          - string
-          items:
-            type: string
-          type: array
-        description:
-          description: Longer Markdown-formatted explanation of what the action requires and why. `null` if not provided.
-          example: An example description.
-          type: string
+        current_version:
+          $ref: '#/components/schemas/ConfigVersion'
+          description: The most recently saved version of this config. `null` if the config has never been saved with content.
         id:
-          description: Health action ID (`aha_...`).
-          example: aha_0aBcDeFgHiJkLmNoPqRsTu
+          description: Config ID (`cfg_...`).
+          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        kind:
-          description: Category of action to take. One of `"env_var"` (set a secret), `"install"` (authorize an OAuth integration), or `"custom"` (agent-defined step).
-          example: env_var
-          type: string
-        last_verified_at:
-          description: When the verifier last ran for this action (ISO 8601). `null` until the verifier has been invoked at least once.
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        last_verifier_message:
-          description: Human-readable output from the most recent verifier run. `null` if the verifier has not run yet.
-          example: string
-          type: string
-        org:
-          description: ID of the organization this action is associated with (`org_...`). `null` when not org-scoped.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        params:
-          description: Kind-specific structured data used to construct the deep-link for this action. For `"env_var"` actions includes `key` and `scope`; for `"install"` actions includes `installation_kind`. Empty object `{}` when no additional parameters are needed.
-          example:
-            key: value
-          type: object
-        required:
-          description: '`true` if this action must be completed before the agent is considered fully operational and counts toward the blocking checklist progress bar.'
+        is_archived:
+          description: Whether this config has been archived. Archived configs are hidden from default listings but remain accessible by ID.
           example: true
           type: boolean
-        sort_order:
-          description: Display order within the same `source` group. Lower values appear first.
-          example: 1
-          type: integer
-        source:
-          description: Lifecycle stage that produced this action. One of `"setup"` (post-install checklist item) or `"health"` (probe-detected issue).
-          example: setup
+        kind:
+          description: Type of config, e.g. `"Agent"` or `"APITool"`. Determines which fields and validation rules apply.
+          example: Agent
           type: string
-        status:
-          description: Current resolution state. One of `"pending"` (not yet completed), `"completed"` (resolved), `"skipped"` (dismissed by the user), or `"degraded"` (completed but the verifier is reporting a warning).
-          example: pending
+        lookup_key:
+          description: Stable, user-defined key used to look up this config without knowing its ID. `null` if not set.
+          example: string
           type: string
-        title:
-          description: Short display label for this action, intended for use as a checklist item heading.
-          example: Example Title
+        mime_type:
+          description: MIME type of the config's content, e.g. `"text/yaml"`. `null` if not determined.
+          example: application/json
+          type: string
+        org:
+          description: Organization ID (`org_...`) this config belongs to. `null` for configs not scoped to an org.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        parent:
+          description: Parent bundle config ID (`cfg_...`). Present only for configs that are children of a bundle; `null` otherwise.
+          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        parent_solution:
+          description: ID (`cfg_...`) of the solution config this config was imported with. `null` if the config was not imported via a solution.
+          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        raw_content:
+          description: Raw file content as a string. Populated only for system configs; `null` for user-owned configs.
+          example: string
+          type: string
+        relative_path:
+          description: Path of this config relative to its parent bundle root. Present only for bundle children; `null` otherwise.
+          example: string
+          type: string
+        sandbox:
+          description: Sandbox identifier this config belongs to. `null` for production configs.
+          example: string
+          type: string
+        team:
+          description: Team ID (`tea_...`) that owns this config. `null` for personal (user-scoped) configs.
+          example: tem_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         updated_at:
-          description: When this health action was last modified (ISO 8601).
+          description: When this config was last modified (ISO 8601).
           example: '2024-01-01T00:00:00Z'
           format: date-time
           type: string
-        verify_config:
-          description: Configuration for the action's verifier step. Contains at minimum a `type` field that indicates which verification affordance to render. Server-internal fields are stripped before this is returned.
-          example: {}
-          type: object
+        user:
+          description: User ID (`usr_...`) who owns this config. `null` for team-scoped configs.
+          example: usr_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        virtual_path:
+          description: Logical path uniquely identifying this config within its team, e.g. `"agents/my-agent.yaml"`. `null` for configs without an explicit path.
+          example: agents/my-agent.yaml
+          type: string
       required:
       - id
       - kind
-      - required
-      - sort_order
-      - source
-      - status
-      - title
+      type: object
+    MessageReaction:
+      description: A compact reaction record embedded in a message's `reactions` array, representing a single user's reaction to a message.
+      example:
+        payload:
+          key: value
+        type: emoji_reaction
+        user: string
+      properties:
+        payload:
+          description: Type-specific reaction data. For `"emoji_reaction"` reactions, contains an `emoji` key with the Unicode emoji string (e.g., `"👍"`).
+          example:
+            key: value
+          type: object
+        type:
+          description: Reaction type identifier. Currently always `"emoji_reaction"` for emoji-based reactions.
+          example: emoji_reaction
+          type: string
+        user:
+          description: Public ID of the user who added the reaction (`usr_...`).
+          example: string
+          type: string
+      required:
+      - type
       type: object
     AgentTool:
       description: A tool attached to an agent, defining a capability the agent can invoke during a conversation or task run.
@@ -6108,173 +6001,52 @@ components:
       - templates
       - upgrade_available
       type: object
-    AgentComputer:
-      description: A cloud computer resource provisioned for an agent to use for browser and desktop automation tasks.
+    SolutionTemplateSummary:
+      description: Identity and display metadata for a single template bundled by a Solution, used to represent each wrapped or sibling template at template granularity.
       example:
-        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
-        config:
-          key: value
-        created_at: '2024-01-01T00:00:00Z'
-        error_message: string
-        id: cmp_0aBcDeFgHiJkLmNoPqRsTu
-        last_active_at: '2024-01-01T00:00:00Z'
-        lookup_key: main-computer
-        metadata:
-          key: value
+        description: An example description.
+        display_name: Example Name
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        kind: AgentTemplate
+        lookup_key: string
         name: Example Name
-        region: us-east-1
-        sprite_url: https://example.com
-        status: ready
-        updated_at: '2024-01-01T00:00:00Z'
+        readme_url: https://example.com
+        virtual_path: string
       properties:
-        agent:
-          description: ID of the agent that owns this computer (`agi_...`). `null` if the computer is not yet assigned to an agent.
-          example: agi_0aBcDeFgHiJkLmNoPqRsTu
+        description:
+          description: Short prose blurb from the template body's `description:` field. `null` when the body doesn't set one. Used as the card subhead in the Library carousel.
+          example: An example description.
           type: string
-        app:
-          description: ID of the app this computer belongs to (`dap_...`).
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        config:
-          description: Provider-specific configuration key-value pairs for the computer. Structure depends on the underlying compute provider.
-          example:
-            key: value
-          type: object
-        created_at:
-          description: When the computer was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        error_message:
-          description: Human-readable error description when `status` is `"error"`. `null` otherwise.
-          example: string
-          type: string
-        id:
-          description: Computer ID (`cmp_...`).
-          example: cmp_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        last_active_at:
-          description: When the computer last reported activity or received a command. `null` if the computer has never been active.
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        lookup_key:
-          description: Unique, stable identifier you assign to this computer within its app. `null` if not set.
-          example: main-computer
-          type: string
-        metadata:
-          description: Arbitrary key-value metadata you attached to the computer. `null` if none was provided.
-          example:
-            key: value
-          type: object
-        name:
-          description: Human-readable display name for the computer. `null` if not set.
+        display_name:
+          description: Human-facing label from the template body's `display_name:` field. `null` when the body doesn't set one. Library carousels use this for the card title, falling back to a humanized `name`.
           example: Example Name
           type: string
-        region:
-          description: Cloud region where the computer is hosted, e.g. `"us-east-1"`. `null` if not yet assigned.
-          example: us-east-1
-          type: string
-        sprite_url:
-          description: URL of the live screenshot sprite used to render a real-time preview of the computer's screen. `null` when no sprite is available.
-          example: https://example.com
-          type: string
-        status:
-          description: Current lifecycle state of the computer. Common values include `"provisioning"`, `"ready"`, `"error"`, and `"terminated"`.
-          example: ready
-          type: string
-        updated_at:
-          description: When the computer record was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-      required:
-      - id
-      type: object
-    Installation:
-      description: An installation representing a connection between an agent and an external service or enablement channel. Tracks configuration, lifecycle state, and any bound integration.
-      example:
-        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-        config: {}
-        created_at: '2024-01-01T00:00:00Z'
-        id: cin_0aBcDeFgHiJkLmNoPqRsTu
-        kind: enablement/github_app
-        lookup_key: string
-        shared_integration: int_0aBcDeFgHiJkLmNoPqRsTu
-        state: active
-        status_payload: {}
-        updated_at: '2024-01-01T00:00:00Z'
-      properties:
-        agent:
-          description: ID of the agent that owns this installation (`agi_...`). `null` if the installation has no agent owner.
-          example: agi_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        config:
-          description: Kind-specific configuration object for this installation. Shape depends on the `kind` value. `null` if the kind requires no configuration.
-          example: {}
-          type: object
-        created_at:
-          description: When the installation was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
         id:
-          description: Installation ID (`cin_...`).
-          example: cin_0aBcDeFgHiJkLmNoPqRsTu
+          description: Template config ID (`cfg_...`). `null` for inline-only templates.
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
           type: string
         kind:
-          description: Slug identifying the type of external service this installation connects to, e.g. `"enablement/github_app"` or `"integration/gmail"`. `null` if not set.
-          example: enablement/github_app
+          description: Template config kind, or `SolutionTemplateRef` / `SolutionTemplatePath` when unresolved.
+          example: AgentTemplate
           type: string
         lookup_key:
-          description: Caller-assigned stable identifier for this installation, used to reference it in knowledge search `source_refs`. `null` if no lookup key was provided at creation time.
+          description: Lookup key stamped on the template config at import time. `null` when no lookup key was assigned.
           example: string
           type: string
-        shared_integration:
-          description: ID of the shared org- or app-level integration bound to this installation (`int_...`). `null` if no integration has been bound.
-          example: int_0aBcDeFgHiJkLmNoPqRsTu
+        name:
+          description: Canonical name from the template body. For `AgentTemplate` this doubles as the human-facing label; for `AgentToolTemplate` it's the LLM-facing tool function identifier (snake_case); for `AgentRoutineTemplate` it's the routine identifier (kebab-case). Clients rendering carousels should prefer `display_name` and fall back to humanizing `name`.
+          example: Example Name
           type: string
-        state:
-          description: Current lifecycle state of the installation. One of `"pending"`, `"active"`, `"paused"`, or `"error"`. `"error"` indicates the installation was suspended due to a policy or compliance issue and requires attention.
-          example: active
+        readme_url:
+          description: Relative path to the public README endpoint with a signed token already embedded, scoped to this template's bundled markdown asset. `null` when the Solution body's `templates[].readme_path` is unset for this entry. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
+          example: https://example.com
           type: string
-        status_payload:
-          description: Provider-supplied status detail for this installation, set during activation or event processing. `null` if no status has been reported.
-          example: {}
-          type: object
-        updated_at:
-          description: When the installation record was last updated (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
+        virtual_path:
+          description: Stable virtual path assigned to the template config. `null` when no virtual path was set.
+          example: string
           type: string
       required:
-      - id
-      type: object
-    AgentUpgradeFieldChange:
-      description: 'One field-level diff entry within an agent upgrade change, describing how a single field will change.
-
-        `baseline` and `locally_edited` are populated only for `agent_base` entries; child resource entries (tools, routines, skills, computers) carry only `field`, `old`, and `new`.'
-      example:
-        field: name
-        locally_edited: true
-      properties:
-        baseline:
-          description: Value that was set by the last-applied template version (pinned baseline). Populated only on `agent_base` field changes. `null` when no baseline is available (legacy agent or deleted version).
-        field:
-          description: Name of the field that will change, e.g. `"name"` or `"identity"`.
-          example: name
-          type: string
-        locally_edited:
-          description: '`true` when the agent''s current value differs from `baseline`, indicating a local edit that this upgrade will overwrite. `false` when the current value matches the baseline. `null` when `baseline` is unavailable. Populated only on `agent_base` field changes.'
-          example: true
-          type: boolean
-        new:
-          description: Incoming value the field will be set to after the upgrade (string, number, boolean, or `null`).
-        old:
-          description: Current value of the field before the upgrade (string, number, boolean, or `null`).
-      required:
-      - field
+      - kind
       type: object
     AgentRoutine:
       description: An agent routine defines a reusable handler — script, preset, or chain — that runs in response to events or on a schedule.
@@ -6421,311 +6193,599 @@ components:
       required:
       - id
       type: object
-    Config:
-      description: A versioned config file owned by a team or user, representing a typed artifact such as an agent definition or API tool specification.
+    AgentCreateResponse:
+      description: The response returned by `POST /api/v1/agents`. Contains all agent fields plus an optional `installed_configs` array when a `template_bundle` was supplied in the request.
       example:
-        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+        acl:
+          add:
+          - actions:
+            - read
+            - write
+            principal: string
+            principal_type: user
+          grants:
+          - actions:
+            - read
+            - write
+            principal: string
+            principal_type: user
+          remove:
+          - principal: string
+            principal_type: user
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
         created_at: '2024-01-01T00:00:00Z'
-        current_version:
-          change_description: An example description.
-          content_hash: sha256:2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
-          created_at: '2024-01-01T00:00:00Z'
-          data: {}
-          id: cfv_0aBcDeFgHiJkLmNoPqRsTu
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          version_number: 1
-        id: cfg_0aBcDeFgHiJkLmNoPqRsTu
-        is_archived: true
-        kind: Agent
-        lookup_key: string
-        mime_type: application/json
+        default_model: claude-3-5-sonnet-20241022
+        email: user@example.com
+        id: agi_0aBcDeFgHiJkLmNoPqRsTu
+        identity: You are a helpful assistant.
+        installed_configs:
+        - id: id_0aBcDeFgHiJkLmNoPqRsTu
+          key: my-skill
+          kind: Skill
+          lookup_key: my-skill
+        lookup_key: my-agent
+        metadata:
+          key: value
+        name: Example Name
         org: org_0aBcDeFgHiJkLmNoPqRsTu
-        parent: cfg_0aBcDeFgHiJkLmNoPqRsTu
-        parent_solution: cfg_0aBcDeFgHiJkLmNoPqRsTu
-        raw_content: string
-        relative_path: string
-        sandbox: string
+        originator: my-service
+        phone_number: '+15555550123'
+        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
         team: tem_0aBcDeFgHiJkLmNoPqRsTu
         updated_at: '2024-01-01T00:00:00Z'
         user: usr_0aBcDeFgHiJkLmNoPqRsTu
-        virtual_path: agents/my-agent.yaml
       properties:
-        agent:
-          description: Agent ID (`agt_...`) associated with this config. `null` if not linked to an agent.
+        acl:
+          $ref: '#/components/schemas/Acl'
+          description: Access control list governing who can interact with this agent. Contains a `grants` array where each entry specifies `principal_type`, `principal`, and `actions`. `null` when no ACL restrictions are applied.
+        app:
+          description: ID of the app this agent belongs to (`dap_...`).
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        created_at:
+          description: When the agent was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        default_model:
+          description: Default AI model the agent uses when no model is specified at runtime, e.g. `"claude-3-5-sonnet-20241022"`. `null` if not configured.
+          example: claude-3-5-sonnet-20241022
+          type: string
+        email:
+          description: Email address assigned to this agent for inbound email handling. `null` if not configured.
+          example: user@example.com
+          type: string
+        id:
+          description: Agent ID (`agi_...`).
           example: agi_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        created_at:
-          description: When this config was first created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
+        identity:
+          description: System prompt or persona description that shapes the agent's behavior. `null` if not set.
+          example: You are a helpful assistant.
           type: string
-        current_version:
-          $ref: '#/components/schemas/ConfigVersion'
-          description: The most recently saved version of this config. `null` if the config has never been saved with content.
-        id:
-          description: Config ID (`cfg_...`).
-          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        is_archived:
-          description: Whether this config has been archived. Archived configs are hidden from default listings but remain accessible by ID.
-          example: true
-          type: boolean
-        kind:
-          description: Type of config, e.g. `"Agent"` or `"APITool"`. Determines which fields and validation rules apply.
-          example: Agent
-          type: string
-        lookup_key:
-          description: Stable, user-defined key used to look up this config without knowing its ID. `null` if not set.
-          example: string
-          type: string
-        mime_type:
-          description: MIME type of the config's content, e.g. `"text/yaml"`. `null` if not determined.
-          example: application/json
-          type: string
-        org:
-          description: Organization ID (`org_...`) this config belongs to. `null` for configs not scoped to an org.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        parent:
-          description: Parent bundle config ID (`cfg_...`). Present only for configs that are children of a bundle; `null` otherwise.
-          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        parent_solution:
-          description: ID (`cfg_...`) of the solution config this config was imported with. `null` if the config was not imported via a solution.
-          example: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        raw_content:
-          description: Raw file content as a string. Populated only for system configs; `null` for user-owned configs.
-          example: string
-          type: string
-        relative_path:
-          description: Path of this config relative to its parent bundle root. Present only for bundle children; `null` otherwise.
-          example: string
-          type: string
-        sandbox:
-          description: Sandbox identifier this config belongs to. `null` for production configs.
-          example: string
-          type: string
-        team:
-          description: Team ID (`tea_...`) that owns this config. `null` for personal (user-scoped) configs.
-          example: tem_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        updated_at:
-          description: When this config was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        user:
-          description: User ID (`usr_...`) who owns this config. `null` for team-scoped configs.
-          example: usr_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        virtual_path:
-          description: Logical path uniquely identifying this config within its team, e.g. `"agents/my-agent.yaml"`. `null` for configs without an explicit path.
-          example: agents/my-agent.yaml
-          type: string
-      required:
-      - id
-      - kind
-      type: object
-    AgentExport:
-      description: A portable export bundle for an agent, containing everything needed to re-deploy it in another workspace or environment.
-      example:
-        configs:
-        - agent: agi_0aBcDeFgHiJkLmNoPqRsTu
-          created_at: '2024-01-01T00:00:00Z'
-          current_version:
-            change_description: An example description.
-            content_hash: sha256:2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
-            created_at: '2024-01-01T00:00:00Z'
-            data: {}
-            id: cfv_0aBcDeFgHiJkLmNoPqRsTu
-            org: org_0aBcDeFgHiJkLmNoPqRsTu
-            sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-            version_number: 1
-          id: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          is_archived: true
-          kind: Agent
-          lookup_key: string
-          mime_type: application/json
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          parent: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          parent_solution: cfg_0aBcDeFgHiJkLmNoPqRsTu
-          raw_content: string
-          relative_path: string
-          sandbox: string
-          team: tem_0aBcDeFgHiJkLmNoPqRsTu
-          updated_at: '2024-01-01T00:00:00Z'
-          user: usr_0aBcDeFgHiJkLmNoPqRsTu
-          virtual_path: agents/my-agent.yaml
-        template: {}
-      properties:
-        configs:
-          description: Ordered list of config file objects that the agent depends on. Included in full so the import can recreate all dependencies without additional requests.
+        installed_configs:
+          description: List of config records created as part of this request's `template_bundle` install. One entry per persisted config, sorted by `key`. Omitted entirely when the request did not include a `template_bundle`.
           items:
-            $ref: '#/components/schemas/Config'
+            $ref: '#/components/schemas/InstalledConfigEntry'
           type: array
-        template:
-          description: The agent template definition as a structured map. Pass this directly to the import endpoint to recreate the agent.
-          example: {}
-          type: object
-      required:
-      - configs
-      - template
-      type: object
-    UpgradeTemplateSummary:
-      description: Compact summary of an AgentTemplate config referenced by an agent upgrade or source-solution response.
-      example:
-        created_at: '2024-01-01T00:00:00Z'
-        description: An example description.
-        display_name: Example Name
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: agent_tool_template
-        lookup_key: string
-        name: Example Name
-        updated_at: '2024-01-01T00:00:00Z'
-        virtual_path: string
-      properties:
-        created_at:
-          description: When this template config was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        description:
-          description: Description of the template from the config body. `null` if the current version has no `description` field.
-          example: An example description.
-          type: string
-        display_name:
-          description: Human-readable display name from the config body. `null` if the current version has no `display_name` field.
-          example: Example Name
-          type: string
-        id:
-          description: Template config ID (`cfg_...`).
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        kind:
-          description: Config kind identifier for this template (e.g. `"agent_tool_template"`).
-          example: agent_tool_template
-          type: string
         lookup_key:
-          description: Stable lookup key assigned to this template config. `null` if no lookup key is set.
-          example: string
+          description: Unique, stable identifier for the agent within its app. `null` if not set.
+          example: my-agent
           type: string
-        name:
-          description: Template name as stored in the config body. `null` if the current version has no `name` field.
-          example: Example Name
-          type: string
-        updated_at:
-          description: When this template config was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        virtual_path:
-          description: Virtual filesystem path for this template config. `null` if not set.
-          example: string
-          type: string
-      required:
-      - id
-      - kind
-      type: object
-    MessageReaction:
-      description: A compact reaction record embedded in a message's `reactions` array, representing a single user's reaction to a message.
-      example:
-        payload:
-          key: value
-        type: emoji_reaction
-        user: string
-      properties:
-        payload:
-          description: Type-specific reaction data. For `"emoji_reaction"` reactions, contains an `emoji` key with the Unicode emoji string (e.g., `"👍"`).
+        metadata:
+          description: Arbitrary key-value metadata attached to the agent. `null` if none was provided.
           example:
             key: value
           type: object
-        type:
-          description: Reaction type identifier. Currently always `"emoji_reaction"` for emoji-based reactions.
-          example: emoji_reaction
+        name:
+          description: Human-readable display name for the agent. `null` if not set.
+          example: Example Name
+          type: string
+        org:
+          description: ID of the organization this agent belongs to (`org_...`). `null` for agents outside an org.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        originator:
+          description: Free-form label identifying the source or author of the agent, e.g. a username or service name. `null` if not set.
+          example: my-service
+          type: string
+        phone_number:
+          description: Phone number assigned to this agent for inbound SMS or voice handling. `null` if not configured.
+          example: '+15555550123'
+          type: string
+        sandbox:
+          description: ID of the sandbox environment this agent is scoped to (`sbx_...`). `null` for agents not scoped to a sandbox.
+          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        team:
+          description: ID of the team that owns this agent (`tea_...`). `null` if owned by a user rather than a team.
+          example: tem_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        updated_at:
+          description: When the agent record was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
           type: string
         user:
-          description: Public ID of the user who added the reaction (`usr_...`).
-          example: string
+          description: ID of the user that owns this agent (`usr_...`). `null` if owned by a team.
+          example: usr_0aBcDeFgHiJkLmNoPqRsTu
           type: string
       required:
-      - type
+      - id
       type: object
-    AgentUpgradeResult:
-      description: The computed diff and outcome of an agent upgrade operation, including the full list of per-resource changes.
+    AgentSchedule:
+      description: A scheduled task created by an agent. Supports one-time and recurring (cron-based) execution patterns.
       example:
-        changes:
-        - action: update
-          description: An example description.
-          field_changes:
-          - field: name
-            locally_edited: true
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          key: string
-          name: Example Name
-          parent_template_config:
-            created_at: '2024-01-01T00:00:00Z'
-            description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: agent_tool_template
-            lookup_key: string
-            name: Example Name
-            updated_at: '2024-01-01T00:00:00Z'
-            virtual_path: string
-          resource: {}
-          resource_type: tool
-          source_template_config:
-            created_at: '2024-01-01T00:00:00Z'
-            description: An example description.
-            display_name: Example Name
-            id: id_0aBcDeFgHiJkLmNoPqRsTu
-            kind: agent_tool_template
-            lookup_key: string
-            name: Example Name
-            updated_at: '2024-01-01T00:00:00Z'
-            virtual_path: string
-        dry_run: true
-        mode: full
-        review_fingerprint: string
-        status: upgraded
-        summary:
-          adds: 1
-          noops: 1
-          removes: 1
-          updates: 1
+        agent: agi_0aBcDeFgHiJkLmNoPqRsTu
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        created_at: '2024-01-01T00:00:00Z'
+        cron_expression: 0 9 * * 1
+        id: asc_0aBcDeFgHiJkLmNoPqRsTu
+        instructions: Send a daily summary of open support tickets to the team Slack channel.
+        last_run_at: '2024-01-01T00:00:00Z'
+        max_runs: 10
+        metadata:
+          key: value
+        next_run_at: '2024-01-01T00:00:00Z'
+        run_count: 1
+        schedule_type: recurring
+        scheduled_at: '2024-01-01T00:00:00Z'
+        status: active
+        thread: thr_0aBcDeFgHiJkLmNoPqRsTu
+        timezone: America/New_York
+        updated_at: '2024-01-01T00:00:00Z'
       properties:
-        changes:
-          description: Ordered list of per-resource changes that will be (or were) applied by this upgrade.
-          items:
-            $ref: '#/components/schemas/AgentUpgradeChange'
-          type: array
-        dry_run:
-          description: '`true` when the request was a dry run and no changes were persisted to the agent.'
-          example: true
-          type: boolean
-        mode:
-          description: Upgrade mode that was used. One of `"full"` (apply all changes) or `"review"` (require fingerprint confirmation).
-          example: full
+        agent:
+          description: ID of the agent that owns this schedule (`agi_...`).
+          example: agi_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        review_fingerprint:
-          description: Opaque fingerprint of the computed diff. Pass this value back as `review_fingerprint` to confirm and apply a `"review"` mode upgrade.
-          example: string
+        app:
+          description: ID of the application the schedule belongs to (`dap_...`).
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        created_at:
+          description: When the schedule was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        cron_expression:
+          description: Standard cron expression defining the recurrence pattern (e.g. `"0 9 * * 1"`). Present only when `schedule_type` is `"recurring"`. `null` for one-time schedules.
+          example: 0 9 * * 1
+          type: string
+        id:
+          description: Schedule ID (`asc_...`).
+          example: asc_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        instructions:
+          description: The task description the agent will execute when this schedule fires.
+          example: Send a daily summary of open support tickets to the team Slack channel.
+          type: string
+        last_run_at:
+          description: UTC datetime of the most recent successful execution. `null` if the schedule has never run.
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        max_runs:
+          description: Maximum number of times a recurring schedule may fire before automatically transitioning to `"completed"`. `null` means no limit.
+          example: 10
+          type: integer
+        metadata:
+          description: Arbitrary key-value pairs attached to the schedule by the agent. Not interpreted by the platform.
+          example:
+            key: value
+          type: object
+        next_run_at:
+          description: UTC datetime of the next planned execution. `null` if the schedule has completed, been cancelled, or has not yet been computed.
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        run_count:
+          description: Total number of times this schedule has fired.
+          example: 1
+          type: integer
+        schedule_type:
+          description: Determines how the schedule repeats. `"once"` fires a single time at `scheduled_at` then transitions to `"completed"`. `"recurring"` fires on the `cron_expression` and reschedules automatically.
+          example: recurring
+          type: string
+        scheduled_at:
+          description: The exact UTC datetime at which a one-time schedule fires. Present only when `schedule_type` is `"once"`. `null` for recurring schedules.
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
           type: string
         status:
-          description: Outcome of the upgrade. `"ready"` for a dry-run (no changes applied); `"upgraded"` when the upgrade was committed.
-          example: upgraded
+          description: Current lifecycle status of the schedule. One of `"active"` (will fire as planned), `"paused"` (temporarily suspended), `"completed"` (has run its last execution), `"cancelled"` (manually stopped), or `"expired"` (past its valid window).
+          example: active
           type: string
-        summary:
-          $ref: '#/components/schemas/AgentUpgradeSummary'
-          description: Aggregate counts of adds, updates, removes, and noops across all child resources.
+        thread:
+          description: Thread ID (`thr_...`) this schedule is bound to. When set, the scheduled task is delivered into the thread rather than creating a new session. `null` for session-based schedules.
+          example: thr_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        timezone:
+          description: IANA timezone name used to interpret the cron expression or `scheduled_at` (e.g. `"America/New_York"`). Defaults to `"Etc/UTC"`.
+          example: America/New_York
+          type: string
+        updated_at:
+          description: When the schedule was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
       required:
-      - changes
-      - dry_run
-      - mode
-      - status
-      - summary
+      - id
+      type: object
+    Actor:
+      description: The entity that authored a message, either a human user or an agent.
+      example:
+        alias: alice
+        id: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
+        name: Example Name
+        profile_picture:
+          file: fil_0aBcDeFgHiJkLmNoPqRsTu
+          height: 600
+          media: med_0aBcDeFgHiJkLmNoPqRsTu
+          mime_type: application/json
+          refresh_url: https://example.com
+          url: https://example.com
+          width: 800
+      properties:
+        alias:
+          description: Short handle or alias for the actor, used as an alternate display identifier. `null` if not configured.
+          example: alice
+          type: string
+        id:
+          description: Composite actor identifier. Format is `"user-<usr_...>"` for human users or `"agent-<agi_...>"` for agents.
+          example: user-usr_01j3k5m7n9p2r4s6t8v0w1x2
+          type: string
+        name:
+          description: Display name of the actor shown in the UI. `null` if no name is set.
+          example: Example Name
+          type: string
+        profile_picture:
+          $ref: '#/components/schemas/ImageSource'
+          description: Profile picture for the actor. `null` if the actor has no profile picture.
+      type: object
+    PresetConfig:
+      description: Configuration for a preset routine handler. Controls the agent's behavior, session persistence, and model selection for a given routine or chain step.
+      example:
+        instructions: You are a helpful assistant. Answer questions concisely and cite sources when possible.
+        llm:
+          model: claude-sonnet-4-5
+        session_mode: stateless
+        session_scope: per_user
+        structured_message_template_ids:
+        - string
+      properties:
+        instructions:
+          description: Custom task or behavior instructions for the preset (max 10,000 chars).
+          example: You are a helpful assistant. Answer questions concisely and cite sources when possible.
+          type: string
+        llm:
+          $ref: '#/components/schemas/LLMConfig'
+          description: LLM invocation settings (e.g. a `model` override for this routine/step).
+        session_mode:
+          description: 'Session mode: `stateless` (default, new session per trigger) or `session` (find-or-create a persistent session scoped by `session_scope`).'
+          example: stateless
+          type: string
+        session_scope:
+          description: 'When `session_mode` is `session`, controls session scoping: `per_user` (default), `per_key`, `per_org`, or `global`.'
+          example: per_user
+          type: string
+        structured_message_template_ids:
+          description: IDs of structured message templates that constrain the agent's responses to predefined structured formats.
+          example:
+          - string
+          items:
+            type: string
+          type: array
+      type: object
+    User:
+      description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
+      example:
+        alias: jdoe
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        app_name: Example Name
+        email: user@example.com
+        id: usr_0aBcDeFgHiJkLmNoPqRsTu
+        is_system_user: true
+        metadata:
+          key: value
+        name: Example Name
+        org: org_0aBcDeFgHiJkLmNoPqRsTu
+        org_name: Example Name
+        org_role: member
+        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+        sandbox_name: Example Name
+      properties:
+        alias:
+          description: Short handle or alias for the user. `null` if not set.
+          example: jdoe
+          type: string
+        app:
+          description: ID of the app this user (and their access token) is scoped to (`dap_...`). `null` if the user is not scoped to an app.
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        app_name:
+          description: Display name of the user's app. `null` when the app association was not preloaded by the caller.
+          example: Example Name
+          type: string
+        email:
+          description: Email address of the user.
+          example: user@example.com
+          type: string
+        id:
+          description: User ID (`usr_...`).
+          example: usr_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        is_system_user:
+          description: '`true` if this account is an internal system user rather than a human. System users are created automatically by the platform.'
+          example: true
+          type: boolean
+        metadata:
+          description: Arbitrary key-value metadata attached to the user. Defaults to an empty object.
+          example:
+            key: value
+          type: object
+        name:
+          description: Full display name of the user. `null` if the user has not set a name.
+          example: Example Name
+          type: string
+        org:
+          description: ID of the organization this user belongs to (`org_...`). `null` if the user is not a member of any organization.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        org_name:
+          description: Display name of the user's organization. `null` when the user is not in an org, or when the org association was not preloaded by the caller.
+          example: Example Name
+          type: string
+        org_role:
+          description: Role of the user within their organization. One of `"admin"`, `"member"`, or `"viewer"`. `null` when the user is not a member of any organization.
+          example: member
+          type: string
+        sandbox:
+          description: ID of the sandbox environment this user is scoped to (`sbx_...`). `null` for production users.
+          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        sandbox_name:
+          description: Display name of the user's sandbox environment. `null` for production users, or when the sandbox association was not preloaded by the caller.
+          example: Example Name
+          type: string
+      required:
+      - id
+      type: object
+    AclGrant:
+      description: A single access-control grant that pairs a principal with the set of actions it is allowed to perform.
+      example:
+        actions:
+        - read
+        - write
+        principal: string
+        principal_type: user
+      properties:
+        actions:
+          description: Array of action strings the principal is permitted to perform, e.g. `["read", "write"]`. Must contain at least one entry.
+          example:
+          - read
+          - write
+          items:
+            type: string
+          type: array
+        principal:
+          description: The identifier of the principal. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`; omit entirely when `principal_type` is `"everyone"`.
+          example: string
+          type: string
+        principal_type:
+          description: The kind of principal receiving the grant. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
+          example: user
+          type: string
+      required:
+      - actions
+      - principal_type
+      type: object
+    AgentUpgradeResponse:
+      description: Response returned by the agent upgrade endpoint, combining the updated agent, its source Solution and template, and the full upgrade diff.
+      example:
+        agent:
+          acl:
+            add:
+            - actions:
+              - read
+              - write
+              principal: string
+              principal_type: user
+            grants:
+            - actions:
+              - read
+              - write
+              principal: string
+              principal_type: user
+            remove:
+            - principal: string
+              principal_type: user
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+          created_at: '2024-01-01T00:00:00Z'
+          default_model: claude-3-7-sonnet-latest
+          email: user@example.com
+          id: agi_0aBcDeFgHiJkLmNoPqRsTu
+          identity: You are a helpful assistant that answers questions about ArchAstro products.
+          last_applied_template_config: cfg_0aBcDeFgHiJkLmNoPqRsTu
+          lookup_key: string
+          metadata:
+            key: value
+          name: Example Name
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          org_name: Example Name
+          originator: deploy-pipeline
+          phone_number: '+15555550123'
+          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          source_solution:
+            solution:
+              category_keys:
+              - string
+              created_at: '2024-01-01T00:00:00Z'
+              description: An example description.
+              id: id_0aBcDeFgHiJkLmNoPqRsTu
+              kind: Solution
+              latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+              latest_version: 1.0.0
+              lookup_key: string
+              metadata:
+                key: value
+              name: Example Name
+              org: org_0aBcDeFgHiJkLmNoPqRsTu
+              org_logo:
+                file: fil_0aBcDeFgHiJkLmNoPqRsTu
+                height: 600
+                media: med_0aBcDeFgHiJkLmNoPqRsTu
+                mime_type: application/json
+                refresh_url: https://example.com
+                url: https://example.com
+                width: 800
+              org_name: Example Name
+              org_slug: example-slug
+              owners:
+              - string
+              readme_url: https://example.com
+              solution_id: 01234567-89ab-cdef-0123-456789abcdef
+              solution_version: 1.2.0
+              tag_keys:
+              - string
+              template_kind: AgentTemplate
+              templates:
+              - description: An example description.
+                display_name: Example Name
+                id: id_0aBcDeFgHiJkLmNoPqRsTu
+                kind: AgentTemplate
+                lookup_key: string
+                name: Example Name
+                readme_url: https://example.com
+                virtual_path: string
+              updated_at: '2024-01-01T00:00:00Z'
+              upgrade_available: true
+              virtual_path: string
+            template:
+              created_at: '2024-01-01T00:00:00Z'
+              description: An example description.
+              display_name: Example Name
+              id: id_0aBcDeFgHiJkLmNoPqRsTu
+              kind: agent_tool_template
+              lookup_key: string
+              name: Example Name
+              updated_at: '2024-01-01T00:00:00Z'
+              virtual_path: string
+          team: tem_0aBcDeFgHiJkLmNoPqRsTu
+          updated_at: '2024-01-01T00:00:00Z'
+          user: usr_0aBcDeFgHiJkLmNoPqRsTu
+        solution:
+          category_keys:
+          - string
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: Solution
+          latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+          latest_version: 1.0.0
+          lookup_key: string
+          metadata:
+            key: value
+          name: Example Name
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          org_logo:
+            file: fil_0aBcDeFgHiJkLmNoPqRsTu
+            height: 600
+            media: med_0aBcDeFgHiJkLmNoPqRsTu
+            mime_type: application/json
+            refresh_url: https://example.com
+            url: https://example.com
+            width: 800
+          org_name: Example Name
+          org_slug: example-slug
+          owners:
+          - string
+          readme_url: https://example.com
+          solution_id: 01234567-89ab-cdef-0123-456789abcdef
+          solution_version: 1.2.0
+          tag_keys:
+          - string
+          template_kind: AgentTemplate
+          templates:
+          - description: An example description.
+            display_name: Example Name
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            kind: AgentTemplate
+            lookup_key: string
+            name: Example Name
+            readme_url: https://example.com
+            virtual_path: string
+          updated_at: '2024-01-01T00:00:00Z'
+          upgrade_available: true
+          virtual_path: string
+        template:
+          created_at: '2024-01-01T00:00:00Z'
+          description: An example description.
+          display_name: Example Name
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: agent_tool_template
+          lookup_key: string
+          name: Example Name
+          updated_at: '2024-01-01T00:00:00Z'
+          virtual_path: string
+        upgrade_result:
+          changes:
+          - action: update
+            description: An example description.
+            field_changes:
+            - field: name
+              locally_edited: true
+            id: id_0aBcDeFgHiJkLmNoPqRsTu
+            key: string
+            name: Example Name
+            parent_template_config:
+              created_at: '2024-01-01T00:00:00Z'
+              description: An example description.
+              display_name: Example Name
+              id: id_0aBcDeFgHiJkLmNoPqRsTu
+              kind: agent_tool_template
+              lookup_key: string
+              name: Example Name
+              updated_at: '2024-01-01T00:00:00Z'
+              virtual_path: string
+            resource: {}
+            resource_type: tool
+            source_template_config:
+              created_at: '2024-01-01T00:00:00Z'
+              description: An example description.
+              display_name: Example Name
+              id: id_0aBcDeFgHiJkLmNoPqRsTu
+              kind: agent_tool_template
+              lookup_key: string
+              name: Example Name
+              updated_at: '2024-01-01T00:00:00Z'
+              virtual_path: string
+          dry_run: true
+          mode: full
+          review_fingerprint: string
+          status: upgraded
+          summary:
+            adds: 1
+            noops: 1
+            removes: 1
+            updates: 1
+      properties:
+        agent:
+          $ref: '#/components/schemas/Agent'
+          description: The agent after the upgrade has been applied. `null` for dry-run requests where no changes were persisted.
+        solution:
+          $ref: '#/components/schemas/SolutionSummary'
+          description: Summary of the parent Solution the agent was upgraded from.
+        template:
+          $ref: '#/components/schemas/UpgradeTemplateSummary'
+          description: Summary of the AgentTemplate config (`cfg_...`) that was selected for this upgrade.
+        upgrade_result:
+          $ref: '#/components/schemas/AgentUpgradeResult'
+          description: Full upgrade diff including status, mode, dry-run flag, summary counts, and per-resource change list.
+      required:
+      - solution
+      - template
+      - upgrade_result
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:

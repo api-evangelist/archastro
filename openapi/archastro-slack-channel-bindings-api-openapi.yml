@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).
-  title: ArchAstro Platform Activity Feed Slack Channel Bindings API
+  title: ArchAstro Platform Slack Channel Bindings API
   version: v1
 tags:
 - name: Slack Channel Bindings
@@ -324,6 +324,51 @@ paths:
       - Slack Channel Bindings
 components:
   schemas:
+    SlackChannelBindingListResponse:
+      description: Paginated list of Slack channel bindings for the requested integration or team. Use the `page` and `per_page` fields to navigate pages of results.
+      example:
+        data:
+        - agents:
+          - string
+          channel: C01234ABCDE
+          customer_label: string
+          id: string
+          integration: string
+          is_ext_shared_cached: true
+          team: string
+        page: 1
+        per_page: 20
+        total_count: 1
+        total_pages: 1
+      properties:
+        data:
+          description: Array of Slack channel binding objects for the current page.
+          items:
+            $ref: '#/components/schemas/SlackChannelBinding'
+          type: array
+        page:
+          description: Current page number (1-indexed).
+          example: 1
+          type: integer
+        per_page:
+          description: Maximum number of bindings returned per page.
+          example: 20
+          type: integer
+        total_count:
+          description: Total number of Slack channel bindings matching the query across all pages.
+          example: 1
+          type: integer
+        total_pages:
+          description: Total number of pages available at the current `per_page` size.
+          example: 1
+          type: integer
+      required:
+      - data
+      - page
+      - per_page
+      - total_count
+      - total_pages
+      type: object
     SlackChannelBinding:
       description: A binding that connects a Slack channel to an ArchAstro team and one or more agents, enabling those agents to receive and respond to messages in that channel.
       example:
@@ -369,51 +414,6 @@ components:
           type: string
       required:
       - id
-      type: object
-    SlackChannelBindingListResponse:
-      description: Paginated list of Slack channel bindings for the requested integration or team. Use the `page` and `per_page` fields to navigate pages of results.
-      example:
-        data:
-        - agents:
-          - string
-          channel: C01234ABCDE
-          customer_label: string
-          id: string
-          integration: string
-          is_ext_shared_cached: true
-          team: string
-        page: 1
-        per_page: 20
-        total_count: 1
-        total_pages: 1
-      properties:
-        data:
-          description: Array of Slack channel binding objects for the current page.
-          items:
-            $ref: '#/components/schemas/SlackChannelBinding'
-          type: array
-        page:
-          description: Current page number (1-indexed).
-          example: 1
-          type: integer
-        per_page:
-          description: Maximum number of bindings returned per page.
-          example: 20
-          type: integer
-        total_count:
-          description: Total number of Slack channel bindings matching the query across all pages.
-          example: 1
-          type: integer
-        total_pages:
-          description: Total number of pages available at the current `per_page` size.
-          example: 1
-          type: integer
-      required:
-      - data
-      - page
-      - per_page
-      - total_count
-      - total_pages
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:

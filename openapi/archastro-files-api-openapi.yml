@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).
-  title: ArchAstro Platform Activity Feed Files API
+  title: ArchAstro Platform Files API
   version: v1
 tags:
 - name: Files
@@ -153,6 +153,46 @@ paths:
       - Files
 components:
   schemas:
+    ImageSource:
+      description: Resolved metadata for an image, including its delivery URL, dimensions, and optional references to the underlying storage file or media record.
+      example:
+        file: fil_0aBcDeFgHiJkLmNoPqRsTu
+        height: 600
+        media: med_0aBcDeFgHiJkLmNoPqRsTu
+        mime_type: application/json
+        refresh_url: https://example.com
+        url: https://example.com
+        width: 800
+      properties:
+        file:
+          description: ID of the underlying storage file (`fil_...`). `null` when the image is not backed by a platform storage file.
+          example: fil_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        height:
+          description: Height of the image in pixels. `null` if not known.
+          example: 600
+          type: integer
+        media:
+          description: ID of the associated media record (`med_...`). `null` when the image is not linked to a media entity.
+          example: med_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        mime_type:
+          description: MIME type of the image, e.g. `"image/png"` or `"image/jpeg"`. `null` if not known.
+          example: application/json
+          type: string
+        refresh_url:
+          description: Endpoint URL you can call to obtain a fresh signed `url` when the current one has expired. `null` if the URL does not require refreshing.
+          example: https://example.com
+          type: string
+        url:
+          description: Signed or public URL for downloading the image. May be time-limited; use `refresh_url` to obtain a new URL when this one expires.
+          example: https://example.com
+          type: string
+        width:
+          description: Width of the image in pixels. `null` if not known.
+          example: 800
+          type: integer
+      type: object
     StorageFile:
       description: A file stored in the platform's object storage, with metadata and a signed URL for downloading its contents.
       example:
@@ -217,46 +257,6 @@ components:
           type: string
       required:
       - id
-      type: object
-    ImageSource:
-      description: Resolved metadata for an image, including its delivery URL, dimensions, and optional references to the underlying storage file or media record.
-      example:
-        file: fil_0aBcDeFgHiJkLmNoPqRsTu
-        height: 600
-        media: med_0aBcDeFgHiJkLmNoPqRsTu
-        mime_type: application/json
-        refresh_url: https://example.com
-        url: https://example.com
-        width: 800
-      properties:
-        file:
-          description: ID of the underlying storage file (`fil_...`). `null` when the image is not backed by a platform storage file.
-          example: fil_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        height:
-          description: Height of the image in pixels. `null` if not known.
-          example: 600
-          type: integer
-        media:
-          description: ID of the associated media record (`med_...`). `null` when the image is not linked to a media entity.
-          example: med_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        mime_type:
-          description: MIME type of the image, e.g. `"image/png"` or `"image/jpeg"`. `null` if not known.
-          example: application/json
-          type: string
-        refresh_url:
-          description: Endpoint URL you can call to obtain a fresh signed `url` when the current one has expired. `null` if the URL does not require refreshing.
-          example: https://example.com
-          type: string
-        url:
-          description: Signed or public URL for downloading the image. May be time-limited; use `refresh_url` to obtain a new URL when this one expires.
-          example: https://example.com
-          type: string
-        width:
-          description: Width of the image in pixels. `null` if not known.
-          example: 800
-          type: integer
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:

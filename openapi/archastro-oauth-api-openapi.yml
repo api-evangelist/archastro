@@ -1,10 +1,10 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Agent-first API for runtime + developer control-plane operations (users, teams, agents, routines, context, workflows, integrations, and webhooks).
-  title: ArchAstro Platform Activity Feed Oauth API
+  title: ArchAstro Platform OAUTH API
   version: v1
 tags:
-- name: Oauth
+- name: OAuth
 paths:
   /oauth/device/approve:
     post:
@@ -62,7 +62,7 @@ paths:
           description: Unauthorized
       summary: Approve a device authorization request
       tags:
-      - Oauth
+      - OAuth
   /oauth/device/authorize:
     post:
       description: 'Starts the OAuth 2.0 Device Authorization flow for a device that cannot
@@ -125,7 +125,7 @@ paths:
           description: Rate limited
       summary: Initiate a device authorization request
       tags:
-      - Oauth
+      - OAuth
   /oauth/device/deny:
     post:
       description: 'Rejects the pending device authorization identified by `user_code`, preventing
@@ -170,7 +170,7 @@ paths:
           description: Unauthorized
       summary: Deny a device authorization request
       tags:
-      - Oauth
+      - OAuth
   /oauth/scopes:
     get:
       description: 'Returns the complete set of OAuth scopes that the platform supports.
@@ -202,7 +202,7 @@ paths:
           description: Successful response
       summary: List available OAuth scopes
       tags:
-      - Oauth
+      - OAuth
   /oauth/token:
     post:
       description: 'Issues an access token and a refresh token in exchange for a valid grant.
@@ -296,7 +296,7 @@ paths:
           description: Rate limited
       summary: Exchange a grant for OAuth tokens
       tags:
-      - Oauth
+      - OAuth
 components:
   schemas:
     DeviceAuthorizationResponse:
@@ -340,6 +340,73 @@ components:
       - user_code
       - verification_uri
       - verification_uri_complete
+      type: object
+    OAuthTokenResponse:
+      description: A successful OAuth 2.0 token response. Issued by the token endpoint after a completed authorization or device-flow grant.
+      example:
+        access_token: string
+        expires_in: 3600
+        refresh_token: string
+        scope: read write
+        token_type: Bearer
+        user:
+          alias: jdoe
+          app: dap_0aBcDeFgHiJkLmNoPqRsTu
+          app_name: Example Name
+          email: user@example.com
+          id: usr_0aBcDeFgHiJkLmNoPqRsTu
+          is_system_user: true
+          metadata:
+            key: value
+          name: Example Name
+          org: org_0aBcDeFgHiJkLmNoPqRsTu
+          org_name: Example Name
+          org_role: member
+          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          sandbox_name: Example Name
+      properties:
+        access_token:
+          description: 'Bearer token used to authenticate API requests. Include this value in the `Authorization: Bearer <token>` header.'
+          example: string
+          type: string
+          x-sdk: access_token
+        expires_in:
+          description: Number of seconds until the access token expires.
+          example: 3600
+          type: integer
+          x-sdk: token_expiry
+        refresh_token:
+          description: Token that can be exchanged for a new access token once the current one expires. `null` if the grant type does not issue refresh tokens.
+          example: string
+          type: string
+          x-sdk: refresh_token
+        scope:
+          description: Space-separated list of scopes granted to the access token. `null` if scope was not included in the grant request.
+          example: read write
+          type: string
+        token_type:
+          description: Token type. Always `"Bearer"`.
+          example: Bearer
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+          description: The authenticated user associated with this token. `null` when the token is not tied to a specific user (e.g. client-credentials grants).
+      required:
+      - access_token
+      - expires_in
+      - token_type
+      type: object
+    DeviceAuthorizationStatusResponse:
+      description: The result of a completed OAuth 2.0 Device Authorization flow, indicating whether the user approved or denied the device's access request.
+      example:
+        status: approved
+      properties:
+        status:
+          description: Outcome of the device authorization request. One of `"approved"` (the user granted access) or `"denied"` (the user rejected or cancelled the request).
+          example: approved
+          type: string
+      required:
+      - status
       type: object
     User:
       description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
@@ -414,73 +481,6 @@ components:
           type: string
       required:
       - id
-      type: object
-    DeviceAuthorizationStatusResponse:
-      description: The result of a completed OAuth 2.0 Device Authorization flow, indicating whether the user approved or denied the device's access request.
-      example:
-        status: approved
-      properties:
-        status:
-          description: Outcome of the device authorization request. One of `"approved"` (the user granted access) or `"denied"` (the user rejected or cancelled the request).
-          example: approved
-          type: string
-      required:
-      - status
-      type: object
-    OAuthTokenResponse:
-      description: A successful OAuth 2.0 token response. Issued by the token endpoint after a completed authorization or device-flow grant.
-      example:
-        access_token: string
-        expires_in: 3600
-        refresh_token: string
-        scope: read write
-        token_type: Bearer
-        user:
-          alias: jdoe
-          app: dap_0aBcDeFgHiJkLmNoPqRsTu
-          app_name: Example Name
-          email: user@example.com
-          id: usr_0aBcDeFgHiJkLmNoPqRsTu
-          is_system_user: true
-          metadata:
-            key: value
-          name: Example Name
-          org: org_0aBcDeFgHiJkLmNoPqRsTu
-          org_name: Example Name
-          org_role: member
-          sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          sandbox_name: Example Name
-      properties:
-        access_token:
-          description: 'Bearer token used to authenticate API requests. Include this value in the `Authorization: Bearer <token>` header.'
-          example: string
-          type: string
-          x-sdk: access_token
-        expires_in:
-          description: Number of seconds until the access token expires.
-          example: 3600
-          type: integer
-          x-sdk: token_expiry
-        refresh_token:
-          description: Token that can be exchanged for a new access token once the current one expires. `null` if the grant type does not issue refresh tokens.
-          example: string
-          type: string
-          x-sdk: refresh_token
-        scope:
-          description: Space-separated list of scopes granted to the access token. `null` if scope was not included in the grant request.
-          example: read write
-          type: string
-        token_type:
-          description: Token type. Always `"Bearer"`.
-          example: Bearer
-          type: string
-        user:
-          $ref: '#/components/schemas/User'
-          description: The authenticated user associated with this token. `null` when the token is not tied to a specific user (e.g. client-credentials grants).
-      required:
-      - access_token
-      - expires_in
-      - token_type
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:
