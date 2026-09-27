@@ -123,6 +123,217 @@ paths:
       - secret_key
 components:
   schemas:
+    User:
+      description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
+      example:
+        alias: jdoe
+        app: dap_0aBcDeFgHiJkLmNoPqRsTu
+        app_name: Example Name
+        email: user@example.com
+        id: usr_0aBcDeFgHiJkLmNoPqRsTu
+        is_system_user: true
+        metadata:
+          key: value
+        name: Example Name
+        org: org_0aBcDeFgHiJkLmNoPqRsTu
+        org_name: Example Name
+        org_role: member
+        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
+        sandbox_name: Example Name
+      properties:
+        alias:
+          description: Short handle or alias for the user. `null` if not set.
+          example: jdoe
+          type: string
+        app:
+          description: ID of the app this user (and their access token) is scoped to (`dap_...`). `null` if the user is not scoped to an app.
+          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        app_name:
+          description: Display name of the user's app. `null` when the app association was not preloaded by the caller.
+          example: Example Name
+          type: string
+        email:
+          description: Email address of the user.
+          example: user@example.com
+          type: string
+        id:
+          description: User ID (`usr_...`).
+          example: usr_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        is_system_user:
+          description: '`true` if this account is an internal system user rather than a human. System users are created automatically by the platform.'
+          example: true
+          type: boolean
+        metadata:
+          description: Arbitrary key-value metadata attached to the user. Defaults to an empty object.
+          example:
+            key: value
+          type: object
+        name:
+          description: Full display name of the user. `null` if the user has not set a name.
+          example: Example Name
+          type: string
+        org:
+          description: ID of the organization this user belongs to (`org_...`). `null` if the user is not a member of any organization.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        org_name:
+          description: Display name of the user's organization. `null` when the user is not in an org, or when the org association was not preloaded by the caller.
+          example: Example Name
+          type: string
+        org_role:
+          description: Role of the user within their organization. One of `"admin"`, `"member"`, or `"viewer"`. `null` when the user is not a member of any organization.
+          example: member
+          type: string
+        sandbox:
+          description: ID of the sandbox environment this user is scoped to (`sbx_...`). `null` for production users.
+          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        sandbox_name:
+          description: Display name of the user's sandbox environment. `null` for production users, or when the sandbox association was not preloaded by the caller.
+          example: Example Name
+          type: string
+      required:
+      - id
+      type: object
+    SolutionTemplateSummary:
+      description: Identity and display metadata for a single template bundled by a Solution, used to represent each wrapped or sibling template at template granularity.
+      example:
+        description: An example description.
+        display_name: Example Name
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        kind: AgentTemplate
+        lookup_key: string
+        name: Example Name
+        readme_url: https://example.com
+        virtual_path: string
+      properties:
+        description:
+          description: Short prose blurb from the template body's `description:` field. `null` when the body doesn't set one. Used as the card subhead in the Library carousel.
+          example: An example description.
+          type: string
+        display_name:
+          description: Human-facing label from the template body's `display_name:` field. `null` when the body doesn't set one. Library carousels use this for the card title, falling back to a humanized `name`.
+          example: Example Name
+          type: string
+        id:
+          description: Template config ID (`cfg_...`). `null` for inline-only templates.
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        kind:
+          description: Template config kind, or `SolutionTemplateRef` / `SolutionTemplatePath` when unresolved.
+          example: AgentTemplate
+          type: string
+        lookup_key:
+          description: Lookup key stamped on the template config at import time. `null` when no lookup key was assigned.
+          example: string
+          type: string
+        name:
+          description: Canonical name from the template body. For `AgentTemplate` this doubles as the human-facing label; for `AgentToolTemplate` it's the LLM-facing tool function identifier (snake_case); for `AgentRoutineTemplate` it's the routine identifier (kebab-case). Clients rendering carousels should prefer `display_name` and fall back to humanizing `name`.
+          example: Example Name
+          type: string
+        readme_url:
+          description: Relative path to the public README endpoint with a signed token already embedded, scoped to this template's bundled markdown asset. `null` when the Solution body's `templates[].readme_path` is unset for this entry. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
+          example: https://example.com
+          type: string
+        virtual_path:
+          description: Stable virtual path assigned to the template config. `null` when no virtual path was set.
+          example: string
+          type: string
+      required:
+      - kind
+      type: object
+    UpgradeTemplateSummary:
+      description: Compact summary of an AgentTemplate config referenced by an agent upgrade or source-solution response.
+      example:
+        created_at: '2024-01-01T00:00:00Z'
+        description: An example description.
+        display_name: Example Name
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        kind: agent_tool_template
+        lookup_key: string
+        name: Example Name
+        updated_at: '2024-01-01T00:00:00Z'
+        virtual_path: string
+      properties:
+        created_at:
+          description: When this template config was created (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        description:
+          description: Description of the template from the config body. `null` if the current version has no `description` field.
+          example: An example description.
+          type: string
+        display_name:
+          description: Human-readable display name from the config body. `null` if the current version has no `display_name` field.
+          example: Example Name
+          type: string
+        id:
+          description: Template config ID (`cfg_...`).
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        kind:
+          description: Config kind identifier for this template (e.g. `"agent_tool_template"`).
+          example: agent_tool_template
+          type: string
+        lookup_key:
+          description: Stable lookup key assigned to this template config. `null` if no lookup key is set.
+          example: string
+          type: string
+        name:
+          description: Template name as stored in the config body. `null` if the current version has no `name` field.
+          example: Example Name
+          type: string
+        updated_at:
+          description: When this template config was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        virtual_path:
+          description: Virtual filesystem path for this template config. `null` if not set.
+          example: string
+          type: string
+      required:
+      - id
+      - kind
+      type: object
+    Acl:
+      description: An access-control list payload that supports either full replacement or targeted patch operations on a resource's grants.
+      example:
+        add:
+        - actions:
+          - read
+          - write
+          principal: string
+          principal_type: user
+        grants:
+        - actions:
+          - read
+          - write
+          principal: string
+          principal_type: user
+        remove:
+        - principal: string
+          principal_type: user
+      properties:
+        add:
+          description: 'Patch mode: grants to add or merge into the existing list. Cannot be combined with `grants`.'
+          items:
+            $ref: '#/components/schemas/AclGrant'
+          type: array
+        grants:
+          description: 'Replace mode: the complete new list of grants that replaces all existing entries. Send an empty array (`[]`) to clear all grants. Cannot be combined with `add` or `remove`.'
+          items:
+            $ref: '#/components/schemas/AclGrant'
+          type: array
+        remove:
+          description: 'Patch mode: principals whose grants should be removed from the existing list. Cannot be combined with `grants`.'
+          items:
+            $ref: '#/components/schemas/AclRemoveTarget'
+          type: array
+      type: object
     AgentSourceSolution:
       description: 'Summary of the Solution and AgentTemplate that an agent was last provisioned from.
 
@@ -192,61 +403,6 @@ components:
       required:
       - solution
       - template
-      type: object
-    UpgradeTemplateSummary:
-      description: Compact summary of an AgentTemplate config referenced by an agent upgrade or source-solution response.
-      example:
-        created_at: '2024-01-01T00:00:00Z'
-        description: An example description.
-        display_name: Example Name
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: agent_tool_template
-        lookup_key: string
-        name: Example Name
-        updated_at: '2024-01-01T00:00:00Z'
-        virtual_path: string
-      properties:
-        created_at:
-          description: When this template config was created (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        description:
-          description: Description of the template from the config body. `null` if the current version has no `description` field.
-          example: An example description.
-          type: string
-        display_name:
-          description: Human-readable display name from the config body. `null` if the current version has no `display_name` field.
-          example: Example Name
-          type: string
-        id:
-          description: Template config ID (`cfg_...`).
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        kind:
-          description: Config kind identifier for this template (e.g. `"agent_tool_template"`).
-          example: agent_tool_template
-          type: string
-        lookup_key:
-          description: Stable lookup key assigned to this template config. `null` if no lookup key is set.
-          example: string
-          type: string
-        name:
-          description: Template name as stored in the config body. `null` if the current version has no `name` field.
-          example: Example Name
-          type: string
-        updated_at:
-          description: When this template config was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        virtual_path:
-          description: Virtual filesystem path for this template config. `null` if not set.
-          example: string
-          type: string
-      required:
-      - id
-      - kind
       type: object
     Agent:
       description: An AI agent that can be configured with tools, routines, and skills, and invoked to handle conversations or tasks.
@@ -425,290 +581,6 @@ components:
           type: string
       required:
       - id
-      type: object
-    ImageSource:
-      description: Resolved metadata for an image, including its delivery URL, dimensions, and optional references to the underlying storage file or media record.
-      example:
-        file: fil_0aBcDeFgHiJkLmNoPqRsTu
-        height: 600
-        media: med_0aBcDeFgHiJkLmNoPqRsTu
-        mime_type: application/json
-        refresh_url: https://example.com
-        url: https://example.com
-        width: 800
-      properties:
-        file:
-          description: ID of the underlying storage file (`fil_...`). `null` when the image is not backed by a platform storage file.
-          example: fil_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        height:
-          description: Height of the image in pixels. `null` if not known.
-          example: 600
-          type: integer
-        media:
-          description: ID of the associated media record (`med_...`). `null` when the image is not linked to a media entity.
-          example: med_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        mime_type:
-          description: MIME type of the image, e.g. `"image/png"` or `"image/jpeg"`. `null` if not known.
-          example: application/json
-          type: string
-        refresh_url:
-          description: Endpoint URL you can call to obtain a fresh signed `url` when the current one has expired. `null` if the URL does not require refreshing.
-          example: https://example.com
-          type: string
-        url:
-          description: Signed or public URL for downloading the image. May be time-limited; use `refresh_url` to obtain a new URL when this one expires.
-          example: https://example.com
-          type: string
-        width:
-          description: Width of the image in pixels. `null` if not known.
-          example: 800
-          type: integer
-      type: object
-    Acl:
-      description: An access-control list payload that supports either full replacement or targeted patch operations on a resource's grants.
-      example:
-        add:
-        - actions:
-          - read
-          - write
-          principal: string
-          principal_type: user
-        grants:
-        - actions:
-          - read
-          - write
-          principal: string
-          principal_type: user
-        remove:
-        - principal: string
-          principal_type: user
-      properties:
-        add:
-          description: 'Patch mode: grants to add or merge into the existing list. Cannot be combined with `grants`.'
-          items:
-            $ref: '#/components/schemas/AclGrant'
-          type: array
-        grants:
-          description: 'Replace mode: the complete new list of grants that replaces all existing entries. Send an empty array (`[]`) to clear all grants. Cannot be combined with `add` or `remove`.'
-          items:
-            $ref: '#/components/schemas/AclGrant'
-          type: array
-        remove:
-          description: 'Patch mode: principals whose grants should be removed from the existing list. Cannot be combined with `grants`.'
-          items:
-            $ref: '#/components/schemas/AclRemoveTarget'
-          type: array
-      type: object
-    SolutionSummary:
-      description: A catalog entry for an imported Solution, including its display metadata, bundled templates, owner scopes, and any available upgrade information.
-      example:
-        category_keys:
-        - string
-        created_at: '2024-01-01T00:00:00Z'
-        description: An example description.
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: Solution
-        latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
-        latest_version: 1.0.0
-        lookup_key: string
-        metadata:
-          key: value
-        name: Example Name
-        org: org_0aBcDeFgHiJkLmNoPqRsTu
-        org_logo:
-          file: fil_0aBcDeFgHiJkLmNoPqRsTu
-          height: 600
-          media: med_0aBcDeFgHiJkLmNoPqRsTu
-          mime_type: application/json
-          refresh_url: https://example.com
-          url: https://example.com
-          width: 800
-        org_name: Example Name
-        org_slug: example-slug
-        owners:
-        - string
-        readme_url: https://example.com
-        solution_id: 01234567-89ab-cdef-0123-456789abcdef
-        solution_version: 1.2.0
-        tag_keys:
-        - string
-        template_kind: AgentTemplate
-        templates:
-        - description: An example description.
-          display_name: Example Name
-          id: id_0aBcDeFgHiJkLmNoPqRsTu
-          kind: AgentTemplate
-          lookup_key: string
-          name: Example Name
-          readme_url: https://example.com
-          virtual_path: string
-        updated_at: '2024-01-01T00:00:00Z'
-        upgrade_available: true
-        virtual_path: string
-      properties:
-        category_keys:
-          description: Category tag keys declared in the Solution body, used to group Solutions in the catalog. An empty array when the body declares none.
-          example:
-          - string
-          items:
-            type: string
-          type: array
-        created_at:
-          description: When the Solution config was first imported (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        description:
-          description: Short tagline or summary declared in the Solution body, used as the card subhead in catalog UIs. `null` when the Solution body does not set one.
-          example: An example description.
-          type: string
-        id:
-          description: Solution config ID (`cfg_...`).
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        kind:
-          description: Resource type. Always `"Solution"`.
-          example: Solution
-          type: string
-        latest_solution:
-          description: When `upgrade_available` is `true`, the system-scope Solution config ID (`cfg_...`) that should be used as the upgrade source. `null` otherwise.
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        latest_version:
-          description: When `upgrade_available` is `true`, the higher system-scope `solution_version` available to upgrade to. `null` otherwise.
-          example: 1.0.0
-          type: string
-        lookup_key:
-          description: The lookup key stored on the Solution config, if one was assigned during import. `null` when no lookup key was set.
-          example: string
-          type: string
-        metadata:
-          description: Arbitrary key-value metadata declared in the Solution body (e.g. category or display hints). Present as an empty object when the body declares none.
-          example:
-            key: value
-          type: object
-        name:
-          description: Human-facing display name declared in the Solution body. `null` when the Solution body does not set one.
-          example: Example Name
-          type: string
-        org:
-          description: Organization ID (`org_...`) that owns this Solution config, when the Solution is scoped to a specific org. `null` for system-scope (app-level) Solutions.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        org_logo:
-          $ref: '#/components/schemas/ImageSource'
-          description: Canonical image-source object for the resolved `org`'s logo, used as the principal category section glyph. Carries the signed `url` plus a `refresh_url`. `null` when `org_slug` is `null` or the org has no logo.
-        org_name:
-          description: Display name of the resolved `org`. Pairs with `org_slug` as the principal catalog category's label. `null` when `org_slug` is `null`.
-          example: Example Name
-          type: string
-        org_slug:
-          description: Resolved slug of the Solution body's `org` (the publishing organization), when set and it resolves to a real org visible to the viewer. When present this is the Solution's principal catalog category key — clients group the Solution under this org ahead of `category_keys`. `null` when the body has no `org` or it doesn't resolve.
-          example: example-slug
-          type: string
-        owners:
-          description: 'Owner scopes this Solution appears under. Members: `"system"` (app-level system scope) and/or `"org"` (viewer''s org scope).'
-          example:
-          - string
-          items:
-            type: string
-          type: array
-        readme_url:
-          description: Relative path to the public README endpoint with a signed token already embedded. `null` when the Solution has no README. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
-          example: https://example.com
-          type: string
-        solution_id:
-          description: Stable UUID declared in the Solution body, used to identify the same logical Solution across multiple installed copies and owner scopes. `null` when the body omits it.
-          example: 01234567-89ab-cdef-0123-456789abcdef
-          type: string
-        solution_version:
-          description: Semver string declared in the Solution body (e.g. `"1.2.0"`). `null` when the body does not declare a version.
-          example: 1.2.0
-          type: string
-        tag_keys:
-          description: Freeform tag keys declared in the Solution body. An empty array when the body declares none.
-          example:
-          - string
-          items:
-            type: string
-          type: array
-        template_kind:
-          description: Wrapped template kind — `"AgentTemplate"`, `"AutomationTemplate"`, `"AgentRoutineTemplate"`, `"AgentToolTemplate"`, `"AgentComputerTemplate"`, or `"SolutionTemplateRef"` for ref-mode bundles.
-          example: AgentTemplate
-          type: string
-        templates:
-          description: Template configs bundled by this Solution, in declaration order — the first entry is the deployable template the Solution wraps; the rest are sibling templates the wrapped template references.
-          items:
-            $ref: '#/components/schemas/SolutionTemplateSummary'
-          type: array
-        updated_at:
-          description: When the Solution config was last modified (ISO 8601).
-          example: '2024-01-01T00:00:00Z'
-          format: date-time
-          type: string
-        upgrade_available:
-          description: '`true` when this Solution is installed at the viewer''s org scope and the app-level system scope carries a higher `solution_version`. Always `false` for system-only rows.'
-          example: true
-          type: boolean
-        virtual_path:
-          description: The stable virtual path assigned to this Solution config, used as the deduplication key when the same Solution appears under multiple owner scopes. `null` when unset.
-          example: string
-          type: string
-      required:
-      - id
-      - kind
-      - owners
-      - templates
-      - upgrade_available
-      type: object
-    SolutionTemplateSummary:
-      description: Identity and display metadata for a single template bundled by a Solution, used to represent each wrapped or sibling template at template granularity.
-      example:
-        description: An example description.
-        display_name: Example Name
-        id: id_0aBcDeFgHiJkLmNoPqRsTu
-        kind: AgentTemplate
-        lookup_key: string
-        name: Example Name
-        readme_url: https://example.com
-        virtual_path: string
-      properties:
-        description:
-          description: Short prose blurb from the template body's `description:` field. `null` when the body doesn't set one. Used as the card subhead in the Library carousel.
-          example: An example description.
-          type: string
-        display_name:
-          description: Human-facing label from the template body's `display_name:` field. `null` when the body doesn't set one. Library carousels use this for the card title, falling back to a humanized `name`.
-          example: Example Name
-          type: string
-        id:
-          description: Template config ID (`cfg_...`). `null` for inline-only templates.
-          example: id_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        kind:
-          description: Template config kind, or `SolutionTemplateRef` / `SolutionTemplatePath` when unresolved.
-          example: AgentTemplate
-          type: string
-        lookup_key:
-          description: Lookup key stamped on the template config at import time. `null` when no lookup key was assigned.
-          example: string
-          type: string
-        name:
-          description: Canonical name from the template body. For `AgentTemplate` this doubles as the human-facing label; for `AgentToolTemplate` it's the LLM-facing tool function identifier (snake_case); for `AgentRoutineTemplate` it's the routine identifier (kebab-case). Clients rendering carousels should prefer `display_name` and fall back to humanizing `name`.
-          example: Example Name
-          type: string
-        readme_url:
-          description: Relative path to the public README endpoint with a signed token already embedded, scoped to this template's bundled markdown asset. `null` when the Solution body's `templates[].readme_path` is unset for this entry. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
-          example: https://example.com
-          type: string
-        virtual_path:
-          description: Stable virtual path assigned to the template config. `null` when no virtual path was set.
-          example: string
-          type: string
-      required:
-      - kind
       type: object
     TeamMembership:
       description: A record representing a user's or agent's membership in a team, including their resolved identity details and role.
@@ -890,96 +762,45 @@ components:
       required:
       - id
       type: object
-    AclRemoveTarget:
-      description: Identifies a principal to be removed from an access-control list.
+    ImageSource:
+      description: Resolved metadata for an image, including its delivery URL, dimensions, and optional references to the underlying storage file or media record.
       example:
-        principal: string
-        principal_type: user
+        file: fil_0aBcDeFgHiJkLmNoPqRsTu
+        height: 600
+        media: med_0aBcDeFgHiJkLmNoPqRsTu
+        mime_type: application/json
+        refresh_url: https://example.com
+        url: https://example.com
+        width: 800
       properties:
-        principal:
-          description: The identifier of the principal to remove. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`. Omit when `principal_type` is `"everyone"`.
-          example: string
+        file:
+          description: ID of the underlying storage file (`fil_...`). `null` when the image is not backed by a platform storage file.
+          example: fil_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-        principal_type:
-          description: The kind of principal to remove. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
-          example: user
+        height:
+          description: Height of the image in pixels. `null` if not known.
+          example: 600
+          type: integer
+        media:
+          description: ID of the associated media record (`med_...`). `null` when the image is not linked to a media entity.
+          example: med_0aBcDeFgHiJkLmNoPqRsTu
           type: string
-      required:
-      - principal_type
-      type: object
-    User:
-      description: A platform user account. Represents a human or system actor that can own threads, belong to an organization, and interact with the API.
-      example:
-        alias: jdoe
-        app: dap_0aBcDeFgHiJkLmNoPqRsTu
-        app_name: Example Name
-        email: user@example.com
-        id: usr_0aBcDeFgHiJkLmNoPqRsTu
-        is_system_user: true
-        metadata:
-          key: value
-        name: Example Name
-        org: org_0aBcDeFgHiJkLmNoPqRsTu
-        org_name: Example Name
-        org_role: member
-        sandbox: dsb_0aBcDeFgHiJkLmNoPqRsTu
-        sandbox_name: Example Name
-      properties:
-        alias:
-          description: Short handle or alias for the user. `null` if not set.
-          example: jdoe
+        mime_type:
+          description: MIME type of the image, e.g. `"image/png"` or `"image/jpeg"`. `null` if not known.
+          example: application/json
           type: string
-        app:
-          description: ID of the app this user (and their access token) is scoped to (`dap_...`). `null` if the user is not scoped to an app.
-          example: dap_0aBcDeFgHiJkLmNoPqRsTu
+        refresh_url:
+          description: Endpoint URL you can call to obtain a fresh signed `url` when the current one has expired. `null` if the URL does not require refreshing.
+          example: https://example.com
           type: string
-        app_name:
-          description: Display name of the user's app. `null` when the app association was not preloaded by the caller.
-          example: Example Name
+        url:
+          description: Signed or public URL for downloading the image. May be time-limited; use `refresh_url` to obtain a new URL when this one expires.
+          example: https://example.com
           type: string
-        email:
-          description: Email address of the user.
-          example: user@example.com
-          type: string
-        id:
-          description: User ID (`usr_...`).
-          example: usr_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        is_system_user:
-          description: '`true` if this account is an internal system user rather than a human. System users are created automatically by the platform.'
-          example: true
-          type: boolean
-        metadata:
-          description: Arbitrary key-value metadata attached to the user. Defaults to an empty object.
-          example:
-            key: value
-          type: object
-        name:
-          description: Full display name of the user. `null` if the user has not set a name.
-          example: Example Name
-          type: string
-        org:
-          description: ID of the organization this user belongs to (`org_...`). `null` if the user is not a member of any organization.
-          example: org_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        org_name:
-          description: Display name of the user's organization. `null` when the user is not in an org, or when the org association was not preloaded by the caller.
-          example: Example Name
-          type: string
-        org_role:
-          description: Role of the user within their organization. One of `"admin"`, `"member"`, or `"viewer"`. `null` when the user is not a member of any organization.
-          example: member
-          type: string
-        sandbox:
-          description: ID of the sandbox environment this user is scoped to (`sbx_...`). `null` for production users.
-          example: dsb_0aBcDeFgHiJkLmNoPqRsTu
-          type: string
-        sandbox_name:
-          description: Display name of the user's sandbox environment. `null` for production users, or when the sandbox association was not preloaded by the caller.
-          example: Example Name
-          type: string
-      required:
-      - id
+        width:
+          description: Width of the image in pixels. `null` if not known.
+          example: 800
+          type: integer
       type: object
     AclGrant:
       description: A single access-control grant that pairs a principal with the set of actions it is allowed to perform.
@@ -1009,6 +830,185 @@ components:
       required:
       - actions
       - principal_type
+      type: object
+    AclRemoveTarget:
+      description: Identifies a principal to be removed from an access-control list.
+      example:
+        principal: string
+        principal_type: user
+      properties:
+        principal:
+          description: The identifier of the principal to remove. A string ID for `"user"`, `"team"`, `"org"`, and `"agent"` types; one of `"admin"`, `"member"`, or `"viewer"` for `"org_role"`. Omit when `principal_type` is `"everyone"`.
+          example: string
+          type: string
+        principal_type:
+          description: The kind of principal to remove. One of `"user"`, `"team"`, `"org"`, `"org_role"`, `"agent"`, or `"everyone"`.
+          example: user
+          type: string
+      required:
+      - principal_type
+      type: object
+    SolutionSummary:
+      description: A catalog entry for an imported Solution, including its display metadata, bundled templates, owner scopes, and any available upgrade information.
+      example:
+        category_keys:
+        - string
+        created_at: '2024-01-01T00:00:00Z'
+        description: An example description.
+        id: id_0aBcDeFgHiJkLmNoPqRsTu
+        kind: Solution
+        latest_solution: id_0aBcDeFgHiJkLmNoPqRsTu
+        latest_version: 1.0.0
+        lookup_key: string
+        metadata:
+          key: value
+        name: Example Name
+        org: org_0aBcDeFgHiJkLmNoPqRsTu
+        org_logo:
+          file: fil_0aBcDeFgHiJkLmNoPqRsTu
+          height: 600
+          media: med_0aBcDeFgHiJkLmNoPqRsTu
+          mime_type: application/json
+          refresh_url: https://example.com
+          url: https://example.com
+          width: 800
+        org_name: Example Name
+        org_slug: example-slug
+        owners:
+        - string
+        readme_url: https://example.com
+        solution_id: 01234567-89ab-cdef-0123-456789abcdef
+        solution_version: 1.2.0
+        tag_keys:
+        - string
+        template_kind: AgentTemplate
+        templates:
+        - description: An example description.
+          display_name: Example Name
+          id: id_0aBcDeFgHiJkLmNoPqRsTu
+          kind: AgentTemplate
+          lookup_key: string
+          name: Example Name
+          readme_url: https://example.com
+          virtual_path: string
+        updated_at: '2024-01-01T00:00:00Z'
+        upgrade_available: true
+        virtual_path: string
+      properties:
+        category_keys:
+          description: Category tag keys declared in the Solution body, used to group Solutions in the catalog. An empty array when the body declares none.
+          example:
+          - string
+          items:
+            type: string
+          type: array
+        created_at:
+          description: When the Solution config was first imported (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        description:
+          description: Short tagline or summary declared in the Solution body, used as the card subhead in catalog UIs. `null` when the Solution body does not set one.
+          example: An example description.
+          type: string
+        id:
+          description: Solution config ID (`cfg_...`).
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        kind:
+          description: Resource type. Always `"Solution"`.
+          example: Solution
+          type: string
+        latest_solution:
+          description: When `upgrade_available` is `true`, the system-scope Solution config ID (`cfg_...`) that should be used as the upgrade source. `null` otherwise.
+          example: id_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        latest_version:
+          description: When `upgrade_available` is `true`, the higher system-scope `solution_version` available to upgrade to. `null` otherwise.
+          example: 1.0.0
+          type: string
+        lookup_key:
+          description: The lookup key stored on the Solution config, if one was assigned during import. `null` when no lookup key was set.
+          example: string
+          type: string
+        metadata:
+          description: Arbitrary key-value metadata declared in the Solution body (e.g. category or display hints). Present as an empty object when the body declares none.
+          example:
+            key: value
+          type: object
+        name:
+          description: Human-facing display name declared in the Solution body. `null` when the Solution body does not set one.
+          example: Example Name
+          type: string
+        org:
+          description: Organization ID (`org_...`) that owns this Solution config, when the Solution is scoped to a specific org. `null` for system-scope (app-level) Solutions.
+          example: org_0aBcDeFgHiJkLmNoPqRsTu
+          type: string
+        org_logo:
+          $ref: '#/components/schemas/ImageSource'
+          description: Canonical image-source object for the resolved `org`'s logo, used as the principal category section glyph. Carries the signed `url` plus a `refresh_url`. `null` when `org_slug` is `null` or the org has no logo.
+        org_name:
+          description: Display name of the resolved `org`. Pairs with `org_slug` as the principal catalog category's label. `null` when `org_slug` is `null`.
+          example: Example Name
+          type: string
+        org_slug:
+          description: Resolved slug of the Solution body's `org` (the publishing organization), when set and it resolves to a real org visible to the viewer. When present this is the Solution's principal catalog category key — clients group the Solution under this org ahead of `category_keys`. `null` when the body has no `org` or it doesn't resolve.
+          example: example-slug
+          type: string
+        owners:
+          description: 'Owner scopes this Solution appears under. Members: `"system"` (app-level system scope) and/or `"org"` (viewer''s org scope).'
+          example:
+          - string
+          items:
+            type: string
+          type: array
+        readme_url:
+          description: Relative path to the public README endpoint with a signed token already embedded. `null` when the Solution has no README. Token expires in 1 hour — refresh via `GET /api/v1/solutions/:solution`.
+          example: https://example.com
+          type: string
+        solution_id:
+          description: Stable UUID declared in the Solution body, used to identify the same logical Solution across multiple installed copies and owner scopes. `null` when the body omits it.
+          example: 01234567-89ab-cdef-0123-456789abcdef
+          type: string
+        solution_version:
+          description: Semver string declared in the Solution body (e.g. `"1.2.0"`). `null` when the body does not declare a version.
+          example: 1.2.0
+          type: string
+        tag_keys:
+          description: Freeform tag keys declared in the Solution body. An empty array when the body declares none.
+          example:
+          - string
+          items:
+            type: string
+          type: array
+        template_kind:
+          description: Wrapped template kind — `"AgentTemplate"`, `"AutomationTemplate"`, `"AgentRoutineTemplate"`, `"AgentToolTemplate"`, `"AgentComputerTemplate"`, or `"SolutionTemplateRef"` for ref-mode bundles.
+          example: AgentTemplate
+          type: string
+        templates:
+          description: Template configs bundled by this Solution, in declaration order — the first entry is the deployable template the Solution wraps; the rest are sibling templates the wrapped template references.
+          items:
+            $ref: '#/components/schemas/SolutionTemplateSummary'
+          type: array
+        updated_at:
+          description: When the Solution config was last modified (ISO 8601).
+          example: '2024-01-01T00:00:00Z'
+          format: date-time
+          type: string
+        upgrade_available:
+          description: '`true` when this Solution is installed at the viewer''s org scope and the app-level system scope carries a higher `solution_version`. Always `false` for system-only rows.'
+          example: true
+          type: boolean
+        virtual_path:
+          description: The stable virtual path assigned to this Solution config, used as the deduplication key when the same Solution appears under multiple owner scopes. `null` when unset.
+          example: string
+          type: string
+      required:
+      - id
+      - kind
+      - owners
+      - templates
+      - upgrade_available
       type: object
 x-archastro-docs-scope: external
 x-auth-schemes:

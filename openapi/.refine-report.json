@@ -15,9 +15,7 @@
     "archastro-auth-api-openapi.yml",
     "archastro-s2s-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -111,15 +109,14 @@
     "archastro-platform-openapi.json: declared missing tag: Users",
     "archastro-platform-openapi.json: declared missing tag: auth",
     "archastro-platform-openapi.json: declared missing tag: s2s",
-    "superseded outputs removed: archastro-o-auth-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 10 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "archastro-activity-feed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "archastro-agents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "archastro-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "archastro-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "archastro-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "archastro-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "archastro-s2s-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "archastro-slack-channel-bindings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "archastro-teams-api-openapi.yml: previously refined output, superseded by openapi/_original/",

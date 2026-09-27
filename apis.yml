@@ -47,6 +47,14 @@ modified: '2026-07-18'
 tags:
 - Company
 - AI Agents
+- Developer Platform
+- Automation
+- Integration
+- MCP
+- Workflows
+tags_raw:
+- Company
+- AI Agents
 - Agentic
 - Developer Platform
 - Automation
@@ -112,7 +120,7 @@ apis:
   - type: Sandbox
     url: sandbox/archastro-sandbox.yml
 - aid: archastro:archastro-auth-api
-  name: Archastro auth API
+  name: Archastro Auth API
   description: The auth API from Archastro — 9 operation(s) for auth.
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
@@ -168,7 +176,7 @@ apis:
   - type: Sandbox
     url: sandbox/archastro-sandbox.yml
 - aid: archastro:archastro-s2s-api
-  name: Archastro s2s API
+  name: Archastro S2s API
   description: The s2s API from Archastro — 2 operation(s) for s2s.
   humanURL: https://docs.archastro.ai/docs/api-reference
   baseURL: https://developers.archastro.ai
