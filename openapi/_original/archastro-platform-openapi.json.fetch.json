@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.archastro.ai/openapi.json",
+ "requested_url": "https://docs.archastro.ai/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 1512359,
+ "sha256": "a13971dc957687477c35948ac88da340e8b9686ccd6a1c537ebb7325bbc68046",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
