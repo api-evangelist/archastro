@@ -1,17 +1,20 @@
-generated: '2026-07-18'
+generated: '2026-09-23'
 method: generated
-source: openapi/archastro-platform-openapi.json
+source: openapi/archastro-activity-feed-api-openapi.yml, openapi/archastro-agents-api-openapi.yml,
+  openapi/archastro-auth-api-openapi.yml, openapi/archastro-files-api-openapi.yml, openapi/archastro-oauth-api-openapi.yml,
+  openapi/archastro-s2s-api-openapi.yml, openapi/archastro-slack-channel-bindings-api-openapi.yml,
+  openapi/archastro-teams-api-openapi.yml, openapi/archastro-threads-api-openapi.yml, openapi/archastro-users-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 89
   by_action_class:
-    connected: 38
-    acting: 51
+    connected: 39
+    acting: 50
   by_consequence:
-    read: 38
-    write: 50
+    read: 39
+    write: 49
     physical: 1
   human_in_the_loop_required: 0
 operations:
@@ -289,18 +292,12 @@ operations:
   method: post
   operationId: post_api_v1_agents__agent_search
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /api/v1/agents/{agent}/threads
   method: post
   operationId: post_api_v1_agents__agent_threads
@@ -497,6 +494,112 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /oauth/device/approve
+  method: post
+  operationId: post_oauth_device_approve
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /oauth/device/authorize
+  method: post
+  operationId: post_oauth_device_authorize
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /oauth/device/deny
+  method: post
+  operationId: post_oauth_device_deny
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /oauth/scopes
+  method: get
+  operationId: get_oauth_scopes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /oauth/token
+  method: post
+  operationId: post_oauth_token
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/teams/{team}/invites
+  method: post
+  operationId: post_api_v1_teams__team_invites
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /api/v1/teams/{team}/members
+  method: post
+  operationId: post_api_v1_teams__team_members
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /api/v1/slack_channel_bindings
   method: get
   operationId: get_api_v1_slack_channel_bindings
@@ -701,22 +804,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /api/v1/teams/{team}/invites
-  method: post
-  operationId: post_api_v1_teams__team_invites
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /api/v1/teams/{team}/join
   method: post
   operationId: post_api_v1_teams__team_join
@@ -775,22 +862,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /api/v1/teams/{team}/members
-  method: post
-  operationId: post_api_v1_teams__team_members
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /api/v1/teams/{team}/members/{user}
   method: patch
   operationId: patch_api_v1_teams__team_members__user
@@ -1126,80 +1197,6 @@ operations:
 - path: /api/v1/users/{user}/threads
   method: post
   operationId: post_api_v1_users__user_threads
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /oauth/device/approve
-  method: post
-  operationId: post_oauth_device_approve
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /oauth/device/authorize
-  method: post
-  operationId: post_oauth_device_authorize
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /oauth/device/deny
-  method: post
-  operationId: post_oauth_device_deny
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /oauth/scopes
-  method: get
-  operationId: get_oauth_scopes
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /oauth/token
-  method: post
-  operationId: post_oauth_token
   x-agentic-access:
     action-class: acting
     consequence: write
