@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.archastro.ai/openapi.json",
+ "final": "https://docs.archastro.ai/openapi.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 2755767,
+ "sha256": "b230d2f58336e0a004de03bf3bbb09dd8e7608447e966c916b09d84b009c1d29",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}
