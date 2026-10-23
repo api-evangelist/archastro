@@ -113,6 +113,36 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-ide-extension-marketplaces.py
   first_seen: '2026-10-20'
+- partner_name: Hex
+  partner: hex-pm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Elixir/Erlang)
+  evidence: https://hex.pm/packages/archastro
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Hex (public registry JSON)
+    spec_file: null
+    language: Elixir/Erlang
+    packages:
+    - name: archastro
+      version: 0.6.0
+      released: '2026-10-21'
+      released_field: inserted_at
+      lapsed: false
+      page: https://hex.pm/packages/archastro
+      repo_leg: github-org:archastro
+      publisher_leg: org:archastro
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 generated: '2026-10-18'
 method: searched
 source:
@@ -133,3 +163,6 @@ checked:
 - https://rubygems.org/api/v1
 - https://pypi.org/org/{org}/
 - https://pypi.org/pypi/{package}/json
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api

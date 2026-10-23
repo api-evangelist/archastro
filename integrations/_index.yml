@@ -120,3 +120,34 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: archastro-hex
+  label: Hex
+  partner: hex-pm
+  partner_name: Hex
+  category: official SDK (Elixir/Erlang)
+  type: register
+  channel: package-registry
+  evidence: https://hex.pm/packages/archastro
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Hex (public registry JSON)
+    spec_file: null
+    language: Elixir/Erlang
+    packages:
+    - name: archastro
+      version: 0.6.0
+      released: '2026-10-21'
+      released_field: inserted_at
+      lapsed: false
+      page: https://hex.pm/packages/archastro
+      repo_leg: github-org:archastro
+      publisher_leg: org:archastro
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
