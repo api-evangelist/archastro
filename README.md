@@ -64,6 +64,140 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Archastro is a company surfaced as a portfolio company of homebrew and added to the API Evangelist network as a stub for enrichment. Sector: aerospace-defense. This profile is a lead awaiting the enrichment pipeline.
+ArchAstro is a Seattle-area startup building a runtime for cross-company AI agents: privacy-aware agents deployed on both sides of a business relationship that collaborate on integrations, migrations, upgrades, onboarding, testing, and bug fixes, with shared test visibility and human approval gates. The ArchAstro Platform API is an agent-first developer control plane covering users, teams, agents, routines, threads, messages, knowledge, tools, installations, workflows, sandboxes, integrations, and inbound webhooks, with first-party TypeScript and Python SDKs and a CLI. Founded in 2026 by engineering veterans from Microsoft, Stripe, Statsig, and Meta; backed by a $6.2M pre-seed.
 
-Backed by: homebrew — https://archastro.ai
+**Areas:** Company · AI Agents · Developer Platform · Automation · Integration · MCP · Workflows
+
+## Archastro on APIs.io
+
+Everything profiled for Archastro is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/archastro/](https://apis.io/providers/archastro/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Archastro Activity Feed API](https://apis.io/apis/archastro/archastro-activity-feed-api/) — The Activity Feed API from Archastro — 1 operation(s) for activity feed.
+- [Archastro Agents API](https://apis.io/apis/archastro/archastro-agents-api/) — The Agents API from Archastro — 17 operation(s) for agents.
+- [Archastro Auth API](https://apis.io/apis/archastro/archastro-auth-api/) — The auth API from Archastro — 9 operation(s) for auth.
+- [Archastro Files API](https://apis.io/apis/archastro/archastro-files-api/) — The Files API from Archastro — 2 operation(s) for files.
+- [Archastro S2s API](https://apis.io/apis/archastro/archastro-s2s-api/) — The s2s API from Archastro — 2 operation(s) for s2s.
+- [Archastro Slack Channel Bindings API](https://apis.io/apis/archastro/archastro-slack-channel-bindings-api/) — The Slack Channel Bindings API from Archastro — 2 operation(s) for slack channel bindings.
+- [Archastro Teams API](https://apis.io/apis/archastro/archastro-teams-api/) — The Teams API from Archastro — 11 operation(s) for teams.
+- [Archastro Threads API](https://apis.io/apis/archastro/archastro-threads-api/) — The Threads API from Archastro — 10 operation(s) for threads.
+- [Archastro Users API](https://apis.io/apis/archastro/archastro-users-api/) — The Users API from Archastro — 7 operation(s) for users.
+- [Archastro OAUTH API](https://apis.io/apis/archastro/archastro-oauth-api/) — The Oauth API from Archastro — 5 operation(s) for oauth.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Archastro Webhooks](https://apis.io/asyncapis/archastro/archastro-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [archastro](https://apis.io/servers/archastro/archastro/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Archastro Agentic Access](https://apis.io/agentic-access/archastro/archastro-agentic-access/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [ArchAstro Platform Activity Feed API](https://apis.io/collections/archastro/open-archastro-activity-feed-api/)
+- [ArchAstro Platform Activity Feed Agents API](https://apis.io/collections/archastro/open-archastro-agents-api/)
+- [ArchAstro Platform Activity Feed auth API](https://apis.io/collections/archastro/open-archastro-auth-api/)
+- [ArchAstro Platform Activity Feed Files API](https://apis.io/collections/archastro/open-archastro-files-api/)
+- [ArchAstro Platform Activity Feed Oauth API](https://apis.io/collections/archastro/open-archastro-oauth-api/)
+- [ArchAstro Platform Activity Feed s2s API](https://apis.io/collections/archastro/open-archastro-s2s-api/)
+- [ArchAstro Platform Activity Feed Slack Channel Bindings API](https://apis.io/collections/archastro/open-archastro-slack-channel-bindings-api/)
+- [ArchAstro Platform Activity Feed Teams API](https://apis.io/collections/archastro/open-archastro-teams-api/)
+- [ArchAstro Platform Activity Feed Threads API](https://apis.io/collections/archastro/open-archastro-threads-api/)
+- [ArchAstro Platform Activity Feed Users API](https://apis.io/collections/archastro/open-archastro-users-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Archastro Platform Overlay](https://apis.io/overlays/archastro/archastro-platform-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Archastro Authentication](https://apis.io/security/archastro/archastro-authentication/)
+- [Archastro Domain Security](https://apis.io/security/archastro/archastro-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://archastro.ai)
+- [Documentation](https://docs.archastro.ai/docs)
+- [Getting started](https://docs.archastro.ai/docs/start-here/getting-started)
+- [API reference](https://docs.archastro.ai/docs/api-reference)
+- [Terms of service](https://archastro.ai/terms)
+- [Privacy policy](https://archastro.ai/privacy)
+- [GitHub](https://github.com/ArchAstro)
+
+## API Evangelist rating
+
+**Kin Score 45.3** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 52.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 63.7 |
+| Access clarity | 21.1 |
+
+**Agent readiness 39.3** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | verified |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | yes |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/archastro/](https://apis.io/providers/archastro/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Archastro: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/archastro/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
